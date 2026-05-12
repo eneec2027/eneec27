@@ -235,7 +235,7 @@ export default function V1Page() {
   }
 
   return (
-    <div className="relative h-screen min-h-[640px] w-full overflow-hidden bg-[#080c14]">
+    <div className="relative h-screen min-h-[580px] w-full overflow-hidden bg-[#080c14]">
 
       {/* ─── 3D SCENE ───────────────────────────────────────────
           Mobile: full-screen background
@@ -279,7 +279,7 @@ export default function V1Page() {
         <div className="flex-1 flex flex-col justify-center">
 
           {/* Edition / location meta */}
-          <div className="flex items-center gap-4 mb-7">
+          <div className="flex items-center gap-4 mb-4 md:mb-7">
             <span className="mono text-[0.6rem] text-gold/70 tracking-[0.3em] uppercase">27.ª Edição</span>
             <div className="h-px w-8 bg-gold/30" />
             <span className="mono text-[0.6rem] text-muted-foreground/70 tracking-[0.2em] uppercase">
@@ -290,7 +290,7 @@ export default function V1Page() {
           {/* Hero heading */}
           <h1
             className="font-bold leading-[0.92] tracking-tight mb-5"
-            style={{ fontSize: 'clamp(4.5rem, 9.5vw, 8.5rem)' }}
+            style={{ fontSize: 'clamp(3.8rem, 9.5vw, 8.5rem)' }}
           >
             <span className="block text-foreground">ENEEC</span>
             <span className="block text-gold glow-text">'27</span>
@@ -304,15 +304,15 @@ export default function V1Page() {
             </p>
           </div>
 
-          <p className="text-foreground/80 text-base font-semibold leading-relaxed mb-9 max-w-[26rem]">
+          <p className="text-foreground/80 text-base font-semibold leading-relaxed mb-5 md:mb-9 max-w-[26rem]">
             O maior encontro de estudantes de Engenharia Civil em Portugal.
             Uma semana de conferências, workshops e networking em Aveiro.
           </p>
 
           {/* Countdown */}
           {countdown.ready && (
-            <div className="mb-9">
-              <p className="mono text-xs text-muted-foreground tracking-[0.2em] uppercase mb-4">
+            <div className="mb-5 md:mb-9">
+              <p className="mono text-xs text-muted-foreground tracking-[0.2em] uppercase mb-3 md:mb-4">
                 Inscrições abrem em
               </p>
               <div className="flex items-end gap-1.5">
@@ -383,7 +383,7 @@ export default function V1Page() {
         </div>
 
         {/* Fala connosco */}
-        <div className="mt-8 mb-6">
+        <div className="mt-4 md:mt-8 mb-4 md:mb-6">
           <p className="mono text-[0.58rem] text-gold/50 tracking-[0.2em] uppercase mb-3">
             Patrocinadores
           </p>
