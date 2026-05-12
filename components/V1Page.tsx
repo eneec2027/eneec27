@@ -1,7 +1,8 @@
 'use client'
 
 import dynamic from 'next/dynamic'
-import { useEffect, useState, useRef } from 'react'
+import { useEffect, useState, useRef, useTransition } from 'react'
+import { signupEmail } from '@/app/actions/signup'
 
 const LibraryScene   = dynamic(() => import('@/components/three/LibraryScene'),   { ssr: false })
 const TidalScene     = dynamic(() => import('@/components/three/TidalScene'),     { ssr: false })
@@ -205,6 +206,7 @@ export default function V1Page() {
   const [email, setEmail]         = useState('')
   const [submitted, setSubmitted] = useState(false)
   const [error, setError]         = useState('')
+  const [isPending, startTransition] = useTransition()
   const [sceneIdx, setSceneIdx]       = useState(0)
   const [displayedScene, setDisplayed] = useState(0)
   const [fading, setFading]            = useState(false)
@@ -230,8 +232,14 @@ export default function V1Page() {
       return
     }
     setError('')
-    setSubmitted(true)
-    // TODO: Supabase insert when account is provisioned
+    startTransition(async () => {
+      const result = await signupEmail(trimmed)
+      if (result.ok) {
+        setSubmitted(true)
+      } else {
+        setError(result.error ?? 'Erro ao guardar. Tenta novamente.')
+      }
+    })
   }
 
   return (
@@ -366,9 +374,10 @@ export default function V1Page() {
                 />
                 <button
                   type="submit"
-                  className="shrink-0 px-5 py-2.5 bg-gold text-[#080c14] text-sm font-bold mono rounded-sm hover:bg-gold-light transition-colors glow-gold"
+                  disabled={isPending}
+                  className="shrink-0 px-5 py-2.5 bg-gold text-[#080c14] text-sm font-bold mono rounded-sm hover:bg-gold-light transition-colors glow-gold disabled:opacity-50"
                 >
-                  →
+                  {isPending ? '...' : '→'}
                 </button>
               </div>
               {error && (
