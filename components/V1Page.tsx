@@ -100,7 +100,7 @@ function RotatingFact({ onIndex }: { onIndex?: (i: number) => void }) {
       {/* Fact text + dots */}
       <div className="flex flex-col justify-center gap-4">
         <p
-          className="text-[0.78rem] text-foreground/60 leading-relaxed max-w-[13rem]"
+          className="text-sm font-semibold text-foreground/75 leading-relaxed max-w-[13rem]"
           style={{
             opacity:    visible ? 1 : 0,
             transform:  visible ? 'translateY(0)' : 'translateY(6px)',
