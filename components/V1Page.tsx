@@ -199,7 +199,7 @@ const INSTAGRAM_URL = '#'
 const LINKEDIN_URL  = '#'
 const FACEBOOK_URL  = '#'
 const CONTACT_EMAIL = 'eneec26@aauav.pt'
-const SPONSOR_EMAIL = 'eneec26@aauav.pt'
+const SPONSOR_EMAIL = 'parcerias.eneec@ua.pt'
 
 export default function V1Page() {
   const countdown = useCountdown(REGISTRATION_OPENS)
