@@ -288,7 +288,7 @@ export default function V1Page() {
 
           {/* Edition / location meta */}
           <div className="flex items-center gap-4 mb-4 md:mb-7">
-            <span className="mono text-[0.6rem] text-gold/70 tracking-[0.3em] uppercase">27.ª Edição</span>
+            <span className="mono text-[0.6rem] text-gold/70 tracking-[0.3em] uppercase">15.ª Edição</span>
             <div className="h-px w-8 bg-gold/30" />
             <span className="mono text-[0.6rem] text-muted-foreground/70 tracking-[0.2em] uppercase">
               Aveiro · Março 2027
