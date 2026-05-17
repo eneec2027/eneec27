@@ -198,7 +198,7 @@ function IconFacebook() {
 const INSTAGRAM_URL = '#'
 const LINKEDIN_URL  = '#'
 const FACEBOOK_URL  = '#'
-const CONTACT_EMAIL = 'eneec26@aauav.pt'
+const CONTACT_EMAIL = 'geral.eneec@ua.pt'
 const SPONSOR_EMAIL = 'parcerias.eneec@ua.pt'
 
 export default function V1Page() {
@@ -291,7 +291,7 @@ export default function V1Page() {
             <span className="mono text-[0.6rem] text-gold/70 tracking-[0.3em] uppercase">15.ª Edição</span>
             <div className="h-px w-8 bg-gold/30" />
             <span className="mono text-[0.6rem] text-muted-foreground/70 tracking-[0.2em] uppercase">
-              Aveiro · Março 2027
+              Aveiro · Abril 2027
             </span>
           </div>
 
