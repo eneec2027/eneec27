@@ -391,6 +391,23 @@ export default function V1Page() {
           )}
         </div>
 
+        {/* Equipa organizadora */}
+        <div className="mt-5 md:mt-7 mb-3 max-w-[22rem]">
+          <div className="flex items-center gap-3 mb-2.5">
+            <div className="h-px w-6 bg-gold/20" />
+            <span className="mono text-[0.52rem] text-muted-foreground/30 tracking-[0.25em] uppercase">
+              Equipa Organizadora
+            </span>
+          </div>
+          <a
+            href="/candidatura"
+            className="group inline-flex items-center gap-2.5 text-foreground/45 hover:text-foreground/80 transition-colors"
+          >
+            <span className="text-xs mono">Queres fazer parte da equipa?</span>
+            <span className="mono text-xs text-gold/50 group-hover:text-gold transition-colors">→</span>
+          </a>
+        </div>
+
         {/* Fala connosco */}
         <div className="mt-4 md:mt-8 mb-4 md:mb-6">
           <p className="mono text-[0.58rem] text-gold/50 tracking-[0.2em] uppercase mb-3">

@@ -2,10 +2,12 @@
 
 import { createClient } from '@supabase/supabase-js'
 
-const supabase = createClient(
-  process.env.NEXT_PUBLIC_SUPABASE_URL!,
-  process.env.SUPABASE_ANON_KEY!
-)
+function getSupabase() {
+  return createClient(
+    process.env.NEXT_PUBLIC_SUPABASE_URL!,
+    process.env.SUPABASE_ANON_KEY!
+  )
+}
 
 export async function signupEmail(email: string): Promise<{ ok: boolean; error?: string }> {
   const trimmed = email.trim().toLowerCase()
@@ -14,7 +16,7 @@ export async function signupEmail(email: string): Promise<{ ok: boolean; error?:
     return { ok: false, error: 'Email inválido.' }
   }
 
-  const { error } = await supabase
+  const { error } = await getSupabase()
     .from('email_signups')
     .insert({ email: trimmed, source: 'v1_teaser' })
 
