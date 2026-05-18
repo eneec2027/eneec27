@@ -5,6 +5,7 @@ import { useForm, useWatch, Controller, type UseFormReturn } from 'react-hook-fo
 import { zodResolver } from '@hookform/resolvers/zod'
 import { applicationSchema, type ApplicationInput } from '@/lib/applicationSchema'
 import { SECTORS, SECTOR_SLUGS, SECTOR_QUESTIONS, type Sector } from '@/lib/sectors'
+import { UNIVERSITIES, COURSES } from '@/lib/formOptions'
 import { SectorDnD } from '@/components/SectorDnD'
 import { submitApplication } from '@/app/actions/apply'
 import { cn } from '@/lib/utils'
@@ -212,26 +213,48 @@ function Step1({ form }: { form: AppForm }) {
 
           <div>
             <label htmlFor="university" className={labelCls}>Universidade / Instituto</label>
-            <input
-              id="university"
-              {...register('university')}
-              placeholder="Ex: Universidade de Aveiro"
-              className={inputErr(!!errors.university)}
-              aria-invalid={!!errors.university}
-              aria-describedby={errors.university ? 'err-university' : undefined}
+            <Controller
+              name="university"
+              control={control}
+              render={({ field }) => (
+                <select
+                  id="university"
+                  value={field.value ?? ''}
+                  onChange={e => field.onChange(e.target.value)}
+                  className={cn(inputErr(!!errors.university), 'cursor-pointer')}
+                  aria-invalid={!!errors.university}
+                  aria-describedby={errors.university ? 'err-university' : undefined}
+                >
+                  <option value="" disabled>Seleciona a tua instituição...</option>
+                  {UNIVERSITIES.map(u => (
+                    <option key={u} value={u}>{u}</option>
+                  ))}
+                </select>
+              )}
             />
             <FieldError id="err-university" msg={errors.university?.message} />
           </div>
 
           <div>
             <label htmlFor="course" className={labelCls}>Curso</label>
-            <input
-              id="course"
-              {...register('course')}
-              placeholder="Ex: Engenharia Civil"
-              className={inputErr(!!errors.course)}
-              aria-invalid={!!errors.course}
-              aria-describedby={errors.course ? 'err-course' : undefined}
+            <Controller
+              name="course"
+              control={control}
+              render={({ field }) => (
+                <select
+                  id="course"
+                  value={field.value ?? ''}
+                  onChange={e => field.onChange(e.target.value)}
+                  className={cn(inputErr(!!errors.course), 'cursor-pointer')}
+                  aria-invalid={!!errors.course}
+                  aria-describedby={errors.course ? 'err-course' : undefined}
+                >
+                  <option value="" disabled>Seleciona o teu curso...</option>
+                  {COURSES.map(c => (
+                    <option key={c} value={c}>{c}</option>
+                  ))}
+                </select>
+              )}
             />
             <FieldError id="err-course" msg={errors.course?.message} />
           </div>
@@ -592,8 +615,8 @@ export default function ApplicationForm() {
       full_name:       '',
       email:           '',
       phone:           '',
-      university:      '',
-      course:          '',
+      university:      '' as ApplicationInput['university'],
+      course:          '' as ApplicationInput['course'],
       academic_year:   '',
       has_event_xp:    undefined as unknown as boolean,
       event_xp_desc:   '',

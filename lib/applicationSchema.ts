@@ -1,5 +1,6 @@
 import { z } from 'zod'
 import { SECTOR_SLUGS, type Sector } from './sectors'
+import { UNIVERSITIES, COURSES } from './formOptions'
 
 const answerBlock = z.object({
   q1: z.string().min(20, 'Pelo menos 20 caracteres.'),
@@ -14,8 +15,8 @@ export const applicationSchema = z.object({
     v => v.replace(/\D/g, '').length >= 9,
     'Número de telemóvel inválido — mínimo 9 dígitos.'
   ),
-  university:      z.string().min(2, 'Universidade obrigatória.'),
-  course:          z.string().min(2, 'Curso obrigatório.'),
+  university:      z.enum(UNIVERSITIES, { error: 'Seleciona uma universidade válida.' }),
+  course:          z.enum(COURSES, { error: 'Seleciona um curso válido.' }),
   academic_year:   z.string().min(1, 'Seleciona o ano curricular.'),
   has_event_xp:    z.boolean({ message: 'Seleciona Sim ou Não.' }),
   event_xp_desc:   z.string().optional(),
