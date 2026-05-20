@@ -149,9 +149,14 @@ function formatPhone(raw: string): string {
 
 type AppForm = UseFormReturn<ApplicationInput, unknown, ApplicationInput>
 
-function Step1({ form }: { form: AppForm }) {
+function Step1({ form, emailExistsError, onEmailChange }: {
+  form: AppForm
+  emailExistsError: string
+  onEmailChange: () => void
+}) {
   const { register, control, formState: { errors } } = form
   const hasXp = useWatch({ control, name: 'has_event_xp' })
+  const emailError = errors.email?.message || emailExistsError
 
   return (
     <div className="space-y-6">
@@ -178,14 +183,14 @@ function Step1({ form }: { form: AppForm }) {
             <label htmlFor="email" className={labelCls}>Email</label>
             <input
               id="email"
-              {...register('email')}
+              {...register('email', { onChange: onEmailChange })}
               type="email"
               placeholder="o.teu@email.pt"
-              className={inputErr(!!errors.email)}
-              aria-invalid={!!errors.email}
-              aria-describedby={errors.email ? 'err-email' : undefined}
+              className={inputErr(!!emailError)}
+              aria-invalid={!!emailError}
+              aria-describedby={emailError ? 'err-email' : undefined}
             />
-            <FieldError id="err-email" msg={errors.email?.message} />
+            <FieldError id="err-email" msg={emailError} />
           </div>
 
           <div>
@@ -610,6 +615,7 @@ export default function ApplicationForm() {
 
   const { handleSubmit, trigger } = form
   const [submitInvalid, setSubmitInvalid] = useState(false)
+  const [emailExistsError, setEmailExistsError] = useState('')
 
   async function goNext() {
     const fields = step === 1 ? STEP_1_FIELDS : STEP_2_FIELDS
@@ -618,10 +624,11 @@ export default function ApplicationForm() {
       if (step === 1) {
         const exists = await checkEmailExists(form.getValues('email'))
         if (exists) {
-          form.setError('email', { type: 'manual', message: 'Já existe uma candidatura com este email.' })
-          setStepError('Preenche todos os campos assinalados antes de continuar.')
+          setEmailExistsError('Já existe uma candidatura com este email.')
+          setStepError('Corrige os campos assinalados antes de continuar.')
           return
         }
+        setEmailExistsError('')
       }
       setStepError('')
       setStep(s => s + 1)
@@ -681,7 +688,13 @@ export default function ApplicationForm() {
     <form onSubmit={handleSubmit(onSubmit, onInvalid)} noValidate>
       <ProgressBar step={step} />
 
-      {step === 1 && <Step1 form={form} />}
+      {step === 1 && (
+        <Step1
+          form={form}
+          emailExistsError={emailExistsError}
+          onEmailChange={() => setEmailExistsError('')}
+        />
+      )}
       {step === 2 && <Step2 form={form} />}
       {step === 3 && <Step3 form={form} openAll={submitInvalid} />}
 
