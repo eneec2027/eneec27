@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useTransition } from 'react'
+import { useState, useEffect, useTransition } from 'react'
 import { useForm, useWatch, Controller, type UseFormReturn } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { applicationSchema, type ApplicationInput } from '@/lib/applicationSchema'
@@ -457,17 +457,15 @@ function Step3({ form, openAll }: { form: AppForm; openAll?: boolean }) {
     sectors[0] ? SECTOR_SLUGS[sectors[0]] : ''
   )
 
-  // When parent triggers openAll (submit failed), expand first sector with errors
-  useState(() => {
+  useEffect(() => {
     if (openAll) {
       const firstWithError = sectors.find(s => {
         const slug = SECTOR_SLUGS[s]
-        const e = (errors.sector_answers as SectorErrors)?.[slug]
-        return !!e
+        return !!(errors.sector_answers as SectorErrors)?.[slug]
       })
       if (firstWithError) setOpenSector(SECTOR_SLUGS[firstWithError])
     }
-  })
+  }, [openAll, errors.sector_answers])
 
   if (sectors.length === 0) {
     return (

@@ -31,7 +31,7 @@ export const applicationSchema = z.object({
   if (data.has_event_xp && (!data.event_xp_desc || data.event_xp_desc.trim().length < 1)) {
     ctx.addIssue({
       code: z.ZodIssueCode.custom,
-      message: 'Descreve brevemente o teu papel (mínimo 10 caracteres).',
+      message: 'Descreve brevemente o teu papel.',
       path: ['event_xp_desc'],
     })
   }
