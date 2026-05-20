@@ -11,6 +11,13 @@ function getSupabase() {
   )
 }
 
+export async function checkEmailExists(email: string): Promise<boolean> {
+  const { data, error } = await getSupabase()
+    .rpc('check_email_exists', { p_email: email })
+  if (error) return false
+  return data === true
+}
+
 export async function submitApplication(
   data: ApplicationInput
 ): Promise<{ ok: boolean; error?: string }> {

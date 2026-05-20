@@ -3,9 +3,9 @@ import { SECTOR_SLUGS, type Sector } from './sectors'
 import { UNIVERSITIES, COURSES } from './formOptions'
 
 const answerBlock = z.object({
-  q1: z.string().min(20, 'Pelo menos 20 caracteres.'),
-  q2: z.string().min(20, 'Pelo menos 20 caracteres.'),
-  q3: z.string().min(20, 'Pelo menos 20 caracteres.'),
+  q1: z.string().min(1, 'Responde à pergunta.'),
+  q2: z.string().min(1, 'Responde à pergunta.'),
+  q3: z.string().min(1, 'Responde à pergunta.'),
 })
 
 export const applicationSchema = z.object({
@@ -23,12 +23,12 @@ export const applicationSchema = z.object({
   availability:    z.string().min(1, 'Seleciona a disponibilidade.'),
   can_travel:      z.string().min(1, 'Seleciona uma opção.'),
   sector_prefs:    z.array(z.string()).min(1, 'Seleciona pelo menos um setor.'),
-  motivation:      z.string().min(50, 'A motivação deve ter pelo menos 50 caracteres.'),
-  differentiation: z.string().min(30, 'A resposta deve ter pelo menos 30 caracteres.'),
+  motivation:      z.string().min(1, 'Escreve a tua motivação.'),
+  differentiation: z.string().min(1, 'Escreve a tua resposta.'),
   how_found_out:   z.string().min(1, 'Seleciona como tomaste conhecimento.'),
   sector_answers:  z.record(z.string(), answerBlock),
 }).superRefine((data, ctx) => {
-  if (data.has_event_xp && (!data.event_xp_desc || data.event_xp_desc.trim().length < 10)) {
+  if (data.has_event_xp && (!data.event_xp_desc || data.event_xp_desc.trim().length < 1)) {
     ctx.addIssue({
       code: z.ZodIssueCode.custom,
       message: 'Descreve brevemente o teu papel (mínimo 10 caracteres).',
@@ -39,7 +39,7 @@ export const applicationSchema = z.object({
     const slug = SECTOR_SLUGS[sector as Sector]
     if (!slug) continue
     const ans = data.sector_answers[slug]
-    if (!ans || ans.q1.length < 20 || ans.q2.length < 20 || ans.q3.length < 20) {
+    if (!ans || !ans.q1.trim() || !ans.q2.trim() || !ans.q3.trim()) {
       ctx.addIssue({
         code: z.ZodIssueCode.custom,
         message: `Responde às 3 perguntas do setor "${sector}".`,

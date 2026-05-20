@@ -7,7 +7,7 @@ import { applicationSchema, type ApplicationInput } from '@/lib/applicationSchem
 import { SECTORS, SECTOR_SLUGS, SECTOR_QUESTIONS, type Sector } from '@/lib/sectors'
 import { UNIVERSITIES, COURSES } from '@/lib/formOptions'
 import { SectorDnD } from '@/components/SectorDnD'
-import { submitApplication } from '@/app/actions/apply'
+import { submitApplication, checkEmailExists } from '@/app/actions/apply'
 import { cn } from '@/lib/utils'
 
 // ─── Shared primitives ───────────────────────────────────────────────────────
@@ -367,20 +367,8 @@ function Step1({ form }: { form: AppForm }) {
 
 // ─── Step 2: Motivação & Setores ──────────────────────────────────────────────
 
-function CharCount({ value, min }: { value: string; min: number }) {
-  const len = value?.length ?? 0
-  const ok  = len >= min
-  return (
-    <span className={cn('mono text-[0.55rem] tabular-nums', ok ? 'text-gold/40' : 'text-muted-foreground/30')}>
-      {len}/{min}
-    </span>
-  )
-}
-
 function Step2({ form }: { form: AppForm }) {
   const { register, control, formState: { errors } } = form
-  const motivation      = useWatch({ control, name: 'motivation'      }) ?? ''
-  const differentiation = useWatch({ control, name: 'differentiation' }) ?? ''
 
   return (
     <div className="space-y-7">
@@ -407,10 +395,7 @@ function Step2({ form }: { form: AppForm }) {
       </div>
 
       <div>
-        <div className="flex items-center justify-between mb-1.5">
-          <label className={cn(labelCls, 'mb-0')}>Porque queres fazer parte da equipa organizadora do ENEEC 2027?</label>
-          <CharCount value={motivation} min={50} />
-        </div>
+        <label className={labelCls}>Porque queres fazer parte da equipa organizadora do ENEEC 2027?</label>
         <textarea
           {...register('motivation')}
           rows={5}
@@ -421,10 +406,7 @@ function Step2({ form }: { form: AppForm }) {
       </div>
 
       <div>
-        <div className="flex items-center justify-between mb-1.5">
-          <label className={cn(labelCls, 'mb-0')}>O que achas que podes trazer de diferente à equipa?</label>
-          <CharCount value={differentiation} min={30} />
-        </div>
+        <label className={labelCls}>O que achas que podes trazer de diferente à equipa?</label>
         <textarea
           {...register('differentiation')}
           rows={4}
@@ -465,8 +447,7 @@ type SectorErrors = Record<string, { q1?: { message?: string }; q2?: { message?:
 
 function Step3({ form, openAll }: { form: AppForm; openAll?: boolean }) {
   const { register, control, formState: { errors } } = form
-  const sectors   = (useWatch({ control, name: 'sector_prefs'    }) ?? []) as Sector[]
-  const allValues = (useWatch({ control, name: 'sector_answers'  }) ?? {}) as Record<string, Record<string, string>>
+  const sectors = (useWatch({ control, name: 'sector_prefs' }) ?? []) as Sector[]
   const [openSector, setOpenSector] = useState<string>(
     sectors[0] ? SECTOR_SLUGS[sectors[0]] : ''
   )
@@ -532,14 +513,10 @@ function Step3({ form, openAll }: { form: AppForm; openAll?: boolean }) {
                   const qKey      = `q${qi + 1}` as 'q1' | 'q2' | 'q3'
                   const fieldName = `sector_answers.${slug}.${qKey}` as const
                   const qError    = qErrors?.[qKey]?.message
-                  const qVal      = allValues?.[slug]?.[qKey] ?? ''
 
                   return (
                     <div key={qi}>
-                      <div className="flex items-center justify-between mb-1">
-                        <label className={cn(labelCls, 'mb-0')}>Pergunta {qi + 1}</label>
-                        <CharCount value={qVal} min={20} />
-                      </div>
+                      <label className={cn(labelCls, 'mb-1')}>Pergunta {qi + 1}</label>
                       <p className="text-sm text-foreground/70 mb-2 leading-relaxed">{question}</p>
                       <textarea
                         {...register(fieldName as Parameters<typeof register>[0])}
@@ -638,6 +615,14 @@ export default function ApplicationForm() {
     const fields = step === 1 ? STEP_1_FIELDS : STEP_2_FIELDS
     const valid = await trigger(fields)
     if (valid) {
+      if (step === 1) {
+        const exists = await checkEmailExists(form.getValues('email'))
+        if (exists) {
+          form.setError('email', { type: 'manual', message: 'Já existe uma candidatura com este email.' })
+          setStepError('Preenche todos os campos assinalados antes de continuar.')
+          return
+        }
+      }
       setStepError('')
       setStep(s => s + 1)
       window.scrollTo({ top: 0, behavior: 'smooth' })
@@ -678,6 +663,7 @@ export default function ApplicationForm() {
 
   function onSubmit(data: ApplicationInput) {
     setSubmitError('')
+    setStepError('')
     setSubmitInvalid(false)
     startTransition(async () => {
       const result = await submitApplication(data)
