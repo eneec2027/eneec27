@@ -87,7 +87,7 @@ export default function Programa() {
   )
 
   return (
-    <section id="programa" className="py-28 bg-[#080c14] grid-bg">
+    <section id="programa" className="py-28 bg-background grid-bg">
       <div className="max-w-7xl mx-auto px-6">
         <div className="mb-16">
           <p className="section-label mb-4">Programa</p>
@@ -104,7 +104,7 @@ export default function Programa() {
               onClick={() => setActiveDay(i)}
               className={`px-5 py-2.5 rounded-sm text-sm font-medium transition-all mono ${
                 activeDay === i
-                  ? 'bg-gold text-[#080c14] font-semibold'
+                  ? 'bg-gold text-primary-foreground font-semibold'
                   : 'border border-gold-subtle text-muted-foreground hover:border-gold/40 hover:text-foreground'
               }`}
             >

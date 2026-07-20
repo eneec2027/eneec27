@@ -49,9 +49,9 @@ export default function Hero() {
       <div className="absolute inset-y-0 right-0 w-[65%] z-0">
         <BuildingScene />
         {/* Blend left edge into page background */}
-        <div className="absolute inset-0 bg-gradient-to-r from-[#080c14] via-[#080c14]/20 to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-r from-background via-background/20 to-transparent" />
         {/* Fade out at top and bottom */}
-        <div className="absolute inset-0 bg-gradient-to-t from-[#080c14] via-transparent to-[#080c14]/60" />
+        <div className="absolute inset-0 bg-gradient-to-t from-background via-transparent to-background/60" />
       </div>
 
       {/* Content */}
@@ -87,7 +87,7 @@ export default function Hero() {
           <div className="flex flex-wrap gap-4">
             <a
               href="#inscricoes"
-              className="inline-flex items-center px-7 py-3 bg-gold text-[#080c14] font-semibold text-sm tracking-widest uppercase mono hover:bg-gold-light transition-colors rounded-sm glow-gold"
+              className="inline-flex items-center px-7 py-3 bg-gold text-primary-foreground font-semibold text-sm tracking-widest uppercase mono hover:bg-gold-light transition-colors rounded-sm glow-gold"
             >
               Inscrever-me
             </a>

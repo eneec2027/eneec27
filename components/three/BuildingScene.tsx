@@ -96,7 +96,7 @@ function StructureFrame() {
             args={[positions, 3]}
           />
         </bufferGeometry>
-        <lineBasicMaterial color="#c9a84c" transparent opacity={0.9} />
+        <lineBasicMaterial color="#1a2444" transparent opacity={0.45} />
       </lineSegments>
     </group>
   )

@@ -1,7 +1,11 @@
 'use client'
 
 import dynamic from 'next/dynamic'
+import Image from 'next/image'
+import { ChevronDown } from 'lucide-react'
 import { useEffect, useState, useRef, useTransition } from 'react'
+import { useTheme } from 'next-themes'
+import { ThemeToggle } from '@/components/ThemeToggle'
 import { signupEmail } from '@/app/actions/signup'
 
 const LibraryScene   = dynamic(() => import('@/components/three/LibraryScene'),   { ssr: false })
@@ -169,7 +173,7 @@ function useCountdown(target: Date) {
 
 function IconInstagram() {
   return (
-    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
       <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/>
       <circle cx="12" cy="12" r="4"/>
       <circle cx="17.5" cy="6.5" r="0.5" fill="currentColor" stroke="none"/>
@@ -179,7 +183,7 @@ function IconInstagram() {
 
 function IconLinkedIn() {
   return (
-    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
       <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/>
       <rect x="2" y="9" width="4" height="12"/>
       <circle cx="4" cy="4" r="2"/>
@@ -189,19 +193,24 @@ function IconLinkedIn() {
 
 function IconFacebook() {
   return (
-    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
       <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/>
     </svg>
   )
 }
 
-const INSTAGRAM_URL = '#'
+const INSTAGRAM_URL = 'https://www.instagram.com/eneec2027'
 const LINKEDIN_URL  = '#'
 const FACEBOOK_URL  = '#'
-const CONTACT_EMAIL = 'geral.eneec@ua.pt'
-const SPONSOR_EMAIL = 'parcerias.eneec@ua.pt'
+const CONTACT_EMAIL = 'geral@eneec.pt'
+const SPONSOR_EMAIL = 'parcerias@eneec.pt'
 
 export default function V1Page() {
+  const { resolvedTheme } = useTheme()
+  const [themeMounted, setThemeMounted] = useState(false)
+  useEffect(() => setThemeMounted(true), [])
+  const isDark = themeMounted && resolvedTheme === 'dark'
+
   const countdown = useCountdown(REGISTRATION_OPENS)
   const [email, setEmail]         = useState('')
   const [submitted, setSubmitted] = useState(false)
@@ -211,6 +220,16 @@ export default function V1Page() {
   const [displayedScene, setDisplayed] = useState(0)
   const [fading, setFading]            = useState(false)
   const inputRef = useRef<HTMLInputElement>(null)
+  const panelRef = useRef<HTMLDivElement>(null)
+  const [hasScrolled, setHasScrolled] = useState(false)
+
+  useEffect(() => {
+    const el = panelRef.current
+    if (!el) return
+    const handler = () => setHasScrolled(el.scrollTop > 30)
+    el.addEventListener('scroll', handler, { passive: true })
+    return () => el.removeEventListener('scroll', handler)
+  }, [])
 
   useEffect(() => {
     if (sceneIdx === displayedScene) return
@@ -243,29 +262,42 @@ export default function V1Page() {
   }
 
   return (
-    <div className="relative h-screen min-h-[580px] w-full overflow-hidden bg-[#080c14]">
+    <div className="relative h-dvh min-h-[580px] w-full overflow-hidden bg-background">
 
       {/* ─── 3D SCENE ───────────────────────────────────────────
+          Always rendered in dark context regardless of site theme
           Mobile: full-screen background
           Desktop: right panel (left-[46%])                      */}
-      <div className="absolute inset-0 md:left-[40%] z-0">
+      <div className="absolute inset-0 md:left-[40%] z-0 bg-background">
         {(() => { const Scene = SCENES[displayedScene]; return <Scene /> })()}
         {/* Scene transition fade overlay */}
         <div
-          className="absolute inset-0 bg-[#080c14] pointer-events-none"
+          className="absolute inset-0 bg-background pointer-events-none"
           style={{ opacity: fading ? 1 : 0, transition: 'opacity 520ms ease' }}
         />
-        {/* Mobile only: flat dark base so text is legible */}
-        <div className="absolute inset-0 md:hidden bg-[#080c14]/70 pointer-events-none" />
-        {/* Desktop: soft feather on the left edge only */}
-        <div className="absolute inset-y-0 left-0 w-[30%] hidden md:block bg-gradient-to-r from-[#080c14] to-transparent pointer-events-none" />
+        {/* Mobile only: flat base so text is legible */}
+        <div className="absolute inset-0 md:hidden bg-background/85 pointer-events-none" />
+        {/* Desktop: smooth feather into the content panel */}
+        <div
+          className="absolute inset-y-0 left-0 w-[65%] hidden md:block pointer-events-none"
+          style={{ background: 'linear-gradient(to right, var(--background) 0%, var(--background) 20%, color-mix(in srgb, var(--background) 85%, transparent) 45%, color-mix(in srgb, var(--background) 42%, transparent) 65%, transparent 100%)' }}
+        />
       </div>
 
       {/* ─── CONTENT PANEL ──────────────────────────────────────
-          Solid dark background — ensures nothing bleeds through  */}
-      <div className="relative z-10 flex flex-col h-full md:w-[46%] px-8 sm:px-14 md:bg-[#080c14]">
-        {/* Subtle grid only on desktop panel */}
-        <div className="hidden md:block absolute inset-0 grid-bg opacity-50 pointer-events-none" />
+          Background matches site theme                           */}
+      <div className="relative z-10 h-full md:w-[46%] md:bg-background">
+        {/* Blueprint grid */}
+        <div className="hidden md:block absolute inset-0 grid-bg pointer-events-none" />
+        {/* Blueprint crosshairs — top-left and bottom-left corners */}
+        <div className="bp-crosshair hidden md:block" style={{ top: 28, left: 28 }} />
+        <div className="bp-crosshair hidden md:block" style={{ bottom: 28, left: 28 }} />
+        {/* Orange accent square — top-right of content panel */}
+        <div className="hidden md:block absolute" style={{ top: 28, right: 28, width: 8, height: 8, background: 'var(--gold)', opacity: 0.85 }} />
+        {/* Bottom fade — stays fixed while content scrolls */}
+        <div className="absolute bottom-0 left-0 right-0 h-28 bg-gradient-to-t from-background to-transparent pointer-events-none z-10" />
+
+        <div ref={panelRef} className="flex flex-col h-full overflow-y-auto no-scrollbar px-8 sm:px-14">
 
         {/* Top bar */}
         <div className="flex items-center justify-between pt-8 pb-2">
@@ -275,16 +307,19 @@ export default function V1Page() {
               ENEEC<span className="text-foreground/30">'</span>27
             </span>
           </div>
-          <a
-            href={`mailto:${CONTACT_EMAIL}`}
-            className="mono text-[0.65rem] text-muted-foreground/50 hover:text-gold transition-colors tracking-wide hidden sm:block"
-          >
-            {CONTACT_EMAIL}
-          </a>
+          <div className="flex items-center gap-4">
+            <a
+              href={`mailto:${CONTACT_EMAIL}`}
+              className="mono text-[0.65rem] text-muted-foreground/50 hover:text-gold transition-colors tracking-wide hidden sm:block"
+            >
+              {CONTACT_EMAIL}
+            </a>
+            <ThemeToggle />
+          </div>
         </div>
 
-        {/* Main content — vertically centered */}
-        <div className="flex-1 flex flex-col justify-center">
+        {/* Main content */}
+        <div className="flex-1 flex flex-col justify-end pb-8">
 
           {/* Edition / location meta */}
           <div className="flex items-center gap-4 mb-4 md:mb-7">
@@ -296,30 +331,33 @@ export default function V1Page() {
           </div>
 
           {/* Hero heading */}
-          <h1
-            className="font-bold leading-[0.92] tracking-tight mb-5"
-            style={{ fontSize: 'clamp(3.8rem, 9.5vw, 8.5rem)' }}
-          >
-            <span className="block text-foreground">ENEEC</span>
-            <span className="block text-gold glow-text">'27</span>
-          </h1>
+          <div className="mb-2">
+            <Image
+              src={isDark ? '/logo-dark.png' : '/logo-light.jpg'}
+              alt="ENEEC'27"
+              width={400}
+              height={400}
+              className="rounded-sm w-full max-w-[400px]"
+              priority
+            />
+          </div>
 
           {/* Tagline rule */}
-          <div className="flex items-center gap-4 mb-6">
+          <div className="flex items-center gap-4 mb-3">
             <div className="h-px w-10 bg-gold/60" />
             <p className="mono text-[0.65rem] text-gold/80 tracking-[0.28em] uppercase">
               Construção em Movimento
             </p>
           </div>
 
-          <p className="text-foreground/80 text-base font-semibold leading-relaxed mb-5 md:mb-9 max-w-[26rem]">
+          <p className="text-foreground/80 text-base font-semibold leading-relaxed mb-3 md:mb-5 max-w-[26rem]">
             O maior encontro de estudantes de Engenharia Civil em Portugal.
             Uma semana de conferências, workshops e networking em Aveiro.
           </p>
 
           {/* Countdown */}
           {countdown.ready && (
-            <div className="mb-5 md:mb-9">
+            <div className="mb-3 md:mb-5">
               <p className="mono text-xs text-muted-foreground tracking-[0.2em] uppercase mb-3 md:mb-4">
                 Inscrições abrem em
               </p>
@@ -336,7 +374,7 @@ export default function V1Page() {
                     )}
                     <div className="flex flex-col items-center">
                       <div
-                        className="bg-[#0d1220] border border-gold/10 rounded-sm text-center"
+                        className="bg-surface border border-gold/10 rounded-sm text-center"
                         style={{ padding: '0.4rem 0.75rem', minWidth: '3rem' }}
                       >
                         <span
@@ -370,12 +408,12 @@ export default function V1Page() {
                   onChange={e => { setEmail(e.target.value); setError('') }}
                   placeholder="o.teu@email.pt"
                   aria-label="Email"
-                  className="flex-1 min-w-0 px-4 py-2.5 bg-[#0d1220]/90 border border-gold/10 text-sm text-foreground placeholder:text-muted-foreground/20 focus:outline-none focus:border-gold/35 transition-colors mono rounded-sm"
+                  className="flex-1 min-w-0 px-4 py-2.5 bg-surface/90 border border-gold/10 text-sm text-foreground placeholder:text-muted-foreground/20 focus:outline-none focus:border-gold/35 transition-colors mono rounded-sm"
                 />
                 <button
                   type="submit"
                   disabled={isPending}
-                  className="shrink-0 px-5 py-2.5 bg-gold text-[#080c14] text-sm font-bold mono rounded-sm hover:bg-gold-light transition-colors glow-gold disabled:opacity-50"
+                  className="shrink-0 px-5 py-2.5 bg-gold text-primary-foreground text-sm font-bold mono rounded-sm hover:bg-gold-light transition-colors glow-gold disabled:opacity-50"
                 >
                   {isPending ? '...' : '→'}
                 </button>
@@ -392,19 +430,16 @@ export default function V1Page() {
         </div>
 
         {/* Equipa organizadora */}
-        <div className="mt-5 md:mt-7 mb-3 max-w-[22rem]">
-          <div className="flex items-center gap-3 mb-2.5">
-            <div className="h-px w-6 bg-gold/20" />
-            <span className="mono text-[0.52rem] text-muted-foreground/30 tracking-[0.25em] uppercase">
-              Equipa Organizadora
-            </span>
-          </div>
+        <div className="mt-4 md:mt-5 mb-3 max-w-[22rem]">
+          <p className="mono text-[0.52rem] text-gold/50 tracking-[0.25em] uppercase mb-2">
+            Equipa Organizadora
+          </p>
           <a
             href="/candidatura"
-            className="group inline-flex items-center gap-2.5 text-foreground/45 hover:text-foreground/80 transition-colors"
+            className="group inline-flex items-center gap-2 px-4 py-2 border border-gold/30 rounded-sm hover:border-gold/70 hover:bg-gold/5 transition-all"
           >
-            <span className="text-xs mono">Queres fazer parte da equipa?</span>
-            <span className="mono text-xs text-gold/50 group-hover:text-gold transition-colors">→</span>
+            <span className="text-sm font-semibold text-foreground/80 group-hover:text-foreground transition-colors">Queres fazer parte da equipa?</span>
+            <span className="text-gold/60 group-hover:text-gold transition-colors">→</span>
           </a>
         </div>
 
@@ -415,7 +450,7 @@ export default function V1Page() {
           </p>
           <a
             href={`mailto:${SPONSOR_EMAIL}`}
-            className="inline-flex items-center gap-3 px-5 py-2.5 border border-gold/60 text-gold font-bold text-sm mono tracking-widest uppercase hover:bg-gold hover:text-[#080c14] transition-all duration-200 rounded-sm glow-gold"
+            className="inline-flex items-center gap-3 px-5 py-2.5 border border-gold/60 text-gold font-bold text-sm mono tracking-widest uppercase hover:bg-gold hover:text-primary-foreground transition-all duration-200 rounded-sm glow-gold"
           >
             Fala connosco →
           </a>
@@ -423,21 +458,22 @@ export default function V1Page() {
 
         {/* Bottom bar */}
         <div className="flex items-center justify-between pb-8 pt-0">
-          <div className="flex items-center gap-5">
-            <a href={INSTAGRAM_URL} aria-label="Instagram"
-              className="text-muted-foreground/40 hover:text-gold transition-colors">
+          <div className="flex items-center gap-3">
+            <a href={INSTAGRAM_URL} target="_blank" rel="noopener noreferrer" aria-label="Instagram"
+              className="flex items-center justify-center w-9 h-9 rounded-sm border border-gold/25 text-gold/70 hover:border-gold/70 hover:text-gold hover:bg-gold/5 transition-all">
               <IconInstagram />
             </a>
-            <a href={LINKEDIN_URL} aria-label="LinkedIn"
-              className="text-muted-foreground/40 hover:text-gold transition-colors">
+            <a href={LINKEDIN_URL} target="_blank" rel="noopener noreferrer" aria-label="LinkedIn"
+              className="flex items-center justify-center w-9 h-9 rounded-sm border border-gold/25 text-gold/70 hover:border-gold/70 hover:text-gold hover:bg-gold/5 transition-all">
               <IconLinkedIn />
             </a>
-            <a href={FACEBOOK_URL} aria-label="Facebook"
-              className="text-muted-foreground/40 hover:text-gold transition-colors">
+            <a href={FACEBOOK_URL} target="_blank" rel="noopener noreferrer" aria-label="Facebook"
+              className="flex items-center justify-center w-9 h-9 rounded-sm border border-gold/25 text-gold/70 hover:border-gold/70 hover:text-gold hover:bg-gold/5 transition-all">
               <IconFacebook />
             </a>
           </div>
         </div>
+        </div>{/* end scrollable inner */}
       </div>
 
 
@@ -456,9 +492,13 @@ export default function V1Page() {
       </div>
 
       {/* ─── SCROLL INDICATOR ───────────────────────────────── */}
-      <div className="absolute bottom-8 left-1/2 md:left-[23%] -translate-x-1/2 z-20 flex flex-col items-center gap-2 pointer-events-none">
-        <div className="w-px h-10 bg-gradient-to-b from-transparent to-gold/25" />
-        <span className="mono text-[0.5rem] text-muted-foreground/25 tracking-[0.3em] uppercase">scroll</span>
+      <div
+        className="absolute bottom-6 left-1/2 md:left-[23%] -translate-x-1/2 z-20 flex flex-col items-center gap-1.5 pointer-events-none transition-opacity duration-700"
+        style={{ opacity: hasScrolled ? 0 : 1 }}
+      >
+        <span className="mono text-[0.5rem] text-gold/55 tracking-[0.3em] uppercase">scroll</span>
+        <div className="w-px h-7 bg-gradient-to-b from-gold/50 to-transparent" />
+        <ChevronDown size={13} className="text-gold/55 animate-bounce -mt-0.5" />
       </div>
     </div>
   )

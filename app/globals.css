@@ -2,17 +2,21 @@
 @import "tw-animate-css";
 @import "shadcn/tailwind.css";
 
+@source "../app/**/*.{tsx,ts,jsx,js}";
+@source "../components/**/*.{tsx,ts,jsx,js}";
+
 @custom-variant dark (&:is(.dark *));
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
+  --color-bg-sidebar: var(--bg-sidebar);
+  --color-border-dim: var(--border-dim);
   --font-sans: var(--font-sans);
   --font-mono: var(--font-mono);
   --font-heading: var(--font-heading);
   --color-gold: var(--gold);
   --color-gold-light: var(--gold-light);
-  --color-cyan: var(--cyan);
   --color-surface: var(--surface);
   --color-card: var(--card);
   --color-card-foreground: var(--card-foreground);
@@ -28,39 +32,88 @@
   --radius-xl: calc(var(--radius) * 1.4);
 }
 
+/* ── Identity — Proposta B "Institucional Limpo" ───────────────────── */
 :root {
-  --background: #080c14;
-  --foreground: #e2e8f0;
-  --surface: #0d1424;
-  --card: #111827;
-  --card-foreground: #e2e8f0;
-  --gold: #c9a84c;
-  --gold-light: #e8c87a;
-  --cyan: #38bdf8;
-  --primary: #c9a84c;
-  --primary-foreground: #080c14;
-  --muted: #1e2535;
-  --muted-foreground: #64748b;
-  --border: rgba(201, 168, 76, 0.15);
-  --ring: #c9a84c;
+  --bg-sidebar: #080c14;
+  --border-dim: rgba(123, 143, 214, .12);
+  --background: #ffffff;
+  --bg-alt:     #f5f7fc;
+  --foreground: #1a1f3c;
+  --surface:    #eef1fa;
+  --card:       #eef1fa;
+  --card-foreground: #1a1f3c;
+
+  --gold:       #f5a623;
+  --gold-light: #f7b84a;
+  --primary:    #f5a623;
+  --primary-foreground: #ffffff;
+
+  --muted:            #e6e9f5;
+  --muted-foreground: #4a5580;
+  --border: rgba(26, 31, 60, 0.12);
+  --ring:   #f5a623;
   --radius: 0.5rem;
+
+  /* Blueprint language */
+  --bp-line: rgba(26, 31, 60, 0.14);
+  --bp-grid: rgba(26, 31, 60, 0.04);
+
+  /* Font variables — populated by next/font via HTML element */
+  --font-sans:    'Inter', system-ui, sans-serif;
+  --font-heading: 'Libre Baskerville', Georgia, serif;
+  --font-mono:    'IBM Plex Mono', 'Menlo', monospace;
+
   /* shadcn compat */
-  --secondary: #1e2535;
-  --secondary-foreground: #e2e8f0;
-  --accent: #1e2535;
-  --accent-foreground: #e2e8f0;
+  --secondary:            #e6e9f5;
+  --secondary-foreground: #1a1f3c;
+  --accent:               #eef1fa;
+  --accent-foreground:    #1a1f3c;
   --destructive: oklch(0.577 0.245 27.325);
-  --input: rgba(255,255,255,0.08);
-  --popover: #111827;
-  --popover-foreground: #e2e8f0;
-  --sidebar: #0d1424;
-  --sidebar-foreground: #e2e8f0;
-  --sidebar-border: rgba(201, 168, 76, 0.15);
-  --sidebar-ring: #c9a84c;
-  --sidebar-primary: #c9a84c;
-  --sidebar-primary-foreground: #080c14;
-  --sidebar-accent: #1e2535;
-  --sidebar-accent-foreground: #e2e8f0;
+  --input:       rgba(26, 31, 60, 0.06);
+  --popover:     #eef1fa;
+  --popover-foreground: #1a1f3c;
+  --sidebar:             #f5f7fc;
+  --sidebar-foreground:  #1a1f3c;
+  --sidebar-border:      rgba(26, 31, 60, 0.12);
+  --sidebar-ring:        #f5a623;
+  --sidebar-primary:     #f5a623;
+  --sidebar-primary-foreground: #ffffff;
+  --sidebar-accent:             #eef1fa;
+  --sidebar-accent-foreground:  #1a1f3c;
+}
+
+/* ── Dark mode — Proposta A "Blueprint Noturno" ────────────────────── */
+.dark {
+  --bg-sidebar: #080c14;
+  --border-dim: rgba(123, 143, 214, .12);
+  --background: #0f1523;
+  --bg-alt:     #131b2e;
+  --foreground: #e2e8f8;
+  --surface:    #1a2444;
+  --card:       #1a2444;
+  --card-foreground: #e2e8f8;
+
+  --muted:            #131b2e;
+  --muted-foreground: #7b8fd6;
+  --border: rgba(123, 143, 214, .18);
+  --ring:   #f5a623;
+
+  --bp-line: rgba(123, 143, 214, .22);
+  --bp-grid: rgba(123, 143, 214, .055);
+
+  /* shadcn compat */
+  --secondary:            #1a2444;
+  --secondary-foreground: #e2e8f8;
+  --accent:               #1a2444;
+  --accent-foreground:    #e2e8f8;
+  --input:                rgba(255, 255, 255, .06);
+  --popover:              #1a2444;
+  --popover-foreground:   #e2e8f8;
+  --sidebar:              #131b2e;
+  --sidebar-foreground:   #e2e8f8;
+  --sidebar-border:       rgba(123, 143, 214, .18);
+  --sidebar-accent:       #1a2444;
+  --sidebar-accent-foreground: #e2e8f8;
 }
 
 @layer base {
@@ -69,17 +122,16 @@
   }
   html {
     @apply scroll-smooth;
-    color-scheme: dark;
   }
   body {
     background-color: var(--background);
     color: var(--foreground);
     font-family: var(--font-sans);
     -webkit-font-smoothing: antialiased;
-    cursor: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxNiIgaGVpZ2h0PSIyMCIgdmlld0JveD0iMCAwIDE2IDIwIj48cGF0aCBkPSJNMSAxIEwxIDE2IEw0LjUgMTIgTDcuNSAxOSBMOS41IDE4LjIgTDYuNSAxMS4yIEwxMS41IDExLjIgWiIgZmlsbD0iI2M5YTg0YyIgc3Ryb2tlPSIjMDYwYTEwIiBzdHJva2Utd2lkdGg9IjEiIHN0cm9rZS1saW5lam9pbj0icm91bmQiLz48L3N2Zz4=") 1 1, auto;
+    cursor: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxNiIgaGVpZ2h0PSIyMCIgdmlld0JveD0iMCAwIDE2IDIwIj48cGF0aCBkPSJNMSAxIEwxIDE2IEw0LjUgMTIgTDcuNSAxOSBMOS41IDE4LjIgTDYuNSAxMS4yIEwxMS41IDExLjIgWiIgZmlsbD0iI2Y1YTYyMyIgc3Ryb2tlPSIjMWExZjNjIiBzdHJva2Utd2lkdGg9IjEiIHN0cm9rZS1saW5lam9pbj0icm91bmQiLz48L3N2Zz4=") 1 1, auto;
   }
   a, button, [role="button"] {
-    cursor: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxNiIgaGVpZ2h0PSIyMCIgdmlld0JveD0iMCAwIDE2IDIwIj48cGF0aCBkPSJNMSAxIEwxIDE2IEw0LjUgMTIgTDcuNSAxOSBMOS41IDE4LjIgTDYuNSAxMS4yIEwxMS41IDExLjIgWiIgZmlsbD0iI2U4Yzg3YSIgc3Ryb2tlPSIjMDYwYTEwIiBzdHJva2Utd2lkdGg9IjEiIHN0cm9rZS1saW5lam9pbj0icm91bmQiLz48L3N2Zz4=") 1 1, pointer;
+    cursor: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxNiIgaGVpZ2h0PSIyMCIgdmlld0JveD0iMCAwIDE2IDIwIj48cGF0aCBkPSJNMSAxIEwxIDE2IEw0LjUgMTIgTDcuNSAxOSBMOS41IDE4LjIgTDYuNSAxMS4yIEwxMS41IDExLjIgWiIgZmlsbD0iI2Y3Yjg0YSIgc3Ryb2tlPSIjMWExZjNjIiBzdHJva2Utd2lkdGg9IjEiIHN0cm9rZS1saW5lam9pbj0icm91bmQiLz48L3N2Zz4=") 1 1, pointer;
   }
   h1, h2, h3, h4, h5, h6 {
     font-family: var(--font-heading);
@@ -89,23 +141,51 @@
 @layer utilities {
   .text-gold { color: var(--gold); }
   .text-gold-light { color: var(--gold-light); }
-  .text-cyan { color: var(--cyan); }
   .bg-surface { background-color: var(--surface); }
   .bg-card-dark { background-color: var(--card); }
   .border-gold { border-color: var(--gold); }
   .border-gold-subtle { border-color: var(--border); }
 
+  /* Blueprint grid — navy-tinted lines on white paper */
   .grid-bg {
     background-image:
-      linear-gradient(rgba(201, 168, 76, 0.04) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(201, 168, 76, 0.04) 1px, transparent 1px);
-    background-size: 48px 48px;
+      linear-gradient(var(--bp-grid) 1px, transparent 1px),
+      linear-gradient(90deg, var(--bp-grid) 1px, transparent 1px);
+    background-size: 56px 56px;
+  }
+
+  /* Blueprint decorative elements */
+  .bp-crosshair {
+    position: absolute;
+    width: 28px;
+    height: 28px;
+    pointer-events: none;
+  }
+  .bp-crosshair::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: var(--bp-line);
+    transform: translateY(-50%);
+  }
+  .bp-crosshair::after {
+    content: '';
+    position: absolute;
+    left: 50%;
+    top: 0;
+    bottom: 0;
+    width: 1px;
+    background: var(--bp-line);
+    transform: translateX(-50%);
   }
 
   .section-label {
     font-family: var(--font-mono);
-    font-size: 0.7rem;
-    letter-spacing: 0.2em;
+    font-size: 0.62rem;
+    letter-spacing: 0.18em;
     text-transform: uppercase;
     color: var(--gold);
   }
@@ -140,11 +220,11 @@
   }
 
   .glow-gold {
-    box-shadow: 0 0 30px rgba(201, 168, 76, 0.15);
+    box-shadow: 0 0 24px rgba(245, 166, 35, 0.18);
   }
 
   .glow-text {
-    text-shadow: 0 0 40px rgba(201, 168, 76, 0.4);
+    text-shadow: 0 0 32px rgba(245, 166, 35, 0.30);
   }
 }
 
@@ -160,9 +240,9 @@
 }
 
 @keyframes orb-drift {
-  0%,  100% { transform: translate(0px, 0px)   scale(1);    opacity: 0.04; }
-  33%        { transform: translate(24px, -32px) scale(1.12); opacity: 0.07; }
-  66%        { transform: translate(-12px, 18px) scale(0.94); opacity: 0.05; }
+  0%,  100% { transform: translate(0px, 0px)   scale(1);    opacity: 0.05; }
+  33%        { transform: translate(24px, -32px) scale(1.12); opacity: 0.09; }
+  66%        { transform: translate(-12px, 18px) scale(0.94); opacity: 0.06; }
 }
 
 @keyframes gold-pulse {
@@ -170,8 +250,8 @@
   50%        { opacity: 1;   }
 }
 
-/* Scrollbar */
-::-webkit-scrollbar { width: 6px; }
-::-webkit-scrollbar-track { background: var(--background); }
-::-webkit-scrollbar-thumb { background: rgba(201, 168, 76, 0.3); border-radius: 3px; }
-::-webkit-scrollbar-thumb:hover { background: rgba(201, 168, 76, 0.5); }
+/* Hide all scrollbars globally */
+html { scrollbar-width: none; -ms-overflow-style: none; }
+html::-webkit-scrollbar { display: none; }
+* { scrollbar-width: none; -ms-overflow-style: none; }
+*::-webkit-scrollbar { display: none; }

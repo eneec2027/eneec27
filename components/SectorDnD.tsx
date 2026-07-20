@@ -65,7 +65,7 @@ function SortableRow({ sector, index, onRemove }: { sector: Sector; index: numbe
       className="flex items-center gap-2.5"
     >
       {/* Order number */}
-      <span className="mono text-[0.52rem] text-gold/30 w-4 text-right flex-shrink-0">{index + 1}.</span>
+      <span className="mono text-[0.52rem] text-gold/55 w-4 text-right flex-shrink-0">{index + 1}.</span>
 
       {/* Row */}
       <div className={cn('flex-1 flex items-center gap-3 px-3 py-2.5 border border-gold/30 bg-gold/8 rounded-sm relative overflow-hidden', isDragging && 'shadow-lg shadow-gold/10')}>
@@ -74,7 +74,8 @@ function SortableRow({ sector, index, onRemove }: { sector: Sector; index: numbe
           type="button"
           {...attributes}
           {...listeners}
-          className="cursor-grab active:cursor-grabbing text-gold/25 hover:text-gold/60 flex-shrink-0 transition-colors"
+          style={{ touchAction: 'none' }}
+          className="cursor-grab active:cursor-grabbing text-gold/50 hover:text-gold/80 flex-shrink-0 transition-colors p-1 -m-1"
           aria-label="Arrastar"
         >
           <GripVertical size={13} />
@@ -92,7 +93,7 @@ function SortableRow({ sector, index, onRemove }: { sector: Sector; index: numbe
         <button
           type="button"
           onClick={onRemove}
-          className="flex-shrink-0 text-gold/25 hover:text-gold/70 transition-colors"
+          className="flex-shrink-0 text-gold/50 hover:text-gold/80 transition-colors"
           aria-label={`Remover ${sector}`}
         >
           <X size={12} />
@@ -104,7 +105,7 @@ function SortableRow({ sector, index, onRemove }: { sector: Sector; index: numbe
 
 export function SectorDnD({ value, onChange, error }: SectorDnDProps) {
   const sensors = useSensors(
-    useSensor(PointerSensor),
+    useSensor(PointerSensor, { activationConstraint: { distance: 4 } }),
     useSensor(KeyboardSensor, { coordinateGetter: sortableKeyboardCoordinates })
   )
 
@@ -169,7 +170,7 @@ export function SectorDnD({ value, onChange, error }: SectorDnDProps) {
                     <p className={cn('text-xs font-semibold text-foreground/65 leading-snug mono mb-0.5 transition-colors duration-300 group-hover:text-foreground/90')}>
                       {sector}
                     </p>
-                    <p className={cn('text-[0.63rem] text-muted-foreground/35 leading-snug transition-colors duration-300 group-hover:text-muted-foreground/55')}>
+                    <p className={cn('text-[0.63rem] text-muted-foreground/60 leading-snug transition-colors duration-300 group-hover:text-muted-foreground/80')}>
                       {SECTOR_SHORT[sector]}
                     </p>
                   </div>

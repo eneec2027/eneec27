@@ -81,7 +81,7 @@ export default function FeiraDEmpresas() {
           {filtered.map((company, i) => (
             <div key={i} className="card-dark p-6 group hover:border-gold/40 transition-colors flex flex-col gap-4">
               {/* Logo placeholder */}
-              <div className="h-12 bg-[#080c14] border border-gold-subtle rounded-sm flex items-center justify-center">
+              <div className="h-12 bg-surface border border-gold-subtle rounded-sm flex items-center justify-center">
                 <span className="mono text-muted-foreground/30 text-xs">{company.name}</span>
               </div>
               <div>
@@ -101,7 +101,7 @@ export default function FeiraDEmpresas() {
           </div>
           <a
             href="mailto:empresas@eneec27.pt"
-            className="shrink-0 inline-flex items-center px-5 py-2.5 border border-gold text-gold text-xs mono tracking-widest uppercase hover:bg-gold hover:text-[#080c14] transition-all rounded-sm"
+            className="shrink-0 inline-flex items-center px-5 py-2.5 border border-gold text-gold text-xs mono tracking-widest uppercase hover:bg-gold hover:text-primary-foreground transition-all rounded-sm"
           >
             Contactar →
           </a>

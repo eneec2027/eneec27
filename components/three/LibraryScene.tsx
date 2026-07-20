@@ -2,6 +2,7 @@
 
 import { useRef, useMemo, useEffect } from 'react'
 import { Canvas, useFrame, useThree } from '@react-three/fiber'
+import { useTheme } from 'next-themes'
 import * as THREE from 'three'
 
 // ── Álvaro Siza Vieira — UA Library column grid ───────────────────
@@ -146,30 +147,33 @@ function buildGeometry() {
 // ── Scene components ─────────────────────────────────────────────
 function Colonnade() {
   const { scene } = useThree()
+  const { resolvedTheme } = useTheme()
+  const isDark = resolvedTheme === 'dark'
 
   useEffect(() => {
-    scene.fog = new THREE.FogExp2('#080c14', 0.044)
+    scene.fog = new THREE.FogExp2(isDark ? '#080c14' : '#f5f7fc', 0.038)
+    scene.background = new THREE.Color(isDark ? '#080c14' : '#f5f7fc')
     return () => { scene.fog = null }
-  }, [scene])
+  }, [scene, isDark])
 
   const { matrices, colEdges, beamLines, groundPts, shelfPts } = useMemo(buildGeometry, [])
 
   const colGeo = useMemo(() => new THREE.BoxGeometry(CW, COL_H, CD), [])
 
   const solidMat = useMemo(
-    () => new THREE.MeshBasicMaterial({ color: '#0d1525' }), [])
+    () => new THREE.MeshBasicMaterial({ color: isDark ? '#0d1525' : '#f5f7fc' }), [isDark])
 
   const colEdgeMat = useMemo(
-    () => new THREE.LineBasicMaterial({ color: '#c9a84c', transparent: true, opacity: 0.55 }), [])
+    () => new THREE.LineBasicMaterial({ color: isDark ? '#c9a84c' : '#1a2444', transparent: true, opacity: isDark ? 0.55 : 0.32 }), [isDark])
 
   const beamMat = useMemo(
-    () => new THREE.LineBasicMaterial({ color: '#c9a84c', transparent: true, opacity: 0.28 }), [])
+    () => new THREE.LineBasicMaterial({ color: isDark ? '#c9a84c' : '#1a2444', transparent: true, opacity: isDark ? 0.28 : 0.14 }), [isDark])
 
   const groundMat = useMemo(
-    () => new THREE.LineBasicMaterial({ color: '#c9a84c', transparent: true, opacity: 0.07 }), [])
+    () => new THREE.LineBasicMaterial({ color: isDark ? '#c9a84c' : '#1a2444', transparent: true, opacity: isDark ? 0.07 : 0.05 }), [isDark])
 
   const shelfMat = useMemo(
-    () => new THREE.LineBasicMaterial({ color: '#c9a84c', transparent: true, opacity: 0.20 }), [])
+    () => new THREE.LineBasicMaterial({ color: isDark ? '#c9a84c' : '#1a2444', transparent: true, opacity: isDark ? 0.20 : 0.11 }), [isDark])
 
   const colEdgeGeo = useMemo(() => {
     const g = new THREE.BufferGeometry()

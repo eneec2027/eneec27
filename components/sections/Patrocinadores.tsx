@@ -30,7 +30,7 @@ const TIERS = [
 
 export default function Patrocinadores() {
   return (
-    <section id="patrocinadores" className="py-28 bg-[#080c14] grid-bg">
+    <section id="patrocinadores" className="py-28 bg-background grid-bg">
       <div className="max-w-7xl mx-auto px-6">
         <div className="mb-16">
           <p className="section-label mb-4">Patrocinadores</p>
@@ -62,7 +62,7 @@ export default function Patrocinadores() {
                   {sponsors.map((s, i) => (
                     <div
                       key={i}
-                      className="aspect-[3/2] bg-[#080c14]/60 border border-white/5 rounded-sm flex items-center justify-center"
+                      className="aspect-[3/2] bg-surface border border-foreground/5 rounded-sm flex items-center justify-center"
                     >
                       <span className="mono text-xs text-muted-foreground/30">{s}</span>
                     </div>
@@ -86,7 +86,7 @@ export default function Patrocinadores() {
           <div className="flex flex-wrap gap-4 justify-center">
             <a
               href="/dossier-patrocinio-eneec27.pdf"
-              className="inline-flex items-center px-7 py-3 bg-gold text-[#080c14] font-semibold text-sm tracking-widest uppercase mono hover:bg-gold-light transition-colors rounded-sm"
+              className="inline-flex items-center px-7 py-3 bg-gold text-primary-foreground font-semibold text-sm tracking-widest uppercase mono hover:bg-gold-light transition-colors rounded-sm"
             >
               Dossier de Patrocínio
             </a>

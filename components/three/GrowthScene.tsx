@@ -2,6 +2,7 @@
 
 import { useRef, useMemo, useEffect } from 'react'
 import { Canvas, useFrame, useThree } from '@react-three/fiber'
+import { useTheme } from 'next-themes'
 import * as THREE from 'three'
 
 // ── UA growth network — 46 founding students → thousands ──────────
@@ -53,10 +54,14 @@ function Network() {
   const { scene, camera } = useThree()
   const clockRef = useRef(0)
 
+  const { resolvedTheme } = useTheme()
+  const isDark = resolvedTheme === 'dark'
+
   useEffect(() => {
-    scene.fog = new THREE.FogExp2('#080c14', 0.028)
+    scene.fog = new THREE.FogExp2(isDark ? '#080c14' : '#f5f7fc', 0.026)
+    scene.background = new THREE.Color(isDark ? '#080c14' : '#f5f7fc')
     return () => { scene.fog = null }
-  }, [scene])
+  }, [scene, isDark])
 
   useEffect(() => {
     camera.position.set(0, 8, 12)
@@ -89,17 +94,17 @@ function Network() {
   }, [])
 
   const nodeMat = useMemo(
-    () => new THREE.PointsMaterial({ color: '#c9a84c', size: 0.22, transparent: true, opacity: 0.75 }),
-    []
+    () => new THREE.PointsMaterial({ color: isDark ? '#c9a84c' : '#1a2444', size: 0.22, transparent: true, opacity: isDark ? 0.75 : 0.40 }),
+    [isDark]
   )
   const edgeMat = useMemo(
-    () => new THREE.LineBasicMaterial({ color: '#c9a84c', transparent: true, opacity: 0.2 }),
-    []
+    () => new THREE.LineBasicMaterial({ color: isDark ? '#c9a84c' : '#1a2444', transparent: true, opacity: isDark ? 0.20 : 0.10 }),
+    [isDark]
   )
   // Brighter material for founding cluster edges (first 46 nodes)
   const foundingEdgeMat = useMemo(
-    () => new THREE.LineBasicMaterial({ color: '#c9a84c', transparent: true, opacity: 0.55 }),
-    []
+    () => new THREE.LineBasicMaterial({ color: isDark ? '#c9a84c' : '#1a2444', transparent: true, opacity: isDark ? 0.55 : 0.30 }),
+    [isDark]
   )
 
   // Separate geometry for founding edges (always bright)

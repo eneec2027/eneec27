@@ -2,6 +2,7 @@
 
 import { useRef, useMemo, useEffect } from 'react'
 import { Canvas, useFrame, useThree } from '@react-three/fiber'
+import { useTheme } from 'next-themes'
 import * as THREE from 'three'
 
 // ── Moliceiro — traditional Aveiro lagoon boat wireframe ──────────
@@ -187,12 +188,15 @@ function buildHull(): number[] {
 
 function Boat() {
   const { scene, camera } = useThree()
+  const { resolvedTheme } = useTheme()
+  const isDark = resolvedTheme === 'dark'
   const t = useRef(0)
 
   useEffect(() => {
-    scene.fog = new THREE.FogExp2('#080c14', 0.045)
+    scene.fog = new THREE.FogExp2(isDark ? '#080c14' : '#f5f7fc', 0.040)
+    scene.background = new THREE.Color(isDark ? '#080c14' : '#f5f7fc')
     return () => { scene.fog = null }
-  }, [scene])
+  }, [scene, isDark])
 
   useEffect(() => {
     camera.position.set(8, 6, 14)
@@ -207,8 +211,8 @@ function Boat() {
   }, [])
 
   const mat = useMemo(
-    () => new THREE.LineBasicMaterial({ color: '#c9a84c', transparent: true, opacity: 0.65 }),
-    []
+    () => new THREE.LineBasicMaterial({ color: isDark ? '#c9a84c' : '#1a2444', transparent: true, opacity: isDark ? 0.65 : 0.38 }),
+    [isDark]
   )
 
   // Ground reference grid (estaleiro — boatyard)
@@ -221,8 +225,8 @@ function Boat() {
     return g
   }, [])
   const groundMat = useMemo(
-    () => new THREE.LineBasicMaterial({ color: '#c9a84c', transparent: true, opacity: 0.06 }),
-    []
+    () => new THREE.LineBasicMaterial({ color: isDark ? '#c9a84c' : '#1a2444', transparent: true, opacity: isDark ? 0.06 : 0.05 }),
+    [isDark]
   )
 
   useFrame((_, delta) => {

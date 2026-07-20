@@ -1,14 +1,22 @@
 import type { Metadata } from "next"
-import { Space_Grotesk, Space_Mono } from "next/font/google"
+import { Libre_Baskerville, Inter, IBM_Plex_Mono } from "next/font/google"
+import { ThemeProvider } from "@/components/ThemeProvider"
 import "./globals.css"
 
-const spaceGrotesk = Space_Grotesk({
+const libreBaskerville = Libre_Baskerville({
   subsets: ["latin"],
-  variable: "--font-sans",
-  weight: ["300", "400", "500", "600", "700"],
+  variable: "--font-heading",
+  weight: ["400", "700"],
+  style: ["normal", "italic"],
 })
 
-const spaceMono = Space_Mono({
+const inter = Inter({
+  subsets: ["latin"],
+  variable: "--font-sans",
+  weight: ["300", "400", "600", "700"],
+})
+
+const ibmPlexMono = IBM_Plex_Mono({
   subsets: ["latin"],
   variable: "--font-mono",
   weight: ["400", "700"],
@@ -32,8 +40,14 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="pt" className={`${spaceGrotesk.variable} ${spaceMono.variable}`}>
-      <body>{children}</body>
+    <html
+      lang="pt"
+      className={`${libreBaskerville.variable} ${inter.variable} ${ibmPlexMono.variable}`}
+      suppressHydrationWarning
+    >
+      <body>
+        <ThemeProvider>{children}</ThemeProvider>
+      </body>
     </html>
   )
 }

@@ -12,7 +12,7 @@ import { cn } from '@/lib/utils'
 
 // ─── Shared primitives ───────────────────────────────────────────────────────
 
-const inputBase = "w-full px-4 py-2.5 bg-[#0d1220]/90 border text-sm text-foreground placeholder:text-muted-foreground/25 focus:outline-none transition-colors mono rounded-sm"
+const inputBase = "w-full px-4 py-2.5 bg-surface/90 border text-sm text-foreground placeholder:text-muted-foreground/40 focus:outline-none transition-colors mono rounded-sm"
 const inputCls  = cn(inputBase, 'border-gold/10 focus:border-gold/35')
 function inputErr(hasError: boolean) {
   return cn(inputBase, hasError
@@ -21,7 +21,7 @@ function inputErr(hasError: boolean) {
   )
 }
 
-const labelCls = "mono text-[0.58rem] text-gold/50 tracking-[0.2em] uppercase block mb-1.5"
+const labelCls = "font-heading text-[0.6rem] text-gold/75 tracking-[0.18em] uppercase block mb-1.5"
 const errorCls = "mt-1.5 text-xs text-red-400 mono"
 
 function FieldError({ id, msg }: { id: string; msg?: string }) {
@@ -69,7 +69,7 @@ function RadioSet<T extends string | boolean>({
               'px-4 py-2 border rounded-sm text-xs mono transition-all',
               value === opt.value
                 ? 'border-gold/60 bg-gold/10 text-gold'
-                : 'border-white/10 text-foreground/50 hover:border-gold/25 hover:text-foreground/70'
+                : 'border-foreground/10 text-foreground/50 hover:border-gold/25 hover:text-foreground/70'
             )}
           >
             {opt.label}
@@ -101,15 +101,15 @@ function ProgressBar({ step }: { step: number }) {
               <div className="flex flex-col items-center gap-1.5">
                 <div className={cn(
                   'w-7 h-7 rounded-full border flex items-center justify-center mono text-xs font-bold transition-all',
-                  done   ? 'bg-gold border-gold text-[#080c14]' :
+                  done   ? 'bg-gold border-gold text-primary-foreground' :
                   active ? 'border-gold text-gold bg-gold/10'   :
-                           'border-white/10 text-muted-foreground/30'
+                           'border-foreground/15 text-muted-foreground/60'
                 )}>
                   {done ? '✓' : n}
                 </div>
                 <span className={cn(
                   'mono text-[0.5rem] tracking-[0.2em] uppercase',
-                  active ? 'text-gold/80' : done ? 'text-gold/40' : 'text-muted-foreground/25'
+                  active ? 'text-gold/90' : done ? 'text-gold/70' : 'text-muted-foreground/40'
                 )}>
                   {label}
                 </span>
@@ -161,7 +161,7 @@ function Step1({ form, emailExistsError, onEmailChange }: {
   return (
     <div className="space-y-6">
       <div>
-        <p className="mono text-[0.58rem] text-gold/40 tracking-[0.25em] uppercase mb-6">
+        <p className="font-heading text-[0.6rem] text-gold/75 tracking-[0.22em] uppercase mb-6">
           Bloco 1 — Perfil Geral
         </p>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
@@ -377,13 +377,13 @@ function Step2({ form }: { form: AppForm }) {
 
   return (
     <div className="space-y-7">
-      <p className="mono text-[0.58rem] text-gold/40 tracking-[0.25em] uppercase">
+      <p className="font-heading text-[0.6rem] text-gold/75 tracking-[0.22em] uppercase">
         Bloco 2 — Motivação & Setores de Interesse
       </p>
 
       <div>
         <label className={labelCls}>Em que setores tens interesse em colaborar?</label>
-        <p className="mono text-[0.55rem] text-muted-foreground/35 tracking-wide mb-3">
+        <p className="mono text-[0.55rem] text-muted-foreground/60 tracking-wide mb-3">
           Seleciona e reordena por ordem de preferência.
         </p>
         <Controller
@@ -477,7 +477,7 @@ function Step3({ form, openAll }: { form: AppForm; openAll?: boolean }) {
 
   return (
     <div className="space-y-4">
-      <p className="mono text-[0.58rem] text-gold/40 tracking-[0.25em] uppercase">
+      <p className="font-heading text-[0.6rem] text-gold/75 tracking-[0.22em] uppercase">
         Bloco 3 — Perguntas por Setor
       </p>
 
@@ -499,13 +499,13 @@ function Step3({ form, openAll }: { form: AppForm; openAll?: boolean }) {
               )}
             >
               <div className="flex items-center gap-3">
-                <span className="mono text-[0.52rem] text-gold/30">{sectorIdx + 1}.</span>
+                <span className="mono text-[0.52rem] text-gold/55">{sectorIdx + 1}.</span>
                 <span className="text-sm font-semibold mono text-foreground/80">{sector}</span>
                 {anyError && (
                   <span data-field-error className="text-[0.6rem] text-red-400 mono">— incompleto</span>
                 )}
               </div>
-              <span className={cn('mono text-xs', isOpen ? 'text-gold' : 'text-muted-foreground/30')}>
+              <span className={cn('mono text-xs', isOpen ? 'text-gold' : 'text-muted-foreground/55')}>
                 {isOpen ? '▲' : '▼'}
               </span>
             </button>
@@ -564,7 +564,7 @@ function SuccessScreen() {
       </div>
       <a
         href="/"
-        className="mt-4 px-6 py-2.5 border border-gold/40 text-gold mono text-xs tracking-widest uppercase hover:bg-gold hover:text-[#080c14] transition-all rounded-sm"
+        className="mt-4 px-6 py-2.5 border border-gold/40 text-gold mono text-xs tracking-widest uppercase hover:bg-gold hover:text-primary-foreground transition-all rounded-sm"
       >
         Voltar ao início →
       </a>
@@ -719,7 +719,7 @@ export default function ApplicationForm() {
           <button
             type="button"
             onClick={goNext}
-            className="px-6 py-2.5 bg-gold text-[#080c14] text-sm font-bold mono rounded-sm hover:bg-gold-light transition-colors"
+            className="px-6 py-2.5 bg-gold text-primary-foreground text-sm font-bold mono rounded-sm hover:bg-gold-light transition-colors"
           >
             Continuar →
           </button>
@@ -727,7 +727,7 @@ export default function ApplicationForm() {
           <button
             type="submit"
             disabled={isPending}
-            className="px-6 py-2.5 bg-gold text-[#080c14] text-sm font-bold mono rounded-sm hover:bg-gold-light transition-colors disabled:opacity-50"
+            className="px-6 py-2.5 bg-gold text-primary-foreground text-sm font-bold mono rounded-sm hover:bg-gold-light transition-colors disabled:opacity-50"
           >
             {isPending ? 'A enviar...' : 'Submeter candidatura →'}
           </button>

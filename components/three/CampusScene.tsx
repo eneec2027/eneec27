@@ -2,6 +2,7 @@
 
 import { useRef, useMemo, useEffect, useCallback } from 'react'
 import { Canvas, useFrame, useThree } from '@react-three/fiber'
+import { useTheme } from 'next-themes'
 import * as THREE from 'three'
 
 // ── Campus de Santiago building volumes ───────────────────────────
@@ -61,11 +62,14 @@ function buildGround(): number[] {
 // ── Scene ─────────────────────────────────────────────────────────
 function Campus() {
   const { scene } = useThree()
+  const { resolvedTheme } = useTheme()
+  const isDark = resolvedTheme === 'dark'
 
   useEffect(() => {
-    scene.fog = new THREE.FogExp2('#080c14', 0.024)
+    scene.fog = new THREE.FogExp2(isDark ? '#080c14' : '#f5f7fc', 0.022)
+    scene.background = new THREE.Color(isDark ? '#080c14' : '#f5f7fc')
     return () => { scene.fog = null }
-  }, [scene])
+  }, [scene, isDark])
 
   const clock = useRef(0)
   const buildingRefs = useRef<Map<number, THREE.Group>>(new Map())
@@ -79,15 +83,15 @@ function Campus() {
 
   // Materials
   const solidMat = useMemo(
-    () => new THREE.MeshBasicMaterial({ color: '#0c1525' }), [])
+    () => new THREE.MeshBasicMaterial({ color: isDark ? '#0c1525' : '#f5f7fc' }), [isDark])
   const edgeMat = useMemo(
-    () => new THREE.LineBasicMaterial({ color: '#c9a84c', transparent: true, opacity: 0.45 }), [])
+    () => new THREE.LineBasicMaterial({ color: isDark ? '#c9a84c' : '#1a2444', transparent: true, opacity: isDark ? 0.45 : 0.22 }), [isDark])
   const accentMat = useMemo(
-    () => new THREE.LineBasicMaterial({ color: '#c9a84c', transparent: true, opacity: 0.80 }), [])
+    () => new THREE.LineBasicMaterial({ color: isDark ? '#c9a84c' : '#1a2444', transparent: true, opacity: isDark ? 0.80 : 0.40 }), [isDark])
   const spineMat = useMemo(
-    () => new THREE.LineBasicMaterial({ color: '#c9a84c', transparent: true, opacity: 0.18 }), [])
+    () => new THREE.LineBasicMaterial({ color: isDark ? '#c9a84c' : '#1a2444', transparent: true, opacity: isDark ? 0.18 : 0.09 }), [isDark])
   const groundMat = useMemo(
-    () => new THREE.LineBasicMaterial({ color: '#c9a84c', transparent: true, opacity: 0.05 }), [])
+    () => new THREE.LineBasicMaterial({ color: isDark ? '#c9a84c' : '#1a2444', transparent: true, opacity: isDark ? 0.05 : 0.04 }), [isDark])
 
   // Building geometries — created once per building
   const geos = useMemo(() =>

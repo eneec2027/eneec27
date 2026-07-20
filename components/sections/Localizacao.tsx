@@ -25,7 +25,7 @@ const TRANSPORT = [
 
 export default function Localizacao() {
   return (
-    <section id="localizacao" className="py-28 bg-[#080c14] grid-bg">
+    <section id="localizacao" className="py-28 bg-background grid-bg">
       <div className="max-w-7xl mx-auto px-6">
         <div className="mb-16">
           <p className="section-label mb-4">Localização</p>

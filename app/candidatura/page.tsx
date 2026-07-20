@@ -8,7 +8,7 @@ export const metadata = {
 
 export default function CandidaturaPage() {
   return (
-    <div className="min-h-screen bg-[#080c14] md:grid md:grid-cols-[45%_55%]">
+    <div className="min-h-screen bg-background md:grid md:grid-cols-[45%_55%]">
 
       <CandidaturaLeftPanel />
 

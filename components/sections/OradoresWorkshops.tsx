@@ -56,7 +56,7 @@ export default function OradoresWorkshops() {
             {SPEAKERS.map((speaker, i) => (
               <div key={i} className="card-dark p-6 flex flex-col">
                 {/* Avatar placeholder */}
-                <div className="w-16 h-16 rounded-sm bg-[#080c14] border border-gold-subtle flex items-center justify-center mb-4">
+                <div className="w-16 h-16 rounded-sm bg-surface border border-gold-subtle flex items-center justify-center mb-4">
                   <span className="mono text-gold/30 text-lg font-bold">?</span>
                 </div>
                 <p className={`font-semibold mb-1 ${speaker.placeholder ? 'text-muted-foreground/50 italic' : 'text-foreground'}`}>
@@ -98,7 +98,7 @@ export default function OradoresWorkshops() {
 
                 <div className="flex flex-wrap gap-2 mb-6">
                   {ws.tags.map(tag => (
-                    <span key={tag} className="mono text-xs px-2.5 py-1 bg-[#080c14] border border-gold-subtle text-muted-foreground rounded-sm">
+                    <span key={tag} className="mono text-xs px-2.5 py-1 bg-surface border border-gold-subtle text-muted-foreground rounded-sm">
                       {tag}
                     </span>
                   ))}
@@ -109,7 +109,7 @@ export default function OradoresWorkshops() {
                     <span>Vagas: {ws.spots - ws.filled}/{ws.spots}</span>
                     <span>{ws.filled === 0 ? 'Inscrições brevemente' : `${ws.filled} inscritos`}</span>
                   </div>
-                  <div className="h-1 bg-[#080c14] rounded-full overflow-hidden">
+                  <div className="h-1 bg-surface rounded-full overflow-hidden">
                     <div
                       className="h-full bg-gold rounded-full transition-all"
                       style={{ width: `${(ws.filled / ws.spots) * 100}%` }}

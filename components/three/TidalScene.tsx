@@ -2,6 +2,7 @@
 
 import { useRef, useMemo, useEffect } from 'react'
 import { Canvas, useFrame, useThree } from '@react-three/fiber'
+import { useTheme } from 'next-themes'
 import * as THREE from 'three'
 
 // ── Ria de Aveiro — tidal mesh ────────────────────────────────────
@@ -36,7 +37,7 @@ function buildCanals(): number[] {
   return pts
 }
 
-function WaterSurface() {
+function WaterSurface({ isDark }: { isDark: boolean }) {
   const geo = useMemo(() => {
     const g = new THREE.PlaneGeometry(SIZE, SIZE, SEGS, SEGS)
     g.rotateX(-Math.PI / 2)
@@ -60,19 +61,22 @@ function WaterSurface() {
 
   return (
     <mesh geometry={geo}>
-      <meshBasicMaterial color="#c9a84c" wireframe transparent opacity={0.18} />
+      <meshBasicMaterial color={isDark ? '#c9a84c' : '#1a2444'} wireframe transparent opacity={isDark ? 0.18 : 0.09} />
     </mesh>
   )
 }
 
 function Scene() {
   const { scene, camera } = useThree()
+  const { resolvedTheme } = useTheme()
+  const isDark = resolvedTheme === 'dark'
   const t = useRef(0)
 
   useEffect(() => {
-    scene.fog = new THREE.FogExp2('#080c14', 0.038)
+    scene.fog = new THREE.FogExp2(isDark ? '#080c14' : '#f5f7fc', 0.034)
+    scene.background = new THREE.Color(isDark ? '#080c14' : '#f5f7fc')
     return () => { scene.fog = null }
-  }, [scene])
+  }, [scene, isDark])
 
   // Canal line geometry
   const canalGeo = useMemo(() => {
@@ -82,8 +86,8 @@ function Scene() {
   }, [])
 
   const canalMat = useMemo(
-    () => new THREE.LineBasicMaterial({ color: '#c9a84c', transparent: true, opacity: 0.55 }),
-    []
+    () => new THREE.LineBasicMaterial({ color: isDark ? '#c9a84c' : '#1a2444', transparent: true, opacity: isDark ? 0.55 : 0.30 }),
+    [isDark]
   )
 
   useEffect(() => {
@@ -104,7 +108,7 @@ function Scene() {
 
   return (
     <>
-      <WaterSurface />
+      <WaterSurface isDark={isDark} />
       <lineSegments geometry={canalGeo} material={canalMat} position={[0, 0.05, 0]} />
     </>
   )

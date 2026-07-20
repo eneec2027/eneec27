@@ -81,7 +81,7 @@ export default function Inscricoes() {
               }`}
             >
               {highlight && (
-                <span className="mono text-xs text-[#080c14] bg-gold px-3 py-1 rounded-sm self-start mb-4 font-semibold tracking-widest uppercase">
+                <span className="mono text-xs text-primary-foreground bg-gold px-3 py-1 rounded-sm self-start mb-4 font-semibold tracking-widest uppercase">
                   Recomendado
                 </span>
               )}
@@ -114,11 +114,11 @@ export default function Inscricoes() {
             <input
               type="email"
               placeholder="o.teu@email.pt"
-              className="flex-1 md:w-64 px-4 py-2.5 bg-[#080c14] border border-gold-subtle rounded-sm text-sm text-foreground placeholder:text-muted-foreground/50 focus:outline-none focus:border-gold transition-colors mono"
+              className="flex-1 md:w-64 px-4 py-2.5 bg-surface border border-gold-subtle rounded-sm text-sm text-foreground placeholder:text-muted-foreground/50 focus:outline-none focus:border-gold transition-colors mono"
             />
             <button
               type="submit"
-              className="px-5 py-2.5 bg-gold text-[#080c14] text-xs font-semibold tracking-widest uppercase mono rounded-sm hover:bg-gold-light transition-colors shrink-0"
+              className="px-5 py-2.5 bg-gold text-primary-foreground text-xs font-semibold tracking-widest uppercase mono rounded-sm hover:bg-gold-light transition-colors shrink-0"
             >
               Subscrever
             </button>

@@ -1,12 +1,15 @@
+import Image from 'next/image'
+
 export default function Footer() {
   return (
     <footer className="border-t border-gold-subtle bg-surface">
       <div className="max-w-7xl mx-auto px-6 py-16 grid grid-cols-1 md:grid-cols-3 gap-12">
         {/* Brand */}
         <div>
-          <p className="mono text-gold font-bold text-sm tracking-widest uppercase mb-3">
-            ENEEC'27
-          </p>
+          <div className="mb-4">
+            <Image src="/logo-light.jpg" alt="ENEEC'27" width={72} height={72} className="rounded-sm dark:hidden" />
+            <Image src="/logo-dark.jpg"  alt="ENEEC'27" width={72} height={72} className="rounded-sm hidden dark:block" />
+          </div>
           <p className="text-sm text-muted-foreground leading-relaxed">
             Encontro Nacional de Estudantes<br />de Engenharia Civil.<br />
             Aveiro, março de 2027.
