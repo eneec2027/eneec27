@@ -8,8 +8,8 @@ export default function Footer() {
         {/* Brand */}
         <div>
           <div className="mb-4">
-            <Image src="/logo-light.jpg" alt="ENEEC'27" width={72} height={72} className="rounded-sm dark:hidden" />
-            <Image src="/logo-dark.jpg"  alt="ENEEC'27" width={72} height={72} className="rounded-sm hidden dark:block" />
+            <Image src="/logo-light-theme.png" alt="ENEEC'27" width={72} height={72} className="rounded-sm dark:hidden" />
+            <Image src="/logo-dark-theme.png" alt="ENEEC'27" width={72} height={72} className="rounded-sm hidden dark:block" />
           </div>
           <p className="text-sm text-muted-foreground leading-relaxed">
             Encontro Nacional de Estudantes<br />de Engenharia Civil.<br />

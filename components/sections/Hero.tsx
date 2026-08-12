@@ -118,7 +118,7 @@ export default function Hero() {
           {/* Logo em vez de texto — mesma variante por tema que a V1 */}
           <div className="mb-2">
             <Image
-              src={isDark ? '/logo-dark-theme.png' : '/logo-light.jpg'}
+              src={isDark ? '/logo-dark-theme.png' : '/logo-light-theme.png'}
               alt={`${EVENT.name} — ${EVENT.fullName}`}
               width={400}
               height={400}
