@@ -14,6 +14,7 @@ import {
 import { useTheme } from 'next-themes'
 import { cn } from '@/lib/utils'
 import { SECTORS, SECTOR_SHORT, type Sector } from '@/lib/sectors'
+import { CONTACTS } from '@/lib/siteConfig'
 import { ThemeToggle } from '@/components/ThemeToggle'
 
 const SECTOR_ICONS: Record<Sector, LucideIcon> = {
@@ -178,8 +179,8 @@ export function CandidaturaLeftPanel() {
         </div>
         <p className="mono text-[0.55rem] text-muted-foreground/55">
           Dúvidas?{' '}
-          <a href="mailto:logistica.eneec@ua.pt" className="text-gold/65 hover:text-gold transition-colors">
-            logistica.eneec@ua.pt
+          <a href={`mailto:${CONTACTS.logistica}`} className="text-gold/65 hover:text-gold transition-colors">
+            {CONTACTS.logistica}
           </a>
         </p>
       </div>

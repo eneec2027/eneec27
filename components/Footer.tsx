@@ -1,4 +1,5 @@
 import Image from 'next/image'
+import { CONTACTS, EVENT, SOCIAL } from '@/lib/siteConfig'
 
 export default function Footer() {
   return (
@@ -12,10 +13,10 @@ export default function Footer() {
           </div>
           <p className="text-sm text-muted-foreground leading-relaxed">
             Encontro Nacional de Estudantes<br />de Engenharia Civil.<br />
-            Aveiro, março de 2027.
+            {EVENT.city}, {EVENT.monthLower}.
           </p>
           <p className="mt-4 text-xs text-muted-foreground mono">
-            Construção em Movimento.
+            {EVENT.tagline}.
           </p>
         </div>
 
@@ -41,31 +42,33 @@ export default function Footer() {
           <p className="section-label mb-4">Contacto</p>
           <ul className="space-y-2 text-sm text-muted-foreground">
             <li>
-              <a href="mailto:geral@eneec27.pt" className="hover:text-gold transition-colors">
-                geral@eneec27.pt
+              <a href={`mailto:${CONTACTS.geral}`} className="hover:text-gold transition-colors">
+                {CONTACTS.geral}
               </a>
             </li>
             <li>
-              <a href="https://instagram.com/eneec27" target="_blank" rel="noopener noreferrer" className="hover:text-gold transition-colors">
-                @eneec27
+              <a href={SOCIAL.instagram} target="_blank" rel="noopener noreferrer" className="hover:text-gold transition-colors">
+                {SOCIAL.instagramHandle}
               </a>
             </li>
-            <li>
-              <a href="https://linkedin.com/company/eneec27" target="_blank" rel="noopener noreferrer" className="hover:text-gold transition-colors">
-                LinkedIn
-              </a>
-            </li>
+            {SOCIAL.linkedin !== '#' && (
+              <li>
+                <a href={SOCIAL.linkedin} target="_blank" rel="noopener noreferrer" className="hover:text-gold transition-colors">
+                  LinkedIn
+                </a>
+              </li>
+            )}
           </ul>
           <div className="mt-6 pt-6 border-t border-gold-subtle">
             <p className="text-xs text-muted-foreground">
               Organizado pelo{' '}
               <a
-                href="https://nebec.pt"
+                href={EVENT.organizerUrl}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-gold hover:text-gold-light transition-colors"
               >
-                NEBEC
+                {EVENT.organizer}
               </a>
               {' '}— Núcleo de Estudantes<br />de Engenharia Civil da UA.
             </p>

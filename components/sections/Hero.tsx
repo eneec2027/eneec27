@@ -3,9 +3,11 @@
 import dynamic from 'next/dynamic'
 import { useEffect, useState } from 'react'
 
+import { EVENT, EVENT_TARGET_DATE } from '@/lib/siteConfig'
+
 const BuildingScene = dynamic(() => import('@/components/three/BuildingScene'), { ssr: false })
 
-const TARGET_DATE = new Date('2027-03-15T09:00:00')
+const TARGET_DATE = EVENT_TARGET_DATE
 
 function useCountdown() {
   const [delta, setDelta] = useState({ days: 0, hours: 0, minutes: 0, seconds: 0 })
@@ -58,7 +60,7 @@ export default function Hero() {
       <div className="relative z-10 flex flex-col justify-end h-full max-w-7xl mx-auto w-full px-6 pb-20">
         <div className="max-w-2xl">
           <p className="section-label mb-4">
-            27.ª Edição &nbsp;·&nbsp; Aveiro &nbsp;·&nbsp; Março 2027
+            {EVENT.edition} &nbsp;·&nbsp; {EVENT.city} &nbsp;·&nbsp; {EVENT.month}
           </p>
 
           <h1 className="heading-xl text-foreground mb-2">

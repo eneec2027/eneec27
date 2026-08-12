@@ -1,7 +1,10 @@
+import { EVENT, EVENT_DATES_CONFIRMED } from '@/lib/siteConfig'
+
 const VENUE_INFO = [
-  { label: 'Local', value: 'Universidade de Aveiro' },
-  { label: 'Cidade', value: 'Aveiro, Portugal' },
-  { label: 'Datas', value: '15–18 Março 2027' },
+  { label: 'Local', value: EVENT.venue },
+  { label: 'Cidade', value: `${EVENT.city}, Portugal` },
+  // Dias por confirmar — mostrar só o mês até a NEBEC fechar as datas.
+  { label: 'Datas', value: EVENT_DATES_CONFIRMED ? `15–18 ${EVENT.month}` : EVENT.month },
   { label: 'Acesso', value: 'A25 / IC2 · AP 5 min a pé' },
 ]
 

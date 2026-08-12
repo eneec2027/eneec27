@@ -1,6 +1,7 @@
 'use client'
 
 import { useState } from 'react'
+import { CONTACTS } from '@/lib/siteConfig'
 
 type Area = 'todas' | 'construção' | 'estruturas' | 'infraestruturas' | 'consultoria' | 'gestão'
 
@@ -100,7 +101,7 @@ export default function FeiraDEmpresas() {
             <p className="text-xs text-muted-foreground">Consulta o dossier de patrocínio ou entra em contacto.</p>
           </div>
           <a
-            href="mailto:empresas@eneec27.pt"
+            href={`mailto:${CONTACTS.parcerias}`}
             className="shrink-0 inline-flex items-center px-5 py-2.5 border border-gold text-gold text-xs mono tracking-widest uppercase hover:bg-gold hover:text-primary-foreground transition-all rounded-sm"
           >
             Contactar →

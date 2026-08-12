@@ -1,3 +1,5 @@
+import { CONTACTS } from '@/lib/siteConfig'
+
 const TIERS = [
   {
     tier: 'Ouro',
@@ -91,7 +93,7 @@ export default function Patrocinadores() {
               Dossier de Patrocínio
             </a>
             <a
-              href="mailto:patrocinadores@eneec27.pt"
+              href={`mailto:${CONTACTS.parcerias}`}
               className="inline-flex items-center px-7 py-3 border border-gold/40 text-foreground text-sm tracking-wide hover:border-gold transition-all rounded-sm"
             >
               Contactar a organização

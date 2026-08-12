@@ -1,3 +1,5 @@
+import { EVENT } from '@/lib/siteConfig'
+
 const PILLARS = [
   {
     number: '01',
@@ -37,9 +39,9 @@ export default function OEvento() {
             profissionais e empresas numa semana intensa de aprendizagem, debate e ligação.
           </p>
           <p className="text-muted-foreground leading-relaxed mt-4">
-            Em 2027, a 27.ª edição acontece em Aveiro, organizada pelo NEBEC — Núcleo
-            de Estudantes de Engenharia Civil da Universidade de Aveiro. O tema:{' '}
-            <span className="text-gold mono">Construção em Movimento</span>.
+            Em 2027, a {EVENT.edition.toLowerCase()} acontece em {EVENT.city}, organizada pelo {EVENT.organizer} — Núcleo
+            de Estudantes de Engenharia Civil da {EVENT.venue}. O tema:{' '}
+            <span className="text-gold mono">{EVENT.tagline}</span>.
           </p>
         </div>
 
