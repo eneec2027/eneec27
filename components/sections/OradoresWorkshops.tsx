@@ -5,39 +5,25 @@ const SPEAKERS = [
   { name: 'A anunciar', role: 'Workshop Keynote', org: '', placeholder: true },
 ]
 
-const WORKSHOPS = [
-  {
-    title: 'BIM para Iniciantes',
-    duration: '3h',
-    spots: 30,
-    filled: 0,
-    tags: ['BIM', 'Autodesk', 'Revit'],
-    description: 'Introdução prática ao Building Information Modeling. Maquete 3D de edifício simples com Revit.',
-  },
-  {
-    title: 'Patologia do Betão',
-    duration: '3h',
-    spots: 25,
-    filled: 0,
-    tags: ['Betão', 'Inspeção', 'Reabilitação'],
-    description: 'Identificação de patologias correntes em estruturas de betão armado e metodologias de inspeção.',
-  },
-  {
-    title: 'Geotecnia Avançada',
-    duration: '3h',
-    spots: 20,
-    filled: 0,
-    tags: ['Geotecnia', 'Fundações', 'SPT'],
-    description: 'Ensaios de campo, interpretação de resultados e dimensionamento de fundações.',
-  },
-  {
-    title: 'Sustentabilidade na Construção',
-    duration: '2h',
-    spots: 40,
-    filled: 0,
-    tags: ['LEED', 'Carbono', 'Ciclo de Vida'],
-    description: 'Critérios de sustentabilidade, certificações e análise de ciclo de vida de edifícios.',
-  },
+// Pôr a true e preencher WORKSHOPS quando a NEBEC fechar os temas, durações
+// e vagas — os cartões completos (tags, barra de vagas) voltam sozinhos.
+const WORKSHOPS_ANNOUNCED = false
+
+// Sem workshops confirmados. Não inventar temas, durações nem nº de vagas.
+const WORKSHOPS: {
+  title: string
+  duration: string
+  spots: number
+  filled: number
+  tags: string[]
+  description: string
+}[] = []
+
+const WORKSHOP_PLACEHOLDERS = [
+  'Workshop Técnico',
+  'Workshop Técnico',
+  'Workshop Técnico',
+  'Workshop Técnico',
 ]
 
 export default function OradoresWorkshops() {
@@ -52,7 +38,7 @@ export default function OradoresWorkshops() {
             Vozes da engenharia
           </h2>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
             {SPEAKERS.map((speaker, i) => (
               <div key={i} className="card-dark p-6 flex flex-col">
                 {/* Avatar placeholder */}
@@ -82,6 +68,29 @@ export default function OradoresWorkshops() {
             Mãos à obra
           </h2>
 
+          {!WORKSHOPS_ANNOUNCED && (
+            <>
+              <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
+                {WORKSHOP_PLACEHOLDERS.map((role, i) => (
+                  <div key={i} className="card-dark p-6 flex flex-col">
+                    <div className="w-16 h-16 rounded-sm bg-surface border border-gold-subtle flex items-center justify-center mb-4">
+                      <span className="mono text-gold/30 text-lg font-bold">?</span>
+                    </div>
+                    <p className="font-semibold mb-1 text-muted-foreground/50 italic">
+                      A anunciar
+                    </p>
+                    <p className="text-xs text-gold mono mb-1">{role}</p>
+                  </div>
+                ))}
+              </div>
+
+              <p className="text-xs text-muted-foreground mono mt-6">
+                Workshops a confirmar. Acompanhe as nossas redes sociais para anúncios.
+              </p>
+            </>
+          )}
+
+          {WORKSHOPS_ANNOUNCED && (
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {WORKSHOPS.map((ws, i) => (
               <div key={i} className="card-dark p-7 group hover:border-gold/40 transition-colors flex flex-col">
@@ -119,6 +128,7 @@ export default function OradoresWorkshops() {
               </div>
             ))}
           </div>
+          )}
         </div>
       </div>
     </section>

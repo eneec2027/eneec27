@@ -8,7 +8,7 @@ const TICKET_TYPES = [
     label: 'Estudante',
     price: 'TBD',
     unit: '',
-    description: 'Acesso completo ao programa, workshops (sujeito a vagas), Feira de Empresas e atividades sociais.',
+    description: 'Para estudantes de engenharia civil. Âmbito e condições a anunciar.',
     highlight: true,
   },
   {
@@ -16,7 +16,7 @@ const TICKET_TYPES = [
     label: 'Profissional',
     price: 'TBD',
     unit: '',
-    description: 'Para engenheiros e profissionais da área. Inclui acesso a conferências e Feira de Empresas.',
+    description: 'Para engenheiros e profissionais da área. Âmbito e condições a anunciar.',
     highlight: false,
   },
   {
@@ -24,11 +24,14 @@ const TICKET_TYPES = [
     label: 'Passe Diário',
     price: 'TBD',
     unit: '/dia',
-    description: 'Acesso ao programa de um único dia à escolha. Não inclui atividades sociais.',
+    description: 'Acesso ao programa de um único dia à escolha. Âmbito e condições a anunciar.',
     highlight: false,
   },
 ]
 
+// As respostas do FAQ são compromissos, não descrições: preços, política de
+// selecção de workshops, alojamento e certificados só podem ser afirmados
+// depois de a NEBEC os aprovar. Até lá, dizer que serão anunciados.
 const FAQS = [
   {
     q: 'Quando abrem as inscrições?',
@@ -36,19 +39,19 @@ const FAQS = [
   },
   {
     q: 'Os workshops estão incluídos na inscrição?',
-    a: 'Os workshops são incluídos na inscrição do Passe Estudante, mas têm vagas limitadas. A seleção é feita por ordem de inscrição e indicação de preferência.',
+    a: 'As condições de acesso aos workshops ainda estão a ser definidas e serão anunciadas com o programa.',
   },
   {
     q: 'Há alojamento disponível?',
-    a: 'Sim. A organização disponibilizará alojamento protocolar para participantes provenientes de outras cidades. Detalhes após confirmação de inscrição.',
+    a: 'As opções de alojamento estão a ser trabalhadas e serão anunciadas antes da abertura das inscrições.',
   },
   {
     q: 'Posso obter certificado de participação?',
-    a: 'Sim, todos os participantes recebem certificado de presença. Oradores e workshop facilitators recebem certificado próprio.',
+    a: 'As condições de emissão de certificados serão anunciadas com os detalhes da inscrição.',
   },
   {
-    q: 'Aceitam candidaturas de universidades estrangeiras?',
-    a: 'Sim. O ENEEC está aberto a estudantes de engenharia civil de todo o mundo. O evento decorre maioritariamente em português.',
+    q: 'Aceitam participantes de universidades estrangeiras?',
+    a: 'O ENEEC é um encontro nacional e decorre em português. As condições de participação de estudantes estrangeiros serão anunciadas com os detalhes da inscrição.',
   },
 ]
 
@@ -114,7 +117,7 @@ export default function Inscricoes() {
             <input
               type="email"
               placeholder="o.teu@email.pt"
-              className="flex-1 md:w-64 px-4 py-2.5 bg-surface border border-gold-subtle rounded-sm text-sm text-foreground placeholder:text-muted-foreground/50 focus:outline-none focus:border-gold transition-colors mono"
+              className="flex-1 min-w-0 md:w-64 px-4 py-2.5 bg-surface border border-gold-subtle rounded-sm text-sm text-foreground placeholder:text-muted-foreground/50 focus:outline-none focus:border-gold transition-colors mono"
             />
             <button
               type="submit"
