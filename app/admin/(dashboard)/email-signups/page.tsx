@@ -1,4 +1,9 @@
 import { getSupabaseAdmin } from '@/lib/supabaseAdmin'
+import { PageHeader } from '../../_components/PageHeader'
+import { StatCard } from '../../_components/StatCard'
+import { EmptyState } from '../../_components/EmptyState'
+import { DataTable, DataRow } from '../../_components/DataTable'
+import { QueryError } from '../../_components/QueryError'
 
 function formatDate(iso: string): string {
   return new Date(iso).toLocaleDateString('pt-PT', {
@@ -13,50 +18,35 @@ export default async function EmailSignupsPage() {
     .select('*')
     .order('created_at', { ascending: false })
 
-  if (error) {
-    return (
-      <div className="p-8">
-        <p className="font-mono text-sm text-red-400">Erro: {error.message}</p>
-      </div>
-    )
-  }
+  if (error) return <QueryError message={error.message} />
 
   const total = signups?.length ?? 0
 
   return (
-    <div className="p-8 space-y-8">
-      <div>
-        <p className="font-mono text-[9px] uppercase tracking-[0.2em] text-gold mb-1">ENEEC'27 · Admin</p>
-        <h1 className="font-heading text-2xl text-foreground">Email Signups</h1>
-      </div>
+    <div className="p-5 sm:p-8 space-y-8">
+      <PageHeader
+        title="Newsletter"
+        aside={total > 0 ? `${total} ${total === 1 ? 'email' : 'emails'}` : undefined}
+      />
 
-      <div className="inline-block bg-surface border border-border rounded-sm p-4">
-        <p className="font-mono text-[9px] uppercase tracking-[0.16em] text-muted-foreground mb-1">Total</p>
-        <p className="font-mono text-3xl font-bold text-gold">{total}</p>
-      </div>
+      <StatCard label="Emails registados" value={total} primary className="max-w-[12rem]" />
 
       {total === 0 ? (
-        <p className="font-mono text-sm text-muted-foreground">Ainda não há emails registados.</p>
+        <EmptyState
+          title="Ainda não há emails registados"
+          hint={<>A caixa de recolha está no fundo da página inicial. Quem se inscrever para ser avisado da abertura aparece aqui.</>}
+        />
       ) : (
-        <div className="overflow-x-auto">
-          <table className="w-full text-sm border-collapse">
-            <thead>
-              <tr className="border-b border-border">
-                {['Email', 'Data de Registo'].map(h => (
-                  <th key={h} className="text-left py-3 px-4 font-mono text-[9px] uppercase tracking-[0.16em] text-muted-foreground/70">{h}</th>
-                ))}
-              </tr>
-            </thead>
-            <tbody>
-              {signups?.map(s => (
-                <tr key={s.id} className="border-b border-border/40 hover:bg-surface/50 transition-colors">
-                  <td className="py-3 px-4 font-mono text-[12px] text-foreground">{s.email}</td>
-                  <td className="py-3 px-4 font-mono text-[11px] text-muted-foreground/60">{formatDate(s.created_at)}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
+        <DataTable headers={['Email', 'Data de registo']}>
+          {signups?.map(s => (
+            <DataRow key={s.id}>
+              <td className="py-3 px-4 font-mono text-[12px] text-foreground">{s.email}</td>
+              <td className="py-3 px-4 font-mono text-[11px] text-muted-foreground/60 tabular-nums whitespace-nowrap">
+                {formatDate(s.created_at)}
+              </td>
+            </DataRow>
+          ))}
+        </DataTable>
       )}
     </div>
   )

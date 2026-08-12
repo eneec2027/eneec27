@@ -18,6 +18,17 @@ export const SECTOR_SLUGS: Record<Sector, string> = {
   'Financeiro':                            'financeiro',
 }
 
+// Nome curto para mostrar a humanos — cartões e etiquetas do admin. Os
+// SECTOR_SLUGS são chaves de dados ('relacoes'), não texto de interface.
+export const SECTOR_LABEL: Record<Sector, string> = {
+  'Relações Institucionais & Empresariais': 'Relações',
+  'Científico & Pedagógico':               'Científico',
+  'Comunicação & Marketing':               'Comunicação',
+  'Logística':                             'Logística',
+  'Cultural':                              'Cultural',
+  'Financeiro':                            'Financeiro',
+}
+
 export const SECTOR_SHORT: Record<Sector, string> = {
   'Relações Institucionais & Empresariais': 'Parcerias com empresas, câmaras e ordens profissionais.',
   'Científico & Pedagógico':               'Palestras, workshops e conteúdo técnico.',

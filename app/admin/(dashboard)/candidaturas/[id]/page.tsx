@@ -15,8 +15,11 @@ function Field({ label, value }: { label: string; value: React.ReactNode }) {
 
 function Block({ title, children }: { title: string; children: React.ReactNode }) {
   return (
-    <section className="border border-border rounded-sm p-6 space-y-5">
-      <p className="font-mono text-[9px] uppercase tracking-[0.2em] text-gold">{title}</p>
+    <section className="border border-border rounded-sm p-5 sm:p-6 space-y-5">
+      <div className="flex items-center gap-3">
+        <p className="font-mono text-[9px] uppercase tracking-[0.2em] text-gold whitespace-nowrap">{title}</p>
+        <span aria-hidden className="h-px flex-1 bg-border/60" />
+      </div>
       {children}
     </section>
   )
@@ -47,18 +50,24 @@ export default async function CandidaturaDetailPage({
   const sectorAnswers = (app.sector_answers as Record<string, { q1: string; q2: string; q3: string }>) ?? {}
 
   return (
-    <div className="p-8 max-w-3xl space-y-6">
-      <div>
-        <Link href="/admin/candidaturas" className="inline-flex items-center gap-1.5 font-mono text-[9px] uppercase tracking-[0.16em] text-muted-foreground hover:text-gold transition-colors mb-4">
+    <div className="p-5 sm:p-8 max-w-3xl space-y-6">
+      <header>
+        <Link
+          href="/admin/candidaturas"
+          className="inline-flex items-center gap-1.5 font-mono text-[9px] uppercase tracking-[0.16em] text-muted-foreground hover:text-gold transition-colors mb-4 focus-visible:outline-none focus-visible:text-gold focus-visible:underline"
+        >
           <ArrowLeft size={11} />
           Candidaturas
         </Link>
-        <h1 className="font-heading text-2xl text-foreground">{app.full_name}</h1>
-        <p className="font-mono text-[10px] text-muted-foreground/60 mt-1">{formatDate(app.created_at)}</p>
-      </div>
+        <h1 className="font-heading text-2xl leading-tight text-foreground">{app.full_name}</h1>
+        <p className="font-mono text-[10px] text-muted-foreground/60 mt-1.5 tabular-nums">
+          Candidatura submetida a {formatDate(app.created_at)}
+        </p>
+        <div className="h-px bg-gradient-to-r from-gold via-border to-transparent mt-4" />
+      </header>
 
       <Block title="01 · Perfil">
-        <div className="grid grid-cols-2 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <Field label="Email" value={app.email} />
           <Field label="Telemóvel" value={app.phone} />
           <Field label="Universidade" value={app.university} />
