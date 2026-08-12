@@ -7,6 +7,7 @@ import { useEffect, useState, useRef, useTransition } from 'react'
 import { useTheme } from 'next-themes'
 import { ThemeToggle } from '@/components/ThemeToggle'
 import { signupEmail } from '@/app/actions/signup'
+import { CONTACTS, REGISTRATION_OPENS, SOCIAL } from '@/lib/siteConfig'
 
 const LibraryScene   = dynamic(() => import('@/components/three/LibraryScene'),   { ssr: false })
 const TidalScene     = dynamic(() => import('@/components/three/TidalScene'),     { ssr: false })
@@ -17,7 +18,6 @@ const MoliceiroScene = dynamic(() => import('@/components/three/MoliceiroScene')
 // Fact index → scene component
 const SCENES = [LibraryScene, TidalScene, CampusScene, GrowthScene, MoliceiroScene]
 
-const REGISTRATION_OPENS = new Date('2026-09-01T09:00:00')
 
 const FACTS = [
   {
@@ -199,11 +199,11 @@ function IconFacebook() {
   )
 }
 
-const INSTAGRAM_URL = 'https://www.instagram.com/eneec2027'
-const LINKEDIN_URL  = '#'
-const FACEBOOK_URL  = '#'
-const CONTACT_EMAIL = 'geral@eneec.pt'
-const SPONSOR_EMAIL = 'parcerias@eneec.pt'
+const INSTAGRAM_URL = SOCIAL.instagram
+const LINKEDIN_URL  = SOCIAL.linkedin
+const FACEBOOK_URL  = SOCIAL.facebook
+const CONTACT_EMAIL = CONTACTS.geral
+const SPONSOR_EMAIL = CONTACTS.parcerias
 
 export default function V1Page() {
   const { resolvedTheme } = useTheme()

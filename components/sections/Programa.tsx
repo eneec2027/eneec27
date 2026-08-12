@@ -17,43 +17,17 @@ interface Day {
   events: ScheduleEvent[]
 }
 
+// O programa ainda não existe. Pôr a true assim que a NEBEC fechar as sessões
+// e preencher DAYS — a timeline interactiva abaixo volta a aparecer sozinha.
+const SCHEDULE_ANNOUNCED = false
+
+// Sem sessões confirmadas. Não inventar horas, salas nem títulos: até haver
+// programa real, a secção mostra apenas o estado "A anunciar".
 const DAYS: Day[] = [
-  {
-    label: 'Dia 1', date: 'Seg, 15 Mar',
-    events: [
-      { time: '14:00', title: 'Receção e acreditação', type: 'social' },
-      { time: '16:00', title: 'Cerimónia de abertura', type: 'conferencia', location: 'Auditório Principal' },
-      { time: '17:30', title: 'Conferência inaugural — "Aveiro 2050"', type: 'conferencia', location: 'Auditório Principal' },
-      { time: '20:00', title: 'Jantar de boas-vindas', type: 'social' },
-    ],
-  },
-  {
-    label: 'Dia 2', date: 'Ter, 16 Mar',
-    events: [
-      { time: '09:30', title: 'Workshop: BIM para iniciantes', type: 'workshop', location: 'Sala A' },
-      { time: '09:30', title: 'Workshop: Patologia do betão', type: 'workshop', location: 'Sala B' },
-      { time: '11:30', title: 'Conferência: Infraestruturas do futuro', type: 'conferencia', location: 'Auditório' },
-      { time: '14:30', title: 'Visita técnica — Porto de Aveiro', type: 'visita' },
-      { time: '20:30', title: 'Festa ENEEC\'27', type: 'social' },
-    ],
-  },
-  {
-    label: 'Dia 3', date: 'Qua, 17 Mar',
-    events: [
-      { time: '09:30', title: 'Feira de Empresas (manhã)', type: 'social', location: 'Pavilhão Central' },
-      { time: '11:00', title: 'Workshop: Geotecnia avançada', type: 'workshop', location: 'Sala A' },
-      { time: '14:00', title: 'Conferência: Sustentabilidade na construção', type: 'conferencia', location: 'Auditório' },
-      { time: '15:30', title: 'Feira de Empresas (tarde)', type: 'social', location: 'Pavilhão Central' },
-    ],
-  },
-  {
-    label: 'Dia 4', date: 'Qui, 18 Mar',
-    events: [
-      { time: '10:00', title: 'Mesa redonda: Mercado de trabalho em EC', type: 'conferencia', location: 'Auditório' },
-      { time: '12:00', title: 'Sessão de encerramento', type: 'conferencia', location: 'Auditório' },
-      { time: '13:30', title: 'Almoço de encerramento', type: 'social' },
-    ],
-  },
+  { label: 'Dia 1', date: '', events: [] },
+  { label: 'Dia 2', date: '', events: [] },
+  { label: 'Dia 3', date: '', events: [] },
+  { label: 'Dia 4', date: '', events: [] },
 ]
 
 const FILTERS: { label: string; value: EventType }[] = [
@@ -96,6 +70,30 @@ export default function Programa() {
           </h2>
         </div>
 
+        {!SCHEDULE_ANNOUNCED && (
+          <>
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+              {DAYS.map((day, i) => (
+                <div key={i} className="card-dark p-6 flex flex-col">
+                  <div className="w-16 h-16 rounded-sm bg-surface border border-gold-subtle flex items-center justify-center mb-4">
+                    <span className="mono text-gold/30 text-lg font-bold">?</span>
+                  </div>
+                  <p className="text-xs text-gold mono mb-1">{day.label}</p>
+                  <p className="font-semibold text-muted-foreground/50 italic">
+                    A anunciar
+                  </p>
+                </div>
+              ))}
+            </div>
+
+            <p className="text-xs text-muted-foreground mono mt-6">
+              Programa a confirmar. Acompanhe as nossas redes sociais para anúncios.
+            </p>
+          </>
+        )}
+
+        {SCHEDULE_ANNOUNCED && (
+          <>
         {/* Day selector */}
         <div className="flex gap-2 mb-8 flex-wrap">
           {DAYS.map((day, i) => (
@@ -108,7 +106,9 @@ export default function Programa() {
                   : 'border border-gold-subtle text-muted-foreground hover:border-gold/40 hover:text-foreground'
               }`}
             >
-              <span className="hidden sm:inline">{day.label} — </span>{day.date}
+              {day.date
+                ? <><span className="hidden sm:inline">{day.label} — </span>{day.date}</>
+                : day.label}
             </button>
           ))}
         </div>
@@ -169,6 +169,8 @@ export default function Programa() {
         <p className="text-xs text-muted-foreground mono mt-10">
           * Programa sujeito a alterações. Versão atualizada disponível nas semanas antes do evento.
         </p>
+          </>
+        )}
       </div>
     </section>
   )

@@ -6,6 +6,7 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { applicationSchema, type ApplicationInput } from '@/lib/applicationSchema'
 import { SECTORS, SECTOR_SLUGS, SECTOR_QUESTIONS, type Sector } from '@/lib/sectors'
 import { UNIVERSITIES, COURSES } from '@/lib/formOptions'
+import { CONTACTS } from '@/lib/siteConfig'
 import { SectorDnD } from '@/components/SectorDnD'
 import { submitApplication, checkEmailExists } from '@/app/actions/apply'
 import { cn } from '@/lib/utils'
@@ -556,8 +557,8 @@ function SuccessScreen() {
         </p>
         <p className="text-sm text-foreground/60">
           Em caso de dúvida, contacta-nos em{' '}
-          <a href="mailto:logistica.eneec@ua.pt" className="text-gold hover:underline">
-            logistica.eneec@ua.pt
+          <a href={`mailto:${CONTACTS.logistica}`} className="text-gold hover:underline">
+            {CONTACTS.logistica}
           </a>
           .
         </p>

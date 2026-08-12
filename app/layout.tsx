@@ -1,6 +1,7 @@
 import type { Metadata } from "next"
 import { Libre_Baskerville, Inter, IBM_Plex_Mono } from "next/font/google"
 import { ThemeProvider } from "@/components/ThemeProvider"
+import { EVENT } from "@/lib/siteConfig"
 import "./globals.css"
 
 const libreBaskerville = Libre_Baskerville({
@@ -23,13 +24,13 @@ const ibmPlexMono = IBM_Plex_Mono({
 })
 
 export const metadata: Metadata = {
-  title: "ENEEC'27 — Encontro Nacional de Estudantes de Engenharia Civil",
+  title: `${EVENT.name} — ${EVENT.fullName}`,
   description:
-    "O Encontro Nacional de Estudantes de Engenharia Civil. Aveiro, março de 2027. Construção em Movimento.",
+    `O ${EVENT.fullName}. ${EVENT.city}, ${EVENT.monthLower}. ${EVENT.tagline}.`,
   keywords: ["ENEEC", "engenharia civil", "estudantes", "Aveiro", "2027", "NEBEC"],
   openGraph: {
-    title: "ENEEC'27",
-    description: "Construção em Movimento. Aveiro, março de 2027.",
+    title: EVENT.name,
+    description: `${EVENT.tagline}. ${EVENT.city}, ${EVENT.monthLower}.`,
     type: "website",
   },
 }
