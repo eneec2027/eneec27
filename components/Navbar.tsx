@@ -38,7 +38,7 @@ export default function Navbar() {
         <Link href="#hero" className="flex items-center shrink-0">
           {mounted ? (
             <Image
-              src={theme === 'dark' ? '/logo-dark.png' : '/logo-light.jpg'}
+              src={theme === 'dark' ? '/logo-dark-theme.png' : '/logo-light.jpg'}
               alt="ENEEC'27"
               width={44}
               height={44}

@@ -12,7 +12,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
 
         {/* Logo */}
         <div className="flex items-center gap-2.5 px-4 h-14 border-b border-border-dim">
-          <Image src="/logo-dark.png" alt="ENEEC'27" width={28} height={28} className="rounded-sm" />
+          <Image src="/logo-dark-theme.png" alt="ENEEC'27" width={28} height={28} className="rounded-sm" />
           <span className="font-mono text-[10px] font-bold tracking-[0.2em] text-foreground uppercase">
             Admin
           </span>

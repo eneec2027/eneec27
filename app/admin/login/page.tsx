@@ -19,7 +19,7 @@ export default function AdminLoginPage() {
 
       <div className="relative z-10 w-full max-w-sm px-6">
         <div className="flex justify-center mb-10">
-          <Image src="/logo-dark.png" alt="ENEEC'27" width={120} height={120} className="rounded-sm" />
+          <Image src="/logo-dark-theme.png" alt="ENEEC'27" width={120} height={120} className="rounded-sm" />
         </div>
 
         <div className="bg-background border border-border rounded-sm p-8">

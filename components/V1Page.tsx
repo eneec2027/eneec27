@@ -333,7 +333,7 @@ export default function V1Page() {
           {/* Hero heading */}
           <div className="mb-2">
             <Image
-              src={isDark ? '/logo-dark.png' : '/logo-light.jpg'}
+              src={isDark ? '/logo-dark-theme.png' : '/logo-light.jpg'}
               alt="ENEEC'27"
               width={400}
               height={400}

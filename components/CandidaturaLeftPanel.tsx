@@ -55,7 +55,7 @@ export function CandidaturaLeftPanel() {
       <nav className="relative z-10 flex items-center justify-between mb-10 md:mb-14">
         <div className="flex items-center">
           <Image
-            src={isDark ? '/logo-dark.png' : '/logo-light.jpg'}
+            src={isDark ? '/logo-dark-theme.png' : '/logo-light.jpg'}
             alt="ENEEC'27"
             width={40}
             height={40}
