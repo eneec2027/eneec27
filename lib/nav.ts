@@ -24,6 +24,9 @@ export const NAV_ITEMS: NavItem[] = [
 ]
 
 export const ROUTES = {
+  // Fora do prefixo da V2 de propósito: o formulário de candidatura é o mesmo
+  // que a V1 serve, com layout próprio, e vive na raiz desde maio.
+  candidatura: '/candidatura',
   home: path(''),
   evento: path('/evento'),
   programa: path('/programa'),

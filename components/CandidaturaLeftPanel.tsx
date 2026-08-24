@@ -65,7 +65,7 @@ export function CandidaturaLeftPanel() {
         <div className="flex items-center gap-4">
           <a
             href="/"
-            className="mono text-[0.58rem] text-muted-foreground/60 hover:text-gold transition-colors tracking-[0.2em] uppercase"
+            className="mono inline-block py-2 text-[0.7rem] text-muted-foreground/60 hover:text-gold transition-colors tracking-[0.2em] uppercase"
           >
             ← Início
           </a>
@@ -76,7 +76,7 @@ export function CandidaturaLeftPanel() {
       {/* Heading block */}
       <div className="relative z-10 mb-8 md:mb-10">
         <p
-          className="font-heading text-[0.6rem] text-gold/75 tracking-[0.25em] uppercase mb-4"
+          className="font-heading text-[0.7rem] text-gold/75 tracking-[0.25em] uppercase mb-4"
           style={{ opacity: 0, animation: 'dept-enter 0.5s ease 0ms forwards' }}
         >
           NEBEC · 15.ª Edição
@@ -103,7 +103,7 @@ export function CandidaturaLeftPanel() {
             className="h-px w-10 bg-gold/60 origin-left"
             style={{ animation: 'line-grow 0.6s ease 240ms both' }}
           />
-          <p className="font-heading text-[0.62rem] text-gold/85 tracking-[0.22em] uppercase">
+          <p className="font-heading text-[0.7rem] text-gold/85 tracking-[0.22em] uppercase">
             Construção em Movimento
           </p>
         </div>
@@ -150,7 +150,7 @@ export function CandidaturaLeftPanel() {
                   <p className={cn('text-xs font-semibold text-foreground/80 leading-snug mono mb-0.5 transition-colors duration-300 group-hover:text-foreground')}>
                     {sector}
                   </p>
-                  <p className={cn('text-[0.63rem] text-muted-foreground/60 leading-snug transition-colors duration-300 group-hover:text-muted-foreground/80')}>
+                  <p className={cn('text-[0.72rem] text-muted-foreground/60 leading-snug transition-colors duration-300 group-hover:text-muted-foreground/80')}>
                     {SECTOR_SHORT[sector]}
                   </p>
                 </div>
@@ -173,13 +173,13 @@ export function CandidaturaLeftPanel() {
           ].map(([v, l]) => (
             <div key={l} className="flex items-center gap-1.5">
               <span className="font-heading text-gold/80 text-xs tracking-wide">{v}</span>
-              <span className="mono text-[0.5rem] text-muted-foreground/55 tracking-widest uppercase">{l}</span>
+              <span className="mono text-[0.66rem] text-muted-foreground/55 tracking-widest uppercase">{l}</span>
             </div>
           ))}
         </div>
-        <p className="mono text-[0.55rem] text-muted-foreground/55">
+        <p className="mono text-[0.66rem] text-muted-foreground/55">
           Dúvidas?{' '}
-          <a href={`mailto:${CONTACTS.logistica}`} className="text-gold/65 hover:text-gold transition-colors">
+          <a href={`mailto:${CONTACTS.logistica}`} className="inline-block py-1 text-gold/65 hover:text-gold transition-colors">
             {CONTACTS.logistica}
           </a>
         </p>

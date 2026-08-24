@@ -1,7 +1,10 @@
 import type { Metadata } from 'next'
 
+import Link from 'next/link'
+
 import PageHeader from '@/components/site/PageHeader'
 import Reveal from '@/components/site/Reveal'
+import { ROUTES } from '@/lib/nav'
 import { CONTACTS, EVENT, SOCIAL } from '@/lib/siteConfig'
 
 export const metadata: Metadata = { title: `Contactos — ${EVENT.name}` }
@@ -27,7 +30,61 @@ export default function ContactosPage() {
         intro="Para dúvidas, propostas de parceria ou imprensa — respondemos a todos."
       />
 
-      <section className="py-24 bg-background">
+      {/* Os dois caminhos de entrada que a V1 já tinha: candidatar-se à equipa
+          organizadora e falar connosco sobre patrocínios. */}
+      <section className="pt-16 pb-4 bg-background">
+        <div className="max-w-7xl mx-auto px-6 grid grid-cols-1 md:grid-cols-2 gap-4">
+          <Reveal>
+            <div className="card-dark p-8 h-full flex flex-col">
+              <p className="section-label mb-3">Equipa organizadora</p>
+              <h2 className="text-xl font-semibold text-foreground mb-2">
+                Queres fazer parte da equipa?
+              </h2>
+              <p className="text-sm text-muted-foreground leading-relaxed mb-6">
+                A Comissão Organizadora do {EVENT.name} está a crescer. A candidatura
+                é um formulário curto — conta-nos quem és e onde queres ajudar.
+              </p>
+              <Link
+                href={ROUTES.candidatura}
+                className="mt-auto inline-flex items-center gap-2 self-start px-5 py-3 bg-gold text-primary-foreground text-xs font-semibold tracking-widest uppercase mono rounded-sm hover:bg-gold-light transition-colors"
+              >
+                Candidatar-me →
+              </Link>
+              <p className="text-xs text-muted-foreground/70 mt-4">
+                Dúvidas sobre a candidatura:{' '}
+                <a href={`mailto:${CONTACTS.logistica}`} className="inline-block py-1 text-gold hover:underline">
+                  {CONTACTS.logistica}
+                </a>
+              </p>
+            </div>
+          </Reveal>
+
+          <Reveal delay={0.06}>
+            <div className="card-dark p-8 h-full flex flex-col">
+              <p className="section-label mb-3">Empresas</p>
+              <h2 className="text-xl font-semibold text-foreground mb-2">
+                Patrocínios e parcerias
+              </h2>
+              <p className="text-sm text-muted-foreground leading-relaxed mb-6">
+                Quatro dias, {EVENT.venue}, centenas de estudantes de Engenharia Civil de
+                todo o país. Falamos das formas de colaboração que fazem sentido para
+                cada empresa.
+              </p>
+              <a
+                href={`mailto:${CONTACTS.parcerias}`}
+                className="mt-auto inline-flex items-center gap-2 self-start px-5 py-3 border border-gold/50 text-gold text-xs font-semibold tracking-widest uppercase mono rounded-sm hover:bg-gold hover:text-primary-foreground transition-all"
+              >
+                Fala connosco →
+              </a>
+              <p className="text-xs text-muted-foreground/70 mt-4">
+                {CONTACTS.parcerias}
+              </p>
+            </div>
+          </Reveal>
+        </div>
+      </section>
+
+      <section className="py-20 bg-background">
         <div className="max-w-7xl mx-auto px-6 grid grid-cols-1 lg:grid-cols-2 gap-16">
           <div>
             <Reveal>

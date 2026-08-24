@@ -101,6 +101,23 @@ export default function Footer() {
             <p className="mono text-[0.7rem] text-muted-foreground/60 mt-4 tracking-widest uppercase">
               {SOCIAL.instagramHandle} · {SOCIAL.instagramNebecHandle}
             </p>
+
+            {/* Os dois caminhos de entrada que vêm da V1: candidatura à equipa
+                e contacto de patrocínios. Estavam só na homepage da V1. */}
+            <div className="flex flex-col items-start gap-2 mt-6">
+              <Link
+                href={ROUTES.candidatura}
+                className="inline-flex items-center gap-2 px-4 py-2.5 border border-gold/30 rounded-sm text-sm text-foreground/85 hover:border-gold/70 hover:text-foreground hover:bg-gold/5 transition-all"
+              >
+                Junta-te à equipa <span className="text-gold">→</span>
+              </Link>
+              <a
+                href={`mailto:${CONTACTS.parcerias}`}
+                className="inline-flex items-center gap-2 px-4 py-2.5 border border-gold/30 rounded-sm text-sm text-foreground/85 hover:border-gold/70 hover:text-foreground hover:bg-gold/5 transition-all"
+              >
+                Apoiar o {EVENT.name} <span className="text-gold">→</span>
+              </a>
+            </div>
           </div>
 
           {/* Captação de interesse — os dois formulários que o briefing pede,

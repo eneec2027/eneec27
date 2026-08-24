@@ -1,10 +1,13 @@
 import type { Metadata } from 'next'
 import Image from 'next/image'
 
+import Link from 'next/link'
+
 import PageHeader from '@/components/site/PageHeader'
 import Reveal from '@/components/site/Reveal'
 import BlueprintRule from '@/components/site/BlueprintRule'
 import { TEAM, AMBASSADORS, type Member } from '@/lib/content'
+import { ROUTES } from '@/lib/nav'
 import { CONTACTS, EVENT, TEAM_ANNOUNCED, AMBASSADORS_ANNOUNCED } from '@/lib/siteConfig'
 
 export const metadata: Metadata = { title: `Equipa & Embaixadores — ${EVENT.name}` }
@@ -119,21 +122,38 @@ export default function EquipaPage() {
           </Reveal>
 
           <Reveal delay={0.1}>
-            <div className="mt-16 card-dark p-8 flex flex-col sm:flex-row sm:items-center justify-between gap-6">
-              <div>
+            <div className="mt-16 grid grid-cols-1 md:grid-cols-2 gap-4">
+              {/* Candidatura à Comissão Organizadora: o mesmo formulário que a
+                  V1 serve em /candidatura desde maio. */}
+              <div className="card-dark p-8 flex flex-col">
+                <p className="text-foreground font-semibold mb-1">
+                  Queres fazer parte da equipa?
+                </p>
+                <p className="text-sm text-muted-foreground mb-6">
+                  As candidaturas à Comissão Organizadora fazem-se num formulário curto.
+                </p>
+                <Link
+                  href={ROUTES.candidatura}
+                  className="mt-auto self-start inline-flex items-center gap-2 px-5 py-3 bg-gold text-primary-foreground text-xs font-semibold tracking-widest uppercase mono rounded-sm hover:bg-gold-light transition-colors"
+                >
+                  Candidatar-me →
+                </Link>
+              </div>
+
+              <div className="card-dark p-8 flex flex-col">
                 <p className="text-foreground font-semibold mb-1">
                   Queres representar a tua universidade?
                 </p>
-                <p className="text-sm text-muted-foreground">
+                <p className="text-sm text-muted-foreground mb-6">
                   Fala connosco — há lugar para embaixadores em todo o país.
                 </p>
+                <a
+                  href={`mailto:${CONTACTS.geral}`}
+                  className="mt-auto self-start inline-flex items-center px-5 py-3 border border-gold/40 text-foreground/80 text-xs font-semibold tracking-widest uppercase mono rounded-sm hover:border-gold hover:text-foreground transition-all"
+                >
+                  {CONTACTS.geral}
+                </a>
               </div>
-              <a
-                href={`mailto:${CONTACTS.geral}`}
-                className="shrink-0 inline-flex items-center px-5 py-2.5 border border-gold/40 text-foreground/80 text-xs font-semibold tracking-widest uppercase mono rounded-sm hover:border-gold hover:text-foreground transition-all"
-              >
-                {CONTACTS.geral}
-              </a>
             </div>
           </Reveal>
         </div>

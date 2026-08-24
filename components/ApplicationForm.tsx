@@ -22,7 +22,7 @@ function inputErr(hasError: boolean) {
   )
 }
 
-const labelCls = "font-heading text-[0.6rem] text-gold/75 tracking-[0.18em] uppercase block mb-1.5"
+const labelCls = "font-heading text-[0.7rem] text-gold/75 tracking-[0.18em] uppercase block mb-1.5"
 const errorCls = "mt-1.5 text-xs text-red-400 mono"
 
 function FieldError({ id, msg }: { id: string; msg?: string }) {
@@ -109,7 +109,7 @@ function ProgressBar({ step }: { step: number }) {
                   {done ? '✓' : n}
                 </div>
                 <span className={cn(
-                  'mono text-[0.5rem] tracking-[0.2em] uppercase',
+                  'mono text-[0.66rem] tracking-[0.2em] uppercase',
                   active ? 'text-gold/90' : done ? 'text-gold/70' : 'text-muted-foreground/40'
                 )}>
                   {label}
@@ -162,7 +162,7 @@ function Step1({ form, emailExistsError, onEmailChange }: {
   return (
     <div className="space-y-6">
       <div>
-        <p className="font-heading text-[0.6rem] text-gold/75 tracking-[0.22em] uppercase mb-6">
+        <p className="font-heading text-[0.7rem] text-gold/75 tracking-[0.22em] uppercase mb-6">
           Bloco 1 — Perfil Geral
         </p>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
@@ -378,13 +378,13 @@ function Step2({ form }: { form: AppForm }) {
 
   return (
     <div className="space-y-7">
-      <p className="font-heading text-[0.6rem] text-gold/75 tracking-[0.22em] uppercase">
+      <p className="font-heading text-[0.7rem] text-gold/75 tracking-[0.22em] uppercase">
         Bloco 2 — Motivação & Setores de Interesse
       </p>
 
       <div>
         <label className={labelCls}>Em que setores tens interesse em colaborar?</label>
-        <p className="mono text-[0.55rem] text-muted-foreground/60 tracking-wide mb-3">
+        <p className="mono text-[0.66rem] text-muted-foreground/60 tracking-wide mb-3">
           Seleciona e reordena por ordem de preferência.
         </p>
         <Controller
@@ -478,7 +478,7 @@ function Step3({ form, openAll }: { form: AppForm; openAll?: boolean }) {
 
   return (
     <div className="space-y-4">
-      <p className="font-heading text-[0.6rem] text-gold/75 tracking-[0.22em] uppercase">
+      <p className="font-heading text-[0.7rem] text-gold/75 tracking-[0.22em] uppercase">
         Bloco 3 — Perguntas por Setor
       </p>
 
@@ -500,10 +500,10 @@ function Step3({ form, openAll }: { form: AppForm; openAll?: boolean }) {
               )}
             >
               <div className="flex items-center gap-3">
-                <span className="mono text-[0.52rem] text-gold/55">{sectorIdx + 1}.</span>
+                <span className="mono text-[0.66rem] text-gold/55">{sectorIdx + 1}.</span>
                 <span className="text-sm font-semibold mono text-foreground/80">{sector}</span>
                 {anyError && (
-                  <span data-field-error className="text-[0.6rem] text-red-400 mono">— incompleto</span>
+                  <span data-field-error className="text-[0.7rem] text-red-400 mono">— incompleto</span>
                 )}
               </div>
               <span className={cn('mono text-xs', isOpen ? 'text-gold' : 'text-muted-foreground/55')}>
@@ -557,7 +557,7 @@ function SuccessScreen() {
         </p>
         <p className="text-sm text-foreground/60">
           Em caso de dúvida, contacta-nos em{' '}
-          <a href={`mailto:${CONTACTS.logistica}`} className="text-gold hover:underline">
+          <a href={`mailto:${CONTACTS.logistica}`} className="inline-block py-1 text-gold hover:underline">
             {CONTACTS.logistica}
           </a>
           .
