@@ -3,7 +3,7 @@ import type { Metadata } from 'next'
 import PageHeader from '@/components/site/PageHeader'
 import Reveal from '@/components/site/Reveal'
 import Programa from '@/components/sections/Programa'
-import OradoresWorkshops from '@/components/sections/OradoresWorkshops'
+import Oradores from '@/components/sections/Oradores'
 import { EVENT, SCHEDULE_ANNOUNCED } from '@/lib/siteConfig'
 import { SOCIAL } from '@/lib/siteConfig'
 
@@ -22,7 +22,7 @@ export default function ProgramaPage() {
         title={SCHEDULE_ANNOUNCED ? 'Quatro dias de engenharia.' : 'Brevemente.'}
         intro={
           SCHEDULE_ANNOUNCED
-            ? undefined
+            ? 'Palestras, feira de empresas, visitas técnicas e convívio, de quarta a sábado. Os temas e oradores por fechar são anunciados à medida que forem confirmados.'
             : 'O programa dos quatro dias — conferências, workshops, visitas técnicas e momentos de convívio — está a ser fechado. Anunciamos cada peça assim que estiver confirmada.'
         }
       />
@@ -45,7 +45,7 @@ export default function ProgramaPage() {
       )}
 
       <Programa />
-      <OradoresWorkshops />
+      <Oradores />
     </>
   )
 }

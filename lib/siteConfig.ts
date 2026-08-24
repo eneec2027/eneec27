@@ -44,7 +44,9 @@ export const REGISTRATION_OPENS = new Date('2026-09-01T09:00:00')
 // Regra: se não está confirmado, o site diz que será anunciado. Nunca inventar.
 // (Em agosto de 2026 houve duas vagas de conteúdo fabricado — 17 sessões, tiers
 // de patrocínio, edições anteriores. O que não tem flag não tem defesa.)
-export const SCHEDULE_ANNOUNCED = false
+// Horário dos quatro dias recebido da NEBEC a 2026-08-24 (horario_eneec2027.xlsx)
+// e transcrito para lib/programa.ts.
+export const SCHEDULE_ANNOUNCED = true
 export const WORKSHOPS_ANNOUNCED = false
 export const SPEAKERS_ANNOUNCED = false
 export const TEAM_ANNOUNCED = false

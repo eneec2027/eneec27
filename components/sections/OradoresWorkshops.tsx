@@ -7,6 +7,10 @@ const SPEAKERS = [
   { name: 'A anunciar', role: 'Workshop Keynote', org: '', placeholder: true },
 ]
 
+// ⚠️ Fora de uso desde 2026-08-24. A página /programa passou a usar o
+// componente Oradores; o horário recebido da NEBEC não tem workshops, e este
+// componente anunciava-os. Fica no repo caso apareçam.
+//
 // WORKSHOPS_ANNOUNCED e SPEAKERS_ANNOUNCED vivem em lib/siteConfig.ts. Pôr a
 // true e preencher os dados quando a NEBEC fechar temas, durações e vagas —
 // os cartões completos (tags, barra de vagas) voltam sozinhos.
