@@ -13,7 +13,7 @@ export default function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12">
           {/* Marca */}
           <div>
-            <Logo variant="h" height={38} className="mb-5" />
+            <Logo variant="h" height={56} sizeClassName="h-12 sm:h-14 w-auto" className="mb-5" />
             <p className="text-sm text-muted-foreground leading-relaxed">
               {EVENT.fullName}.<br />
               {EVENT.datesLong}.<br />

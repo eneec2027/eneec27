@@ -20,14 +20,24 @@ const RATIO: Record<Variant, number> = { h: 1400 / 294, mark: 800 / 495 }
 
 interface Props {
   variant?: Variant
+  /** Altura em px. Ignorada se `sizeClassName` for passada. */
   height: number
+  /** Altura responsiva em classes Tailwind (ex.: 'h-10 lg:h-14 w-auto'). */
+  sizeClassName?: string
   className?: string
   priority?: boolean
   /** Força a variante lilás — para logo sobre vídeo ou fotografia. */
   forceDark?: boolean
 }
 
-export default function Logo({ variant = 'h', height, className = '', priority, forceDark }: Props) {
+export default function Logo({
+  variant = 'h',
+  height,
+  sizeClassName,
+  className = '',
+  priority,
+  forceDark,
+}: Props) {
   const { resolvedTheme } = useTheme()
   const [mounted, setMounted] = useState(false)
   // eslint-disable-next-line react-hooks/set-state-in-effect
@@ -38,7 +48,13 @@ export default function Logo({ variant = 'h', height, className = '', priority, 
 
   // Antes de hidratar não se sabe o tema: reservar o espaço evita o salto.
   if (!mounted && !forceDark) {
-    return <div className={className} style={{ width, height }} aria-hidden />
+    return (
+      <div
+        className={`${sizeClassName ?? ''} ${className}`}
+        style={sizeClassName ? { aspectRatio: RATIO[variant] } : { width, height }}
+        aria-hidden
+      />
+    )
   }
 
   return (
@@ -47,8 +63,8 @@ export default function Logo({ variant = 'h', height, className = '', priority, 
       alt={`${EVENT.name} — ${EVENT.fullName}`}
       width={width * 2}
       height={height * 2}
-      style={{ height, width: 'auto' }}
-      className={className}
+      style={sizeClassName ? undefined : { height, width: 'auto' }}
+      className={`${sizeClassName ?? ''} ${className}`}
       priority={priority}
     />
   )

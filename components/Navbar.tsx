@@ -44,9 +44,12 @@ export default function Navbar() {
           : 'border-b border-transparent'
       }`}
     >
-      <nav className="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between gap-6">
+      <nav className="max-w-7xl mx-auto px-6 h-24 flex items-center justify-between gap-6">
         <Link href={ROUTES.home} className="shrink-0" aria-label="Início">
-          <Logo variant="h" height={34} priority />
+          {/* O lockup horizontal traz a linha "Encontro Nacional de Estudantes de
+              Engenharia Civil" ao lado da marca: abaixo de ~44px de altura essa
+              linha deixa de se ler. Daí a barra ser mais alta do que o habitual. */}
+          <Logo variant="h" height={56} sizeClassName="h-11 sm:h-12 lg:h-13 xl:h-14 w-auto" priority />
         </Link>
 
         {/* Desktop */}
