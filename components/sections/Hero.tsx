@@ -5,8 +5,9 @@ import Link from 'next/link'
 import { useEffect, useState } from 'react'
 
 import { EVENT, EVENT_TARGET_DATE, EARLY_BIRDS_OPEN } from '@/lib/siteConfig'
-import { HERO_HEADLINE } from '@/lib/content'
-import { ROUTES } from '@/lib/nav'
+import { HERO_HEADLINE_INDEX } from '@/lib/content'
+import { routes } from '@/lib/nav'
+import { getDict, type Lang } from '@/lib/i18n'
 
 // As mesmas 5 cenas da V1, na mesma ordem — ver components/V1Page.tsx
 const LibraryScene   = dynamic(() => import('@/components/three/LibraryScene'),   { ssr: false })
@@ -80,7 +81,10 @@ function CountdownUnit({ value, label }: { value: number; label: string }) {
   )
 }
 
-export default function Hero() {
+export default function Hero({ lang }: { lang: Lang }) {
+  const d = getDict(lang)
+  const r = routes(lang)
+  const headline = d.home.heroHeadlines[HERO_HEADLINE_INDEX]
   const countdown = useCountdown()
   const { displayedScene, fading } = useRotatingScene()
 
@@ -104,43 +108,43 @@ export default function Hero() {
       <div className="relative z-10 flex flex-col justify-end grow max-w-7xl mx-auto w-full px-6 pt-32 pb-20">
         <div className="max-w-3xl">
           <p className="section-label mb-6">
-            {EVENT.edition} &nbsp;·&nbsp; {EVENT.city} &nbsp;·&nbsp; {EVENT.organizerFull}
+            {d.event.edition} &nbsp;·&nbsp; {EVENT.city} &nbsp;·&nbsp; {EVENT.organizerFull}
           </p>
 
           {/* Bloco 1 do briefing: frase de impacto. As três opções vivem em
               lib/content.ts — HERO_HEADLINE_INDEX escolhe. */}
-          <h1 className="heading-xl text-foreground mb-8 text-balance">{HERO_HEADLINE}</h1>
+          <h1 className="heading-xl text-foreground mb-8 text-balance">{headline}</h1>
 
           {/* "Data e local, sempre bem visíveis" — briefing */}
           <p className="flex flex-col sm:flex-row sm:items-center gap-x-3 gap-y-0.5 text-lg md:text-xl mb-10">
-            <span className="text-gold font-semibold">{EVENT.dates}</span>
+            <span className="text-gold font-semibold">{d.event.dates}</span>
             <span className="hidden sm:inline text-muted-foreground/50">·</span>
-            <span className="text-foreground/90">{EVENT.venue}</span>
+            <span className="text-foreground/90">{d.event.venue}</span>
           </p>
 
           {/* Countdown — gaps apertados em mobile para não transbordar */}
           <div className="flex items-start gap-3 sm:gap-6 md:gap-10 mb-10">
-            <CountdownUnit value={countdown.days}    label="dias" />
+            <CountdownUnit value={countdown.days}    label={d.countdown.days} />
             <span className="text-gold/30 text-2xl sm:text-3xl font-thin mt-1">:</span>
-            <CountdownUnit value={countdown.hours}   label="horas" />
+            <CountdownUnit value={countdown.hours}   label={d.countdown.hours} />
             <span className="text-gold/30 text-2xl sm:text-3xl font-thin mt-1">:</span>
-            <CountdownUnit value={countdown.minutes} label="min" />
+            <CountdownUnit value={countdown.minutes} label={d.countdown.minutes} />
             <span className="text-gold/30 text-2xl sm:text-3xl font-thin mt-1">:</span>
-            <CountdownUnit value={countdown.seconds} label="seg" />
+            <CountdownUnit value={countdown.seconds} label={d.countdown.seconds} />
           </div>
 
           <div className="flex flex-wrap gap-4">
             <Link
-              href={ROUTES.descobre}
+              href={r.descobre}
               className="inline-flex items-center px-7 py-3 bg-gold text-primary-foreground font-semibold text-sm tracking-widest uppercase mono hover:bg-gold-light transition-colors rounded-sm glow-gold"
             >
-              {EARLY_BIRDS_OPEN ? 'Garantir Bilhete' : 'Descobre o ENEEC27'}
+              {EARLY_BIRDS_OPEN ? d.cta.ticket : d.cta.discover}
             </Link>
             <Link
-              href={ROUTES.evento}
+              href={r.evento}
               className="inline-flex items-center px-7 py-3 border border-gold/40 text-foreground/80 font-medium text-sm tracking-wide hover:border-gold hover:text-foreground transition-all rounded-sm"
             >
-              O Evento
+              {d.cta.event}
             </Link>
           </div>
         </div>
@@ -149,7 +153,7 @@ export default function Hero() {
       {/* Scroll indicator */}
       <div className="absolute bottom-6 right-8 z-10 hidden sm:flex flex-col items-center gap-2">
         <div className="w-px h-12 bg-gradient-to-b from-transparent to-gold/40" />
-        <span className="section-label" style={{ writingMode: 'vertical-rl' }}>scroll</span>
+        <span className="section-label" style={{ writingMode: 'vertical-rl' }}>{d.cta.scroll}</span>
       </div>
     </section>
   )

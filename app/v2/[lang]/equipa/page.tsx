@@ -1,16 +1,21 @@
 import type { Metadata } from 'next'
+import { notFound } from 'next/navigation'
 import Image from 'next/image'
-
 import Link from 'next/link'
 
 import PageHeader from '@/components/site/PageHeader'
 import Reveal from '@/components/site/Reveal'
 import BlueprintRule from '@/components/site/BlueprintRule'
 import { TEAM, AMBASSADORS, type Member } from '@/lib/content'
-import { ROUTES } from '@/lib/nav'
+import { routes } from '@/lib/nav'
 import { CONTACTS, EVENT, TEAM_ANNOUNCED, AMBASSADORS_ANNOUNCED } from '@/lib/siteConfig'
+import { getDict, isLang } from '@/lib/i18n'
 
-export const metadata: Metadata = { title: `Equipa & Embaixadores — ${EVENT.name}` }
+export async function generateMetadata({ params }: { params: Promise<{ lang: string }> }): Promise<Metadata> {
+  const { lang } = await params
+  if (!isLang(lang)) return {}
+  return { title: `${getDict(lang).equipa.label} — ${EVENT.name}` }
+}
 
 // "Apresenta primeiro a Comissão Organizadora, com fotografia, nome e função de
 // cada elemento. Depois, os Embaixadores, agrupados por universidade" — briefing.
@@ -43,7 +48,7 @@ function PersonCard({ member }: { member: Member }) {
   )
 }
 
-function EmptyState({ children }: { children: React.ReactNode }) {
+function EmptyState({ soon, role }: { soon: string; role: string }) {
   return (
     <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
       {[0, 1, 2, 3].map(i => (
@@ -51,28 +56,34 @@ function EmptyState({ children }: { children: React.ReactNode }) {
           <div className="w-16 h-16 rounded-sm bg-surface border border-gold-subtle flex items-center justify-center mb-4">
             <span className="mono text-gold/30 text-lg font-bold">?</span>
           </div>
-          <p className="font-semibold text-muted-foreground/50 italic">A anunciar</p>
-          <p className="text-xs text-gold mono mt-1">{children}</p>
+          <p className="font-semibold text-muted-foreground/50 italic">{soon}</p>
+          <p className="text-xs text-gold mono mt-1">{role}</p>
         </div>
       ))}
     </div>
   )
 }
 
-export default function EquipaPage() {
+export default async function EquipaPage({ params }: { params: Promise<{ lang: string }> }) {
+  const { lang } = await params
+  if (!isLang(lang)) notFound()
+  const d = getDict(lang).equipa
+  const r = routes(lang)
+
   return (
     <>
       <PageHeader
-        label="Equipa & Embaixadores"
-        title="Quem está a construir o ENEEC27."
-        intro={`A Comissão Organizadora do ${EVENT.organizerFull} e os embaixadores que representam o encontro em cada universidade do país.`}
+        lang={lang}
+        label={d.label}
+        title={d.title}
+        intro={d.intro(EVENT.organizerFull)}
       />
 
       <section className="py-24 bg-background">
         <div className="max-w-7xl mx-auto px-6">
           <Reveal>
-            <p className="section-label mb-4">Comissão Organizadora</p>
-            <h2 className="heading-lg text-foreground mb-12">A casa</h2>
+            <p className="section-label mb-4">{d.teamLabel}</p>
+            <h2 className="heading-lg text-foreground mb-12">{d.teamTitle}</h2>
           </Reveal>
 
           <Reveal delay={0.06}>
@@ -82,10 +93,8 @@ export default function EquipaPage() {
               </div>
             ) : (
               <>
-                <EmptyState>Comissão Organizadora</EmptyState>
-                <p className="text-xs text-muted-foreground mono mt-6">
-                  Fotografias e funções a publicar.
-                </p>
+                <EmptyState soon={d.soon} role={d.teamLabel} />
+                <p className="text-xs text-muted-foreground mono mt-6">{d.teamSoon}</p>
               </>
             )}
           </Reveal>
@@ -93,8 +102,8 @@ export default function EquipaPage() {
           <BlueprintRule className="my-20 opacity-80" />
 
           <Reveal>
-            <p className="section-label mb-4">Embaixadores</p>
-            <h2 className="heading-lg text-foreground mb-12">O país todo</h2>
+            <p className="section-label mb-4">{d.ambassadorsLabel}</p>
+            <h2 className="heading-lg text-foreground mb-12">{d.ambassadorsTitle}</h2>
           </Reveal>
 
           <Reveal delay={0.06}>
@@ -113,10 +122,8 @@ export default function EquipaPage() {
               </div>
             ) : (
               <>
-                <EmptyState>Embaixador</EmptyState>
-                <p className="text-xs text-muted-foreground mono mt-6">
-                  Embaixadores por universidade a anunciar.
-                </p>
+                <EmptyState soon={d.soon} role={d.ambassadorsLabel} />
+                <p className="text-xs text-muted-foreground mono mt-6">{d.ambassadorsSoon}</p>
               </>
             )}
           </Reveal>
@@ -126,27 +133,19 @@ export default function EquipaPage() {
               {/* Candidatura à Comissão Organizadora: o mesmo formulário que a
                   V1 serve em /candidatura desde maio. */}
               <div className="card-dark p-8 flex flex-col">
-                <p className="text-foreground font-semibold mb-1">
-                  Queres fazer parte da equipa?
-                </p>
-                <p className="text-sm text-muted-foreground mb-6">
-                  As candidaturas à Comissão Organizadora fazem-se num formulário curto.
-                </p>
+                <p className="text-foreground font-semibold mb-1">{d.joinTitle}</p>
+                <p className="text-sm text-muted-foreground mb-6">{d.joinText}</p>
                 <Link
-                  href={ROUTES.candidatura}
+                  href={r.candidatura}
                   className="mt-auto self-start inline-flex items-center gap-2 px-5 py-3 bg-gold text-primary-foreground text-xs font-semibold tracking-widest uppercase mono rounded-sm hover:bg-gold-light transition-colors"
                 >
-                  Candidatar-me →
+                  {d.joinCta}
                 </Link>
               </div>
 
               <div className="card-dark p-8 flex flex-col">
-                <p className="text-foreground font-semibold mb-1">
-                  Queres representar a tua universidade?
-                </p>
-                <p className="text-sm text-muted-foreground mb-6">
-                  Fala connosco — há lugar para embaixadores em todo o país.
-                </p>
+                <p className="text-foreground font-semibold mb-1">{d.ambassadorTitle}</p>
+                <p className="text-sm text-muted-foreground mb-6">{d.ambassadorText}</p>
                 <a
                   href={`mailto:${CONTACTS.geral}`}
                   className="mt-auto self-start inline-flex items-center px-5 py-3 border border-gold/40 text-foreground/80 text-xs font-semibold tracking-widest uppercase mono rounded-sm hover:border-gold hover:text-foreground transition-all"

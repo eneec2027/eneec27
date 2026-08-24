@@ -1,13 +1,18 @@
 import type { Metadata } from 'next'
-
+import { notFound } from 'next/navigation'
 import Link from 'next/link'
 
 import PageHeader from '@/components/site/PageHeader'
 import Reveal from '@/components/site/Reveal'
-import { ROUTES } from '@/lib/nav'
+import { routes } from '@/lib/nav'
 import { CONTACTS, EVENT, SOCIAL } from '@/lib/siteConfig'
+import { getDict, isLang } from '@/lib/i18n'
 
-export const metadata: Metadata = { title: `Contactos — ${EVENT.name}` }
+export async function generateMetadata({ params }: { params: Promise<{ lang: string }> }): Promise<Metadata> {
+  const { lang } = await params
+  if (!isLang(lang)) return {}
+  return { title: `${getDict(lang).contactos.label} — ${EVENT.name}` }
+}
 
 // "Reúne os e-mails oficiais, redes sociais e localização do Departamento de
 // Engenharia Civil / Universidade de Aveiro" — briefing.
@@ -15,20 +20,22 @@ export const metadata: Metadata = { title: `Contactos — ${EVENT.name}` }
 // Sobre transportes: só o que é verificável. A versão anterior desta informação
 // prometia "parque gratuito", "transfers" e uma estação "a 10 minutos a pé" —
 // nada disso estava confirmado.
-const EMAILS = [
-  { label: 'E-mail geral', value: CONTACTS.geral },
-  { label: 'Patrocínios / parcerias', value: CONTACTS.parcerias },
-  { label: 'Candidaturas à equipa', value: CONTACTS.logistica },
-]
+export default async function ContactosPage({ params }: { params: Promise<{ lang: string }> }) {
+  const { lang } = await params
+  if (!isLang(lang)) notFound()
+  const dict = getDict(lang)
+  const d = dict.contactos
+  const r = routes(lang)
 
-export default function ContactosPage() {
+  const emails = [
+    { label: d.emailGeneral, value: CONTACTS.geral },
+    { label: d.emailSponsors, value: CONTACTS.parcerias },
+    { label: d.emailApplications, value: CONTACTS.logistica },
+  ]
+
   return (
     <>
-      <PageHeader
-        label="Contactos"
-        title="Falar connosco."
-        intro="Para dúvidas, propostas de parceria ou imprensa — respondemos a todos."
-      />
+      <PageHeader lang={lang} label={d.label} title={d.title} intro={d.intro} />
 
       {/* Os dois caminhos de entrada que a V1 já tinha: candidatar-se à equipa
           organizadora e falar connosco sobre patrocínios. */}
@@ -36,22 +43,17 @@ export default function ContactosPage() {
         <div className="max-w-7xl mx-auto px-6 grid grid-cols-1 md:grid-cols-2 gap-4">
           <Reveal>
             <div className="card-dark p-8 h-full flex flex-col">
-              <p className="section-label mb-3">Equipa organizadora</p>
-              <h2 className="text-xl font-semibold text-foreground mb-2">
-                Queres fazer parte da equipa?
-              </h2>
-              <p className="text-sm text-muted-foreground leading-relaxed mb-6">
-                A Comissão Organizadora do {EVENT.name} está a crescer. A candidatura
-                é um formulário curto — conta-nos quem és e onde queres ajudar.
-              </p>
+              <p className="section-label mb-3">{d.teamLabel}</p>
+              <h2 className="text-xl font-semibold text-foreground mb-2">{d.teamTitle}</h2>
+              <p className="text-sm text-muted-foreground leading-relaxed mb-6">{d.teamText}</p>
               <Link
-                href={ROUTES.candidatura}
+                href={r.candidatura}
                 className="mt-auto inline-flex items-center gap-2 self-start px-5 py-3 bg-gold text-primary-foreground text-xs font-semibold tracking-widest uppercase mono rounded-sm hover:bg-gold-light transition-colors"
               >
-                Candidatar-me →
+                {d.teamCta}
               </Link>
               <p className="text-xs text-muted-foreground/70 mt-4">
-                Dúvidas sobre a candidatura:{' '}
+                {d.teamDoubts}{' '}
                 <a href={`mailto:${CONTACTS.logistica}`} className="inline-block py-1 text-gold hover:underline">
                   {CONTACTS.logistica}
                 </a>
@@ -61,24 +63,18 @@ export default function ContactosPage() {
 
           <Reveal delay={0.06}>
             <div className="card-dark p-8 h-full flex flex-col">
-              <p className="section-label mb-3">Empresas</p>
-              <h2 className="text-xl font-semibold text-foreground mb-2">
-                Patrocínios e parcerias
-              </h2>
+              <p className="section-label mb-3">{d.sponsorLabel}</p>
+              <h2 className="text-xl font-semibold text-foreground mb-2">{d.sponsorTitle}</h2>
               <p className="text-sm text-muted-foreground leading-relaxed mb-6">
-                Quatro dias, {EVENT.venue}, centenas de estudantes de Engenharia Civil de
-                todo o país. Falamos das formas de colaboração que fazem sentido para
-                cada empresa.
+                {d.sponsorText(dict.event.venue)}
               </p>
               <a
                 href={`mailto:${CONTACTS.parcerias}`}
                 className="mt-auto inline-flex items-center gap-2 self-start px-5 py-3 border border-gold/50 text-gold text-xs font-semibold tracking-widest uppercase mono rounded-sm hover:bg-gold hover:text-primary-foreground transition-all"
               >
-                Fala connosco →
+                {d.sponsorCta}
               </a>
-              <p className="text-xs text-muted-foreground/70 mt-4">
-                {CONTACTS.parcerias}
-              </p>
+              <p className="text-xs text-muted-foreground/70 mt-4">{CONTACTS.parcerias}</p>
             </div>
           </Reveal>
         </div>
@@ -88,9 +84,9 @@ export default function ContactosPage() {
         <div className="max-w-7xl mx-auto px-6 grid grid-cols-1 lg:grid-cols-2 gap-16">
           <div>
             <Reveal>
-              <p className="section-label mb-8">E-mails oficiais</p>
+              <p className="section-label mb-8">{d.emailsLabel}</p>
               <ul className="space-y-px">
-                {EMAILS.map(({ label, value }) => (
+                {emails.map(({ label, value }) => (
                   <li
                     key={value}
                     className="flex flex-col sm:flex-row sm:items-baseline gap-1 sm:gap-6 py-4 border-b border-gold-subtle"
@@ -108,7 +104,7 @@ export default function ContactosPage() {
             </Reveal>
 
             <Reveal delay={0.08}>
-              <p className="section-label mb-8 mt-16">Redes sociais</p>
+              <p className="section-label mb-8 mt-16">{d.socialLabel}</p>
               <ul className="space-y-px">
                 <li className="flex flex-col sm:flex-row sm:items-baseline gap-1 sm:gap-6 py-4 border-b border-gold-subtle">
                   <span className="section-label sm:w-52 shrink-0">Instagram</span>
@@ -141,10 +137,10 @@ export default function ContactosPage() {
                       rel="noopener noreferrer"
                       className="text-foreground hover:text-gold transition-colors"
                     >
-                      Evento oficial do ENEEC27
+                      {d.linkedinText}
                     </a>
                   ) : (
-                    <span className="text-muted-foreground/60 italic">a publicar</span>
+                    <span className="text-muted-foreground/60 italic">{d.soon}</span>
                   )}
                 </li>
                 <li className="flex flex-col sm:flex-row sm:items-baseline gap-1 sm:gap-6 py-4 border-b border-gold-subtle">
@@ -159,7 +155,7 @@ export default function ContactosPage() {
                       TikTok
                     </a>
                   ) : (
-                    <span className="text-muted-foreground/60 italic">brevemente</span>
+                    <span className="text-muted-foreground/60 italic">{d.soonTikTok}</span>
                   )}
                 </li>
               </ul>
@@ -168,15 +164,13 @@ export default function ContactosPage() {
 
           <div>
             <Reveal delay={0.06}>
-              <p className="section-label mb-8">Onde acontece</p>
+              <p className="section-label mb-8">{d.whereLabel}</p>
               <div className="card-dark p-8">
-                <p className="text-foreground font-semibold mb-1">{EVENT.department}</p>
-                <p className="text-muted-foreground">{EVENT.venue}</p>
-                <p className="text-muted-foreground text-sm mt-3 leading-relaxed">
-                  {EVENT.address}
-                </p>
+                <p className="text-foreground font-semibold mb-1">{dict.event.department}</p>
+                <p className="text-muted-foreground">{dict.event.venue}</p>
+                <p className="text-muted-foreground text-sm mt-3 leading-relaxed">{EVENT.address}</p>
                 <p className="mono text-xs text-gold mt-6 tracking-widest uppercase">
-                  {EVENT.dates} · 2027
+                  {dict.event.dates} · 2027
                 </p>
                 <a
                   href={EVENT.mapsUrl}
@@ -184,38 +178,21 @@ export default function ContactosPage() {
                   rel="noopener noreferrer"
                   className="inline-flex mt-6 text-xs text-gold mono hover:text-gold-light transition-colors border border-gold/30 px-4 py-2 rounded-sm"
                 >
-                  Abrir no Google{'\u00A0'}Maps →
+                  {d.maps}
                 </a>
               </div>
             </Reveal>
 
             <Reveal delay={0.12}>
-              <p className="section-label mb-8 mt-16">Como chegar</p>
+              <p className="section-label mb-8 mt-16">{d.howLabel}</p>
               <div className="space-y-4">
-                <div className="card-dark p-5">
-                  <p className="text-sm font-semibold text-foreground mb-1">Comboio</p>
-                  <p className="text-xs text-muted-foreground leading-relaxed">
-                    Estação de Aveiro, na linha do Norte, com ligações a Lisboa, Porto e
-                    Coimbra. Do centro ao Campus de Santiago há autocarro urbano.
-                  </p>
-                </div>
-                <div className="card-dark p-5">
-                  <p className="text-sm font-semibold text-foreground mb-1">Automóvel</p>
-                  <p className="text-xs text-muted-foreground leading-relaxed">
-                    A1 e A25 servem Aveiro. O campus tem estacionamento à superfície.
-                  </p>
-                </div>
-                <div className="card-dark p-5">
-                  <p className="text-sm font-semibold text-foreground mb-1">Avião</p>
-                  <p className="text-xs text-muted-foreground leading-relaxed">
-                    Aeroporto Francisco Sá Carneiro (Porto), a cerca de 70 km, com ligação
-                    de metro e comboio até Aveiro.
-                  </p>
-                </div>
-                <p className="text-xs text-muted-foreground/70 mono leading-relaxed">
-                  Alojamento e transportes do evento: informação a anunciar com a abertura
-                  das inscrições.
-                </p>
+                {d.transport.map(({ title, text }) => (
+                  <div key={title} className="card-dark p-5">
+                    <p className="text-sm font-semibold text-foreground mb-1">{title}</p>
+                    <p className="text-xs text-muted-foreground leading-relaxed">{text}</p>
+                  </div>
+                ))}
+                <p className="text-xs text-muted-foreground/70 mono leading-relaxed">{d.lodgingNote}</p>
               </div>
             </Reveal>
           </div>

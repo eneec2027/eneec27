@@ -1,12 +1,17 @@
 import Link from 'next/link'
-import { IconInstagram, IconLinkedIn, IconTikTok } from '@/components/site/SocialIcons'
 
+import { IconInstagram, IconLinkedIn, IconTikTok } from '@/components/site/SocialIcons'
 import Logo from '@/components/site/Logo'
 import EmailCapture from '@/components/site/EmailCapture'
-import { NAV_ITEMS, ROUTES } from '@/lib/nav'
+import { navItems, routes } from '@/lib/nav'
 import { CONTACTS, EVENT, SOCIAL } from '@/lib/siteConfig'
+import { getDict, type Lang } from '@/lib/i18n'
 
-export default function Footer() {
+export default function Footer({ lang }: { lang: Lang }) {
+  const dict = getDict(lang)
+  const d = dict.footer
+  const r = routes(lang)
+
   return (
     <footer className="border-t border-gold-subtle bg-surface">
       <div className="max-w-7xl mx-auto px-6 py-16">
@@ -15,18 +20,18 @@ export default function Footer() {
           <div>
             <Logo variant="h" height={56} sizeClassName="h-12 sm:h-14 w-auto" className="mb-5" />
             <p className="text-sm text-muted-foreground leading-relaxed">
-              {EVENT.fullName}.<br />
-              {EVENT.datesLong}.<br />
-              {EVENT.venue}.
+              {dict.event.fullName}.<br />
+              {dict.event.datesLong}.<br />
+              {dict.event.venue}.
             </p>
             <p className="mono text-xs text-gold/70 mt-4 tracking-widest">{EVENT.tagline}</p>
           </div>
 
           {/* Navegação rápida */}
           <div>
-            <p className="section-label mb-5">Navegação</p>
+            <p className="section-label mb-5">{d.navLabel}</p>
             <ul className="text-sm text-muted-foreground">
-              {NAV_ITEMS.map(({ label, href }) => (
+              {navItems(lang).map(({ label, href }) => (
                 <li key={href}>
                   <Link href={href} className="inline-block py-2 hover:text-gold transition-colors">
                     {label}
@@ -38,7 +43,7 @@ export default function Footer() {
 
           {/* Contactos e redes */}
           <div>
-            <p className="section-label mb-5">Contactos</p>
+            <p className="section-label mb-5">{d.contactsLabel}</p>
             <ul className="text-sm text-muted-foreground">
               <li>
                 <a href={`mailto:${CONTACTS.geral}`} className="inline-block py-2 hover:text-gold transition-colors">
@@ -106,16 +111,16 @@ export default function Footer() {
                 e contacto de patrocínios. Estavam só na homepage da V1. */}
             <div className="flex flex-col items-start gap-2 mt-6">
               <Link
-                href={ROUTES.candidatura}
+                href={r.candidatura}
                 className="inline-flex items-center gap-2 px-4 py-2.5 border border-gold/30 rounded-sm text-sm text-foreground/85 hover:border-gold/70 hover:text-foreground hover:bg-gold/5 transition-all"
               >
-                Junta-te à equipa <span className="text-gold">→</span>
+                {d.joinTeam} <span className="text-gold">→</span>
               </Link>
               <a
                 href={`mailto:${CONTACTS.parcerias}`}
                 className="inline-flex items-center gap-2 px-4 py-2.5 border border-gold/30 rounded-sm text-sm text-foreground/85 hover:border-gold/70 hover:text-foreground hover:bg-gold/5 transition-all"
               >
-                Apoiar o {EVENT.name} <span className="text-gold">→</span>
+                {d.support} <span className="text-gold">→</span>
               </a>
             </div>
           </div>
@@ -124,29 +129,29 @@ export default function Footer() {
               sobre o mesmo sistema, distinguidos pela coluna `source`. */}
           <div className="space-y-8">
             <EmailCapture
+              lang={lang}
               source="v2_newsletter"
-              label="Novidades"
-              cta="Quero receber"
-              hint="Só novidades do ENEEC27. Ao subscrever aceitas a nossa"
+              label={d.newsletterLabel}
+              cta={d.newsletterCta}
+              hint={d.newsletterHint}
             />
             <EmailCapture
+              lang={lang}
               source="v2_early_birds"
-              label="Early Birds"
-              cta="Avisa-me"
+              label={d.earlyLabel}
+              cta={d.earlyCta}
             />
           </div>
         </div>
 
         <div className="mt-14 pt-8 border-t border-gold-subtle flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
-          <p className="mono text-xs text-muted-foreground/70">
-            © 2027 ENEEC27 / {EVENT.organizerFull}. Todos os direitos reservados.
-          </p>
+          <p className="mono text-xs text-muted-foreground/70">{d.rights}</p>
           <div className="flex items-center gap-6">
             <Link
-              href={ROUTES.privacidade}
+              href={r.privacidade}
               className="mono text-xs text-muted-foreground/70 hover:text-gold transition-colors py-2"
             >
-              Política de Privacidade
+              {d.privacy}
             </Link>
             <a
               href={EVENT.organizerUrl}

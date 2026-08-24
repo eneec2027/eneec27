@@ -14,6 +14,8 @@
 // "Ted Talk- Influencer") entram com `provisional: true` e o site diz que o
 // tema ou o convidado será anunciado, em vez de fingir um título final.
 
+import type { Localized } from '@/lib/i18n'
+
 export type SessionType =
   | 'sessao'
   | 'palestra'
@@ -26,7 +28,7 @@ export interface Session {
   start: string
   /** Fim, quando o ficheiro o define. */
   end?: string
-  title: string
+  title: Localized
   type: SessionType
   /**
    * Pista dentro do dia. Cada dia tem duas colunas na grelha, como no ficheiro
@@ -36,25 +38,16 @@ export interface Session {
   track?: 1 | 2
   /** Título de trabalho no ficheiro da NEBEC — o site diz que falta anunciar. */
   provisional?: boolean
-  note?: string
+  note?: Localized
   /** Sub-programa de um bloco (a Sessão de Abertura de quarta-feira). */
   children?: Session[]
 }
 
 export interface ProgramDay {
   key: string
-  weekday: string
-  date: string
+  weekday: Localized
+  date: Localized
   sessions: Session[]
-}
-
-export const TYPE_LABEL: Record<SessionType, string> = {
-  sessao: 'Sessão',
-  palestra: 'Palestra',
-  feira: 'Feira de Empresas',
-  visita: 'Visita',
-  social: 'Convívio',
-  logistica: 'Logística',
 }
 
 export const TYPE_STYLE: Record<SessionType, string> = {
@@ -69,76 +62,105 @@ export const TYPE_STYLE: Record<SessionType, string> = {
 export const PROGRAM: ProgramDay[] = [
   {
     key: 'qua',
-    weekday: 'Quarta-feira',
-    date: '7 de abril',
+    weekday: { pt: 'Quarta-feira', en: 'Wednesday' },
+    date: { pt: '7 de abril', en: '7 April' },
     sessions: [
-      { start: '09:00', end: '12:30', title: 'Receção', type: 'logistica' },
-      { start: '12:30', end: '14:00', title: 'Almoço', type: 'logistica' },
+      { start: '09:00', end: '12:30', title: { pt: 'Receção', en: 'Check-in' }, type: 'logistica' },
+      { start: '12:30', end: '14:00', title: { pt: 'Almoço', en: 'Lunch' }, type: 'logistica' },
       {
         start: '14:00', end: '16:00',
-        title: 'Visitas',
-        note: 'DECivil · Universidade de Aveiro · cidade',
+        title: { pt: 'Visitas', en: 'Visits' },
+        note: {
+          pt: 'DECivil · Universidade de Aveiro · cidade',
+          en: 'DECivil · University of Aveiro · the city',
+        },
         type: 'visita',
       },
       {
         start: '16:00', end: '19:30',
-        title: 'Sessão de Abertura',
+        title: { pt: 'Sessão de Abertura', en: 'Opening Session' },
         type: 'sessao',
         children: [
-          { start: '16:00', end: '18:00', title: 'Sessão de abertura institucional', type: 'sessao' },
-          { start: '18:00', end: '18:30', title: 'Coffee break', type: 'logistica' },
-          { start: '18:30', end: '19:00', title: 'Ted Talk', type: 'palestra', provisional: true, note: 'convidado a anunciar' },
-          { start: '19:00', end: '19:30', title: 'Sessão do Main Sponsor', type: 'sessao' },
+          { start: '16:00', end: '18:00', title: { pt: 'Sessão de abertura institucional', en: 'Institutional opening session' }, type: 'sessao' },
+          { start: '18:00', end: '18:30', title: { pt: 'Coffee break', en: 'Coffee break' }, type: 'logistica' },
+          {
+            start: '18:30', end: '19:00',
+            title: { pt: 'Ted Talk', en: 'Ted Talk' },
+            type: 'palestra',
+            provisional: true,
+            note: { pt: 'convidado a anunciar', en: 'guest to be announced' },
+          },
+          { start: '19:00', end: '19:30', title: { pt: 'Sessão do Main Sponsor', en: 'Main Sponsor session' }, type: 'sessao' },
         ],
       },
-      { start: '19:30', end: '21:30', title: 'Sunset', note: 'Bar do Estudante', type: 'social' },
+      {
+        start: '19:30', end: '21:30',
+        title: { pt: 'Sunset', en: 'Sunset' },
+        note: { pt: 'Bar do Estudante', en: 'Bar do Estudante' },
+        type: 'social',
+      },
     ],
   },
   {
     key: 'qui',
-    weekday: 'Quinta-feira',
-    date: '8 de abril',
+    weekday: { pt: 'Quinta-feira', en: 'Thursday' },
+    date: { pt: '8 de abril', en: '8 April' },
     sessions: [
-      { start: '08:30', end: '09:00', title: 'Receção', type: 'logistica' },
-      { start: '09:00', end: '09:30', title: 'Sessão de abertura', type: 'sessao' },
-      { start: '09:30', end: '10:30', title: 'Palestra Mola', type: 'palestra' },
-      { start: '10:30', end: '11:30', title: 'Linha de Alta Velocidade', type: 'palestra' },
-      { start: '11:30', end: '16:00', title: 'Feira de Empresas', type: 'feira' },
-      { start: '16:00', end: '17:00', title: 'Company Spotlights', type: 'sessao' },
-      { start: '17:00', end: '18:30', title: 'Roundtable — Habitação', type: 'palestra' },
-      { start: '18:30', end: '20:00', title: 'Alojamento', type: 'logistica' },
-      { start: '20:00', end: '21:00', title: 'Jantar', type: 'logistica' },
-      { start: '21:00', title: 'After', type: 'social' },
+      { start: '08:30', end: '09:00', title: { pt: 'Receção', en: 'Check-in' }, type: 'logistica' },
+      { start: '09:00', end: '09:30', title: { pt: 'Sessão de abertura', en: 'Opening session' }, type: 'sessao' },
+      { start: '09:30', end: '10:30', title: { pt: 'Palestra Mola', en: 'Mola talk' }, type: 'palestra' },
+      { start: '10:30', end: '11:30', title: { pt: 'Linha de Alta Velocidade', en: 'High-Speed Rail Line' }, type: 'palestra' },
+      { start: '11:30', end: '16:00', title: { pt: 'Feira de Empresas', en: 'Company Fair' }, type: 'feira' },
+      { start: '16:00', end: '17:00', title: { pt: 'Company Spotlights', en: 'Company Spotlights' }, type: 'sessao' },
+      { start: '17:00', end: '18:30', title: { pt: 'Roundtable — Habitação', en: 'Roundtable — Housing' }, type: 'palestra' },
+      { start: '18:30', end: '20:00', title: { pt: 'Alojamento', en: 'Accommodation' }, type: 'logistica' },
+      { start: '20:00', end: '21:00', title: { pt: 'Jantar', en: 'Dinner' }, type: 'logistica' },
+      { start: '21:00', title: { pt: 'After', en: 'After party' }, type: 'social' },
     ],
   },
   {
     key: 'sex',
-    weekday: 'Sexta-feira',
-    date: '9 de abril',
+    weekday: { pt: 'Sexta-feira', en: 'Friday' },
+    date: { pt: '9 de abril', en: '9 April' },
     sessions: [
-      { start: '08:30', end: '09:00', title: 'Receção', type: 'logistica' },
-      { start: '09:00', end: '09:30', title: 'Sessão de abertura', type: 'sessao' },
-      { start: '09:30', end: '13:00', title: 'Feira de Empresas', type: 'feira', track: 2 },
-      { start: '09:30', end: '10:00', title: 'Palestra de investigação', type: 'palestra', track: 1, provisional: true, note: 'tema a anunciar' },
-      { start: '10:00', end: '10:30', title: 'Coffee break', type: 'logistica', track: 1 },
-      { start: '10:30', end: '11:00', title: 'Palestra de investigação', type: 'palestra', track: 1, provisional: true, note: 'tema a anunciar' },
-      { start: '11:00', end: '11:30', title: 'Coffee break', type: 'logistica', track: 1 },
-      { start: '11:30', end: '12:00', title: 'Palestra de investigação', type: 'palestra', track: 1, provisional: true, note: 'tema a anunciar' },
-      { start: '12:00', end: '12:30', title: 'Coffee break', type: 'logistica', track: 1 },
-      { start: '12:30', end: '13:00', title: 'Painel dos oradores', type: 'sessao', track: 1 },
-      { start: '13:00', end: '13:30', title: 'Almoço', type: 'logistica' },
-      { start: '13:30', end: '18:30', title: 'Visitas técnicas', type: 'visita' },
-      { start: '18:30', end: '20:00', title: 'Alojamento', type: 'logistica' },
-      { start: '20:00', end: '21:30', title: 'Jantar de encerramento', type: 'logistica' },
+      { start: '08:30', end: '09:00', title: { pt: 'Receção', en: 'Check-in' }, type: 'logistica' },
+      { start: '09:00', end: '09:30', title: { pt: 'Sessão de abertura', en: 'Opening session' }, type: 'sessao' },
+      { start: '09:30', end: '13:00', title: { pt: 'Feira de Empresas', en: 'Company Fair' }, type: 'feira', track: 2 },
+      {
+        start: '09:30', end: '10:00',
+        title: { pt: 'Palestra de investigação', en: 'Research talk' },
+        type: 'palestra', track: 1, provisional: true,
+        note: { pt: 'tema a anunciar', en: 'topic to be announced' },
+      },
+      { start: '10:00', end: '10:30', title: { pt: 'Coffee break', en: 'Coffee break' }, type: 'logistica', track: 1 },
+      {
+        start: '10:30', end: '11:00',
+        title: { pt: 'Palestra de investigação', en: 'Research talk' },
+        type: 'palestra', track: 1, provisional: true,
+        note: { pt: 'tema a anunciar', en: 'topic to be announced' },
+      },
+      { start: '11:00', end: '11:30', title: { pt: 'Coffee break', en: 'Coffee break' }, type: 'logistica', track: 1 },
+      {
+        start: '11:30', end: '12:00',
+        title: { pt: 'Palestra de investigação', en: 'Research talk' },
+        type: 'palestra', track: 1, provisional: true,
+        note: { pt: 'tema a anunciar', en: 'topic to be announced' },
+      },
+      { start: '12:00', end: '12:30', title: { pt: 'Coffee break', en: 'Coffee break' }, type: 'logistica', track: 1 },
+      { start: '12:30', end: '13:00', title: { pt: 'Painel dos oradores', en: 'Speakers’ panel' }, type: 'sessao', track: 1 },
+      { start: '13:00', end: '13:30', title: { pt: 'Almoço', en: 'Lunch' }, type: 'logistica' },
+      { start: '13:30', end: '18:30', title: { pt: 'Visitas técnicas', en: 'Site visits' }, type: 'visita' },
+      { start: '18:30', end: '20:00', title: { pt: 'Alojamento', en: 'Accommodation' }, type: 'logistica' },
+      { start: '20:00', end: '21:30', title: { pt: 'Jantar de encerramento', en: 'Closing dinner' }, type: 'logistica' },
     ],
   },
   {
     key: 'sab',
-    weekday: 'Sábado',
-    date: '10 de abril',
+    weekday: { pt: 'Sábado', en: 'Saturday' },
+    date: { pt: '10 de abril', en: '10 April' },
     sessions: [
-      { start: '08:30', end: '13:00', title: 'Atividade lúdica', type: 'social' },
-      { start: '13:00', title: 'Almoço de despedida', type: 'logistica' },
+      { start: '08:30', end: '13:00', title: { pt: 'Atividade lúdica', en: 'Group activity' }, type: 'social' },
+      { start: '13:00', title: { pt: 'Almoço de despedida', en: 'Farewell lunch' }, type: 'logistica' },
     ],
   },
 ]
@@ -171,8 +193,9 @@ export function spanOf(s: Session): number {
   return Math.max(1, (toMinutes(s.end) - toMinutes(s.start)) / SLOT_MIN)
 }
 
-/** Chave estável para selecção e listas. */
-export const keyOf = (dayKey: string, s: Session) => `${dayKey}-${s.start}-${s.title}`
+/** Chave estável para selecção e listas. Usa sempre o português, para a chave
+    não mudar quando o visitante troca de língua. */
+export const keyOf = (dayKey: string, s: Session) => `${dayKey}-${s.start}-${s.title.pt}`
 
 /** As horas certas dentro da grelha, para o eixo do tempo. */
 export const HOUR_MARKS: string[] = (() => {

@@ -4,10 +4,10 @@ import { useState } from 'react'
 
 import Reveal from '@/components/site/Reveal'
 import { SCHEDULE_ANNOUNCED } from '@/lib/siteConfig'
+import { getDict, t, type Lang } from '@/lib/i18n'
 import {
   PROGRAM,
   LEGEND_TYPES,
-  TYPE_LABEL,
   TYPE_STYLE,
   GRID_ROWS,
   HOUR_MARKS,
@@ -26,10 +26,10 @@ import {
 
 const ROW_H = '2.5rem'
 
-function TypeChip({ type }: { type: SessionType }) {
+function TypeChip({ type, lang }: { type: SessionType; lang: Lang }) {
   return (
     <span className={`mono text-[0.68rem] tracking-widest uppercase px-2 py-0.5 border rounded-sm ${TYPE_STYLE[type]}`}>
-      {TYPE_LABEL[type]}
+      {getDict(lang).programa.typeLabels[type]}
     </span>
   )
 }
@@ -38,12 +38,14 @@ function TypeChip({ type }: { type: SessionType }) {
 function Block({
   day,
   session,
+  lang,
   selected,
   dimmed,
   onSelect,
 }: {
   day: ProgramDay
   session: Session
+  lang: Lang
   selected: boolean
   dimmed: boolean
   onSelect: () => void
@@ -52,6 +54,7 @@ function Block({
   const colStart = 2 + dayIdx * 2 + (session.track === 2 ? 1 : 0)
   const colSpan = session.track ? 1 : 2
   const rows = spanOf(session)
+  const title = t(session.title, lang)
 
   // flex-col + justify-start no botão: um <button> centra o conteúdo na
   // vertical, o que fazia o título de um bloco de quatro horas flutuar a meio.
@@ -79,7 +82,7 @@ function Block({
             session.type === 'logistica' ? 'font-normal' : 'font-semibold'
           }`}
         >
-          {session.title}
+          {title}
         </span>
       ) : rows <= 1 ? (
         // Meia hora à largura do dia: hora e título na mesma linha.
@@ -90,7 +93,7 @@ function Block({
               session.type === 'logistica' ? 'font-normal' : 'font-semibold'
             }`}
           >
-            {session.title}
+            {title}
           </span>
         </span>
       ) : (
@@ -103,18 +106,20 @@ function Block({
               session.type === 'logistica' ? 'font-normal' : 'font-semibold'
             }`}
           >
-            {session.title}
+            {title}
           </span>
         </>
       )}
       {rows >= 3 && session.note && (
-        <span className="block text-[0.68rem] leading-tight opacity-70 mt-0.5">{session.note}</span>
+        <span className="block text-[0.68rem] leading-tight opacity-70 mt-0.5">
+          {t(session.note, lang)}
+        </span>
       )}
       {rows >= 4 && session.children && (
         <span className="block text-[0.68rem] leading-tight opacity-70 mt-1.5 space-y-0.5">
           {session.children.map(c => (
-            <span key={c.title} className="block truncate">
-              {c.start} {c.title}
+            <span key={c.title.pt} className="block truncate">
+              {c.start} {t(c.title, lang)}
             </span>
           ))}
         </span>
@@ -126,17 +131,21 @@ function Block({
 /** O mesmo programa em lista, para ecrãs onde quatro colunas não cabem. */
 function DayList({
   day,
+  lang,
   selectedKey,
   onSelect,
 }: {
   day: ProgramDay
+  lang: Lang
   selectedKey: string | null
   onSelect: (k: string) => void
 }) {
+  const d = getDict(lang).programa
+
   return (
     <div className="mb-10">
       <p className="mono text-xs tracking-widest uppercase text-foreground mb-4 pb-3 border-b border-gold-subtle">
-        {day.weekday} <span className="text-gold">· {day.date}</span>
+        {t(day.weekday, lang)} <span className="text-gold">· {t(day.date, lang)}</span>
       </p>
       <div className="space-y-px">
         {day.sessions.map(s => {
@@ -159,36 +168,38 @@ function DayList({
               <span>
                 <span className="flex flex-wrap items-center gap-2">
                   <span className={`text-sm ${s.type === 'logistica' ? 'text-muted-foreground' : 'text-foreground font-semibold'}`}>
-                    {s.title}
+                    {t(s.title, lang)}
                   </span>
-                  {s.type !== 'logistica' && <TypeChip type={s.type} />}
+                  {s.type !== 'logistica' && <TypeChip type={s.type} lang={lang} />}
                   {s.track && (
                     <span className="mono text-[0.68rem] tracking-widest uppercase text-muted-foreground/70">
-                      paralelo
+                      {d.parallelShort}
                     </span>
                   )}
                 </span>
                 {s.note && (
                   <span className={`block text-xs mt-1 ${s.provisional ? 'text-muted-foreground/70 italic' : 'text-muted-foreground'}`}>
-                    {s.note}
+                    {t(s.note, lang)}
                   </span>
                 )}
                 {s.children && !open && (
                   <span className="block mono text-[0.7rem] tracking-widest uppercase text-gold mt-1.5">
-                    ▾ {s.children.length} momentos
+                    ▾ {d.moments(s.children.length)}
                   </span>
                 )}
                 {open && s.children && (
                   <span className="block mt-3 pl-3 border-l border-gold-subtle space-y-1.5">
                     {s.children.map(c => (
-                      <span key={c.title} className="block text-xs">
+                      <span key={c.title.pt} className="block text-xs">
                         <span className="mono text-muted-foreground tabular-nums mr-2">
                           {c.start}{c.end ? `–${c.end}` : ''}
                         </span>
                         <span className={c.type === 'logistica' ? 'text-muted-foreground' : 'text-foreground'}>
-                          {c.title}
+                          {t(c.title, lang)}
                         </span>
-                        {c.note && <span className="text-muted-foreground/70 italic ml-2">{c.note}</span>}
+                        {c.note && (
+                          <span className="text-muted-foreground/70 italic ml-2">{t(c.note, lang)}</span>
+                        )}
                       </span>
                     ))}
                   </span>
@@ -202,43 +213,47 @@ function DayList({
   )
 }
 
-function Detail({ day, session }: { day: ProgramDay; session: Session }) {
+function Detail({ day, session, lang }: { day: ProgramDay; session: Session; lang: Lang }) {
+  const d = getDict(lang).programa
+
   return (
     <div className="card-dark p-6 sm:p-8">
       <div className="flex flex-wrap items-center gap-3 mb-3">
         <span className="mono text-xs tracking-widest uppercase text-gold">
-          {day.weekday} {day.date}
+          {t(day.weekday, lang)} {t(day.date, lang)}
         </span>
         <span className="mono text-xs text-muted-foreground tabular-nums">
-          {session.start}{session.end ? `–${session.end}` : ' — fim a anunciar'}
+          {session.start}{session.end ? `–${session.end}` : d.endSoon}
         </span>
-        <TypeChip type={session.type} />
+        <TypeChip type={session.type} lang={lang} />
         {session.track && (
           <span className="mono text-[0.68rem] tracking-widest uppercase text-muted-foreground/70">
-            em paralelo
+            {d.parallel}
           </span>
         )}
       </div>
 
-      <h3 className="text-xl font-semibold text-foreground mb-2">{session.title}</h3>
+      <h3 className="text-xl font-semibold text-foreground mb-2">{t(session.title, lang)}</h3>
 
       {session.note && (
         <p className={`text-sm ${session.provisional ? 'text-muted-foreground/80 italic' : 'text-muted-foreground'}`}>
-          {session.note}
+          {t(session.note, lang)}
         </p>
       )}
 
       {session.children && (
         <div className="mt-5 pl-4 border-l border-gold-subtle space-y-2.5">
           {session.children.map(c => (
-            <div key={c.title} className="flex flex-wrap items-baseline gap-x-3">
+            <div key={c.title.pt} className="flex flex-wrap items-baseline gap-x-3">
               <span className="mono text-xs text-muted-foreground tabular-nums">
                 {c.start}{c.end ? `–${c.end}` : ''}
               </span>
               <span className={`text-sm ${c.type === 'logistica' ? 'text-muted-foreground' : 'text-foreground'}`}>
-                {c.title}
+                {t(c.title, lang)}
               </span>
-              {c.note && <span className="text-xs text-muted-foreground/70 italic">{c.note}</span>}
+              {c.note && (
+                <span className="text-xs text-muted-foreground/70 italic">{t(c.note, lang)}</span>
+              )}
             </div>
           ))}
         </div>
@@ -246,14 +261,15 @@ function Detail({ day, session }: { day: ProgramDay; session: Session }) {
 
       {session.type !== 'logistica' && !session.children && (
         <p className="mono text-[0.7rem] tracking-widest uppercase text-muted-foreground/60 mt-5">
-          Orador a anunciar
+          {d.speakerSoon}
         </p>
       )}
     </div>
   )
 }
 
-export default function Programa() {
+export default function Programa({ lang }: { lang: Lang }) {
+  const d = getDict(lang).programa
   const [selected, setSelected] = useState<string | null>(null)
   const [highlight, setHighlight] = useState<SessionType | null>(null)
 
@@ -267,17 +283,18 @@ export default function Programa() {
                 <div className="w-16 h-16 rounded-sm bg-surface border border-gold-subtle flex items-center justify-center mb-4">
                   <span className="mono text-gold/30 text-lg font-bold">?</span>
                 </div>
-                <p className="text-xs text-gold mono mb-1">{day.weekday}</p>
-                <p className="font-semibold text-muted-foreground/50 italic">A anunciar</p>
+                <p className="text-xs text-gold mono mb-1">{t(day.weekday, lang)}</p>
+                <p className="font-semibold text-muted-foreground/50 italic">{d.soonCard}</p>
               </div>
             ))}
           </div>
+          <p className="text-xs text-muted-foreground mono mt-6">{d.soonNote}</p>
         </div>
       </section>
     )
   }
 
-  const found = PROGRAM.flatMap(d => d.sessions.map(s => ({ day: d, s })))
+  const found = PROGRAM.flatMap(day => day.sessions.map(s => ({ day, s })))
     .find(({ day, s }) => keyOf(day.key, s) === selected)
 
   const toggle = (k: string) => setSelected(cur => (cur === k ? null : k))
@@ -288,18 +305,17 @@ export default function Programa() {
         {/* ── Grelha (ecrãs largos) ─────────────────────────────────────── */}
         <Reveal>
           <div className="hidden lg:block card-dark p-6 overflow-x-auto">
-            {/* Cabeçalho dos dias */}
             <div
               className="grid gap-0 mb-2 min-w-[56rem]"
               style={{ gridTemplateColumns: `3.5rem repeat(${PROGRAM.length * 2}, minmax(0, 1fr))` }}
             >
               <div />
-              {PROGRAM.map(d => (
-                <div key={d.key} className="col-span-2 px-1 pb-3">
+              {PROGRAM.map(day => (
+                <div key={day.key} className="col-span-2 px-1 pb-3">
                   <p className="mono text-[0.62rem] tracking-widest uppercase text-muted-foreground">
-                    {d.weekday}
+                    {t(day.weekday, lang)}
                   </p>
-                  <p className="font-semibold text-foreground">{d.date}</p>
+                  <p className="font-semibold text-foreground">{t(day.date, lang)}</p>
                 </div>
               ))}
             </div>
@@ -311,7 +327,6 @@ export default function Programa() {
                 gridTemplateRows: `repeat(${GRID_ROWS}, ${ROW_H})`,
               }}
             >
-              {/* Linhas de hora */}
               {HOUR_MARKS.map(h => (
                 <div
                   key={h}
@@ -319,7 +334,6 @@ export default function Programa() {
                   style={{ gridColumn: '1 / -1', gridRow: `${rowOf(h)} / span 1` }}
                 />
               ))}
-              {/* Eixo do tempo */}
               {HOUR_MARKS.map(h => (
                 <div
                   key={`l-${h}`}
@@ -329,18 +343,16 @@ export default function Programa() {
                   {h}
                 </div>
               ))}
-              {/* Separadores entre dias */}
-              {PROGRAM.map((d, i) =>
+              {PROGRAM.map((day, i) =>
                 i === 0 ? null : (
                   <div
-                    key={`s-${d.key}`}
+                    key={`s-${day.key}`}
                     className="border-l border-gold-subtle"
                     style={{ gridColumn: `${2 + i * 2} / span 1`, gridRow: `1 / -1` }}
                   />
                 ),
               )}
 
-              {/* Sessões */}
               {PROGRAM.map(day =>
                 day.sessions.map(s => {
                   const k = keyOf(day.key, s)
@@ -349,6 +361,7 @@ export default function Programa() {
                       key={k}
                       day={day}
                       session={s}
+                      lang={lang}
                       selected={selected === k}
                       dimmed={highlight !== null && s.type !== highlight}
                       onSelect={() => toggle(k)}
@@ -363,44 +376,40 @@ export default function Programa() {
         {/* ── Legenda: passar por cima destaca, clicar fixa ──────────────── */}
         <Reveal delay={0.05}>
           <div className="hidden lg:flex flex-wrap items-center gap-x-5 gap-y-2 mt-5">
-            {LEGEND_TYPES.map(t => (
+            {LEGEND_TYPES.map(type => (
               <button
-                key={t}
+                key={type}
                 type="button"
-                onMouseEnter={() => setHighlight(t)}
-                onMouseLeave={() => setHighlight(h => (h === t ? null : h))}
-                onFocus={() => setHighlight(t)}
+                onMouseEnter={() => setHighlight(type)}
+                onMouseLeave={() => setHighlight(h => (h === type ? null : h))}
+                onFocus={() => setHighlight(type)}
                 onBlur={() => setHighlight(null)}
-                onClick={() => setHighlight(h => (h === t ? null : t))}
+                onClick={() => setHighlight(h => (h === type ? null : type))}
                 className={`flex items-center gap-2 mono text-[0.62rem] tracking-widest uppercase transition-colors ${
-                  highlight === t ? 'text-foreground' : 'text-muted-foreground hover:text-foreground'
+                  highlight === type ? 'text-foreground' : 'text-muted-foreground hover:text-foreground'
                 }`}
               >
-                <span className={`w-3 h-3 rounded-[2px] border ${TYPE_STYLE[t]}`} />
-                {TYPE_LABEL[t]}
+                <span className={`w-3 h-3 rounded-[2px] border ${TYPE_STYLE[type]}`} />
+                {d.typeLabels[type]}
               </button>
             ))}
           </div>
         </Reveal>
 
-        {/* ── Detalhe da sessão seleccionada ─────────────────────────────── */}
         {found && (
           <div className="hidden lg:block mt-6">
-            <Detail day={found.day} session={found.s} />
+            <Detail day={found.day} session={found.s} lang={lang} />
           </div>
         )}
 
         {/* ── Lista (ecrãs estreitos) ────────────────────────────────────── */}
         <div className="lg:hidden">
           {PROGRAM.map(day => (
-            <DayList key={day.key} day={day} selectedKey={selected} onSelect={toggle} />
+            <DayList key={day.key} day={day} lang={lang} selectedKey={selected} onSelect={toggle} />
           ))}
         </div>
 
-        <p className="text-xs text-muted-foreground/70 mono mt-8 leading-relaxed">
-          Programa sujeito a ajustes. Os temas e oradores marcados como “a anunciar”
-          são divulgados assim que estiverem confirmados.
-        </p>
+        <p className="text-xs text-muted-foreground/70 mono mt-8 leading-relaxed">{d.disclaimer}</p>
       </div>
     </section>
   )
