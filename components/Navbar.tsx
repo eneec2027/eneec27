@@ -2,69 +2,73 @@
 
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
-import Image from 'next/image'
+import { usePathname } from 'next/navigation'
 import { useTheme } from 'next-themes'
 import { Sun, Moon } from 'lucide-react'
 
-const NAV_LINKS = [
-  { label: 'O Evento', href: '#evento' },
-  { label: 'Programa', href: '#programa' },
-  { label: 'Oradores', href: '#oradores' },
-  { label: 'Localização', href: '#localizacao' },
-  { label: 'Empresas', href: '#empresas' },
-  { label: 'Patrocinadores', href: '#patrocinadores' },
-]
+import Logo from '@/components/site/Logo'
+import { NAV_ITEMS, ROUTES } from '@/lib/nav'
+import { EARLY_BIRDS_OPEN } from '@/lib/siteConfig'
+
+// CTA de pré-lançamento do briefing. Quando os Early Birds abrirem, a flag muda
+// e o botão passa a "Garantir Bilhete" em todo o site.
+const CTA = EARLY_BIRDS_OPEN
+  ? { label: 'Garantir Bilhete', href: ROUTES.descobre }
+  : { label: 'Descobre o ENEEC27', href: ROUTES.descobre }
 
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false)
   const [open, setOpen] = useState(false)
   const [mounted, setMounted] = useState(false)
   const { theme, setTheme } = useTheme()
+  const pathname = usePathname()
 
   useEffect(() => {
+    // Guard de hidratação do next-themes — mesmo padrão do V1Page e do Hero.
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setMounted(true)
     const handler = () => setScrolled(window.scrollY > 40)
+    handler()
     window.addEventListener('scroll', handler, { passive: true })
     return () => window.removeEventListener('scroll', handler)
   }, [])
 
+  const isActive = (href: string) =>
+    href === ROUTES.home ? pathname === href : pathname.startsWith(href)
+
   return (
     <header
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-        scrolled ? 'bg-background/90 backdrop-blur-md border-b border-gold-subtle' : ''
+        scrolled || open
+          ? 'bg-background/92 backdrop-blur-md border-b border-gold-subtle'
+          : 'border-b border-transparent'
       }`}
     >
-      <nav className="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
-        <Link href="#hero" className="flex items-center shrink-0">
-          {mounted ? (
-            <Image
-              src={theme === 'dark' ? '/logo-dark-theme.png' : '/logo-light-theme.png'}
-              alt="ENEEC'27"
-              width={44}
-              height={44}
-              className="rounded-sm"
-              priority
-            />
-          ) : (
-            <div className="w-11 h-11 rounded-sm bg-surface" />
-          )}
+      <nav className="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between gap-6">
+        <Link href={ROUTES.home} className="shrink-0" aria-label="Início">
+          <Logo variant="h" height={34} priority />
         </Link>
 
         {/* Desktop */}
-        <ul className="hidden md:flex items-center gap-8">
-          {NAV_LINKS.map(({ label, href }) => (
+        <ul className="hidden lg:flex items-center gap-7">
+          {NAV_ITEMS.map(({ label, href, short }) => (
             <li key={href}>
-              <a
+              <Link
                 href={href}
-                className="text-sm text-muted-foreground hover:text-foreground transition-colors tracking-wide"
+                className={`text-sm tracking-wide transition-colors ${
+                  isActive(href)
+                    ? 'text-foreground'
+                    : 'text-muted-foreground hover:text-foreground'
+                }`}
               >
-                {label}
-              </a>
+                <span className="xl:hidden">{short ?? label}</span>
+                <span className="hidden xl:inline">{label}</span>
+              </Link>
             </li>
           ))}
         </ul>
 
-        <div className="hidden md:flex items-center gap-3">
+        <div className="hidden lg:flex items-center gap-3 shrink-0">
           {mounted && (
             <button
               onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
@@ -74,16 +78,16 @@ export default function Navbar() {
               {theme === 'dark' ? <Sun size={16} /> : <Moon size={16} />}
             </button>
           )}
-          <a
-            href="#inscricoes"
-            className="inline-flex items-center px-4 py-2 text-xs font-semibold tracking-widest uppercase border border-gold text-gold hover:bg-gold hover:text-primary-foreground transition-all duration-200 rounded-sm mono"
+          <Link
+            href={CTA.href}
+            className="inline-flex items-center px-4 py-2 text-xs font-semibold tracking-widest uppercase bg-gold text-primary-foreground hover:bg-gold-light transition-colors rounded-sm mono"
           >
-            Inscrições
-          </a>
+            {CTA.label}
+          </Link>
         </div>
 
         {/* Mobile toggle */}
-        <div className="md:hidden flex items-center gap-3">
+        <div className="lg:hidden flex items-center gap-3">
           {mounted && (
             <button
               onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
@@ -94,9 +98,10 @@ export default function Navbar() {
             </button>
           )}
           <button
-            className="text-foreground/60 hover:text-foreground transition-colors"
+            className="text-foreground/60 hover:text-foreground transition-colors p-1"
             onClick={() => setOpen(o => !o)}
             aria-label="Menu"
+            aria-expanded={open}
           >
             <div className="w-5 space-y-1">
               <span className={`block h-px bg-current transition-all ${open ? 'rotate-45 translate-y-1.5' : ''}`} />
@@ -109,27 +114,29 @@ export default function Navbar() {
 
       {/* Mobile menu */}
       {open && (
-        <div className="md:hidden bg-background/95 backdrop-blur-md border-b border-gold-subtle px-6 pb-6 pt-2">
+        <div className="lg:hidden bg-background/97 backdrop-blur-md border-b border-gold-subtle px-6 pb-8 pt-2">
           <ul className="space-y-4">
-            {NAV_LINKS.map(({ label, href }) => (
+            {NAV_ITEMS.map(({ label, href }) => (
               <li key={href}>
-                <a
+                <Link
                   href={href}
                   onClick={() => setOpen(false)}
-                  className="block text-sm text-muted-foreground hover:text-foreground transition-colors"
+                  className={`block text-sm transition-colors ${
+                    isActive(href) ? 'text-foreground' : 'text-muted-foreground hover:text-foreground'
+                  }`}
                 >
                   {label}
-                </a>
+                </Link>
               </li>
             ))}
-            <li>
-              <a
-                href="#inscricoes"
+            <li className="pt-2">
+              <Link
+                href={CTA.href}
                 onClick={() => setOpen(false)}
-                className="inline-flex px-4 py-2 text-xs font-semibold tracking-widest uppercase border border-gold text-gold mono rounded-sm"
+                className="inline-flex px-4 py-2 text-xs font-semibold tracking-widest uppercase bg-gold text-primary-foreground mono rounded-sm"
               >
-                Inscrições
-              </a>
+                {CTA.label}
+              </Link>
             </li>
           </ul>
         </div>

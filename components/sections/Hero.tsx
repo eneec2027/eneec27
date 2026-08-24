@@ -1,11 +1,12 @@
 'use client'
 
 import dynamic from 'next/dynamic'
-import Image from 'next/image'
+import Link from 'next/link'
 import { useEffect, useState } from 'react'
-import { useTheme } from 'next-themes'
 
-import { EVENT, EVENT_TARGET_DATE } from '@/lib/siteConfig'
+import { EVENT, EVENT_TARGET_DATE, EARLY_BIRDS_OPEN } from '@/lib/siteConfig'
+import { HERO_HEADLINE } from '@/lib/content'
+import { ROUTES } from '@/lib/nav'
 
 // As mesmas 5 cenas da V1, na mesma ordem — ver components/V1Page.tsx
 const LibraryScene   = dynamic(() => import('@/components/three/LibraryScene'),   { ssr: false })
@@ -16,8 +17,6 @@ const MoliceiroScene = dynamic(() => import('@/components/three/MoliceiroScene')
 
 const SCENES = [LibraryScene, TidalScene, CampusScene, GrowthScene, MoliceiroScene]
 const SCENE_INTERVAL_MS = 9000
-
-const TARGET_DATE = EVENT_TARGET_DATE
 
 // Roda as cenas com o mesmo crossfade da V1.
 function useRotatingScene() {
@@ -53,7 +52,7 @@ function useCountdown() {
 
   useEffect(() => {
     function tick() {
-      const diff = TARGET_DATE.getTime() - Date.now()
+      const diff = EVENT_TARGET_DATE.getTime() - Date.now()
       if (diff <= 0) return
       setDelta({
         days:    Math.floor(diff / 86400000),
@@ -84,55 +83,39 @@ function CountdownUnit({ value, label }: { value: number; label: string }) {
 export default function Hero() {
   const countdown = useCountdown()
   const { displayedScene, fading } = useRotatingScene()
-  const { resolvedTheme } = useTheme()
-  const [mounted, setMounted] = useState(false)
-  // Guard de hidratação do next-themes — mesmo padrão do V1Page e do Navbar.
-  // eslint-disable-next-line react-hooks/set-state-in-effect
-  useEffect(() => setMounted(true), [])
-  const isDark = mounted && resolvedTheme === 'dark'
 
   return (
-    <section id="hero" className="relative h-dvh min-h-[580px] flex flex-col overflow-hidden grid-bg">
+    <section id="hero" className="relative min-h-dvh flex flex-col overflow-hidden grid-bg">
       {/* Cena 3D — full-bleed em mobile, painel direito em desktop (padrão V1) */}
       <div className="absolute inset-0 md:left-[38%] z-0">
         {(() => { const Scene = SCENES[displayedScene]; return <Scene /> })()}
-        {/* Crossfade entre cenas */}
         <div
           className="absolute inset-0 bg-background pointer-events-none"
           style={{ opacity: fading ? 1 : 0, transition: 'opacity 520ms ease' }}
         />
         {/* Mobile: base plana para o texto ser legível por cima da cena */}
-        <div className="absolute inset-0 md:hidden bg-background/85 pointer-events-none" />
+        <div className="absolute inset-0 md:hidden bg-background/88 pointer-events-none" />
         {/* Desktop: esbate a aresta esquerda para o fundo da página */}
-        <div className="absolute inset-0 hidden md:block bg-gradient-to-r from-background via-background/20 to-transparent pointer-events-none" />
+        <div className="absolute inset-0 hidden md:block bg-gradient-to-r from-background via-background/25 to-transparent pointer-events-none" />
         <div className="absolute inset-0 hidden md:block bg-gradient-to-t from-background via-transparent to-background/60 pointer-events-none" />
       </div>
 
-      {/* Content */}
-      <div className="relative z-10 flex flex-col justify-end h-full max-w-7xl mx-auto w-full px-6 pb-20">
-        <div className="max-w-2xl">
-          <p className="section-label mb-4">
-            {EVENT.edition} &nbsp;·&nbsp; {EVENT.city} &nbsp;·&nbsp; {EVENT.month}
+      {/* Conteúdo */}
+      <div className="relative z-10 flex flex-col justify-end grow max-w-7xl mx-auto w-full px-6 pt-32 pb-20">
+        <div className="max-w-3xl">
+          <p className="section-label mb-6">
+            {EVENT.edition} &nbsp;·&nbsp; {EVENT.city} &nbsp;·&nbsp; {EVENT.organizerFull}
           </p>
 
-          {/* Logo em vez de texto — mesma variante por tema que a V1 */}
-          <div className="mb-2">
-            <Image
-              src={isDark ? '/logo-dark-theme.png' : '/logo-light-theme.png'}
-              alt={`${EVENT.name} — ${EVENT.fullName}`}
-              width={400}
-              height={400}
-              className="rounded-sm w-full max-w-[260px] sm:max-w-[340px] md:max-w-[400px] h-auto"
-              priority
-            />
-          </div>
+          {/* Bloco 1 do briefing: frase de impacto. As três opções vivem em
+              lib/content.ts — HERO_HEADLINE_INDEX escolhe. */}
+          <h1 className="heading-xl text-foreground mb-8 text-balance">{HERO_HEADLINE}</h1>
 
-          <p className="text-lg md:text-xl text-muted-foreground mb-2 tracking-wide">
-            Encontro Nacional de Estudantes<br className="hidden sm:block" /> de Engenharia Civil
-          </p>
-
-          <p className="mono text-gold/70 text-sm mb-10 tracking-widest">
-            — Construção em Movimento —
+          {/* "Data e local, sempre bem visíveis" — briefing */}
+          <p className="flex flex-wrap items-center gap-x-3 gap-y-1 text-lg md:text-xl mb-10">
+            <span className="text-gold font-semibold">{EVENT.dates}</span>
+            <span className="text-muted-foreground/50">·</span>
+            <span className="text-foreground/90">{EVENT.venue}</span>
           </p>
 
           {/* Countdown — gaps apertados em mobile para não transbordar */}
@@ -147,24 +130,24 @@ export default function Hero() {
           </div>
 
           <div className="flex flex-wrap gap-4">
-            <a
-              href="#inscricoes"
+            <Link
+              href={ROUTES.descobre}
               className="inline-flex items-center px-7 py-3 bg-gold text-primary-foreground font-semibold text-sm tracking-widest uppercase mono hover:bg-gold-light transition-colors rounded-sm glow-gold"
             >
-              Inscrever-me
-            </a>
-            <a
-              href="#evento"
+              {EARLY_BIRDS_OPEN ? 'Garantir Bilhete' : 'Descobre o ENEEC27'}
+            </Link>
+            <Link
+              href={ROUTES.evento}
               className="inline-flex items-center px-7 py-3 border border-gold/40 text-foreground/80 font-medium text-sm tracking-wide hover:border-gold hover:text-foreground transition-all rounded-sm"
             >
-              Saber mais
-            </a>
+              O Evento
+            </Link>
           </div>
         </div>
       </div>
 
       {/* Scroll indicator */}
-      <div className="absolute bottom-6 right-8 z-10 flex flex-col items-center gap-2">
+      <div className="absolute bottom-6 right-8 z-10 hidden sm:flex flex-col items-center gap-2">
         <div className="w-px h-12 bg-gradient-to-b from-transparent to-gold/40" />
         <span className="section-label" style={{ writingMode: 'vertical-rl' }}>scroll</span>
       </div>

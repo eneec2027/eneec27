@@ -1,3 +1,5 @@
+import { WORKSHOPS_ANNOUNCED } from '@/lib/siteConfig'
+
 const SPEAKERS = [
   { name: 'A anunciar', role: 'Orador Principal', org: '', placeholder: true },
   { name: 'A anunciar', role: 'Conferência Técnica', org: '', placeholder: true },
@@ -5,9 +7,9 @@ const SPEAKERS = [
   { name: 'A anunciar', role: 'Workshop Keynote', org: '', placeholder: true },
 ]
 
-// Pôr a true e preencher WORKSHOPS quando a NEBEC fechar os temas, durações
-// e vagas — os cartões completos (tags, barra de vagas) voltam sozinhos.
-const WORKSHOPS_ANNOUNCED = false
+// WORKSHOPS_ANNOUNCED e SPEAKERS_ANNOUNCED vivem em lib/siteConfig.ts. Pôr a
+// true e preencher os dados quando a NEBEC fechar temas, durações e vagas —
+// os cartões completos (tags, barra de vagas) voltam sozinhos.
 
 // Sem workshops confirmados. Não inventar temas, durações nem nº de vagas.
 const WORKSHOPS: {

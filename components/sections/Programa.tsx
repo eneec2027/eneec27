@@ -2,6 +2,8 @@
 
 import { useState } from 'react'
 
+import { SCHEDULE_ANNOUNCED } from '@/lib/siteConfig'
+
 type EventType = 'conferencia' | 'workshop' | 'visita' | 'social' | 'todos'
 
 interface ScheduleEvent {
@@ -17,9 +19,9 @@ interface Day {
   events: ScheduleEvent[]
 }
 
-// O programa ainda não existe. Pôr a true assim que a NEBEC fechar as sessões
-// e preencher DAYS — a timeline interactiva abaixo volta a aparecer sozinha.
-const SCHEDULE_ANNOUNCED = false
+// SCHEDULE_ANNOUNCED vive em lib/siteConfig.ts com as outras flags de conteúdo.
+// Pôr a true assim que a NEBEC fechar as sessões e preencher DAYS — a timeline
+// interactiva abaixo volta a aparecer sozinha.
 
 // Sem sessões confirmadas. Não inventar horas, salas nem títulos: até haver
 // programa real, a secção mostra apenas o estado "A anunciar".
@@ -63,11 +65,8 @@ export default function Programa() {
   return (
     <section id="programa" className="py-28 bg-background grid-bg">
       <div className="max-w-7xl mx-auto px-6">
-        <div className="mb-16">
-          <p className="section-label mb-4">Programa</p>
-          <h2 className="heading-lg text-foreground">
-            4 dias de engenharia
-          </h2>
+        <div className="mb-12">
+          <p className="section-label">Os quatro dias</p>
         </div>
 
         {!SCHEDULE_ANNOUNCED && (

@@ -1,0 +1,78 @@
+import type { Metadata } from 'next'
+
+import EmailCapture from '@/components/site/EmailCapture'
+import Reveal from '@/components/site/Reveal'
+import Logo from '@/components/site/Logo'
+import { EVENT, TEASER_VIDEO_URL, EARLY_BIRDS_OPEN } from '@/lib/siteConfig'
+import { TEASER_INTRO } from '@/lib/content'
+
+export const metadata: Metadata = {
+  title: `Descobre o ${EVENT.name}`,
+}
+
+// 3.1 do briefing: a página de pré-lançamento para onde aponta o CTA principal.
+// Fica deliberadamente curta — "sem necessidade de preencher a página com
+// conteúdo provisório". Cresce com programa, bilhetes e convidados a seu tempo.
+export default function DescobrePage() {
+  return (
+    <section className="min-h-dvh grid-bg flex items-center">
+      <div className="max-w-5xl mx-auto px-6 py-32 w-full">
+        <Reveal>
+          <div className="flex flex-col items-center text-center">
+            <Logo variant="mark" height={120} className="mb-10" priority />
+
+            <p className="section-label mb-5">Coming Soon</p>
+            <h1 className="heading-xl text-foreground mb-6 text-balance">
+              O teaser está quase pronto.
+            </h1>
+            <p className="flex flex-wrap justify-center items-center gap-x-3 text-lg md:text-xl mb-10">
+              <span className="text-gold font-semibold">{EVENT.dates}</span>
+              <span className="text-muted-foreground/50">·</span>
+              <span className="text-foreground/90">{EVENT.venue}</span>
+            </p>
+          </div>
+        </Reveal>
+
+        {/* Placeholder de vídeo — substituir TEASER_VIDEO_URL em siteConfig e o
+            player real aparece no lugar deste bloco, sem mexer no layout. */}
+        <Reveal delay={0.1}>
+          <div className="aspect-video w-full card-dark overflow-hidden relative flex items-center justify-center">
+            {TEASER_VIDEO_URL ? (
+              <video
+                src={TEASER_VIDEO_URL}
+                controls
+                playsInline
+                className="w-full h-full object-cover"
+              />
+            ) : (
+              <>
+                <div className="absolute inset-0 grid-bg opacity-60" />
+                <div className="relative z-10 text-center px-6">
+                  <div className="w-16 h-16 border border-gold/50 rounded-full flex items-center justify-center mx-auto mb-5">
+                    <span className="text-gold text-xl translate-x-0.5">▶</span>
+                  </div>
+                  <p className="text-sm text-muted-foreground">Teaser em fase final de produção</p>
+                  <p className="mono text-xs text-muted-foreground/50 mt-1">a publicar em breve</p>
+                </div>
+              </>
+            )}
+          </div>
+        </Reveal>
+
+        <Reveal delay={0.15}>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-10 mt-14 items-start">
+            <p className="text-muted-foreground leading-relaxed">{TEASER_INTRO}</p>
+
+            <EmailCapture
+              source="v2_early_birds"
+              label={EARLY_BIRDS_OPEN ? 'Inscrições' : 'Avisa-me quando abrirem os Early Birds'}
+              cta="Avisa-me"
+              hint="Guardamos só o teu email, para te avisar. Ver a"
+              className="card-dark p-6"
+            />
+          </div>
+        </Reveal>
+      </div>
+    </section>
+  )
+}
