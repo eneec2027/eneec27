@@ -28,8 +28,12 @@ export interface Session {
   end?: string
   title: string
   type: SessionType
-  /** Decorre em paralelo com o resto do bloco. */
-  parallel?: boolean
+  /**
+   * Pista dentro do dia. Cada dia tem duas colunas na grelha, como no ficheiro
+   * da NEBEC: sem `track`, a sessão ocupa a largura toda do dia; com 1 ou 2,
+   * fica lado a lado com o que decorre em paralelo.
+   */
+  track?: 1 | 2
   /** Título de trabalho no ficheiro da NEBEC — o site diz que falta anunciar. */
   provisional?: boolean
   note?: string
@@ -114,14 +118,14 @@ export const PROGRAM: ProgramDay[] = [
     sessions: [
       { start: '08:30', end: '09:00', title: 'Receção', type: 'logistica' },
       { start: '09:00', end: '09:30', title: 'Sessão de abertura', type: 'sessao' },
-      { start: '09:30', end: '13:00', title: 'Feira de Empresas', type: 'feira', parallel: true },
-      { start: '09:30', end: '10:00', title: 'Palestra de investigação', type: 'palestra', provisional: true, note: 'tema a anunciar' },
-      { start: '10:00', end: '10:30', title: 'Coffee break', type: 'logistica' },
-      { start: '10:30', end: '11:00', title: 'Palestra de investigação', type: 'palestra', provisional: true, note: 'tema a anunciar' },
-      { start: '11:00', end: '11:30', title: 'Coffee break', type: 'logistica' },
-      { start: '11:30', end: '12:00', title: 'Palestra de investigação', type: 'palestra', provisional: true, note: 'tema a anunciar' },
-      { start: '12:00', end: '12:30', title: 'Coffee break', type: 'logistica' },
-      { start: '12:30', end: '13:00', title: 'Painel dos oradores', type: 'sessao' },
+      { start: '09:30', end: '13:00', title: 'Feira de Empresas', type: 'feira', track: 2 },
+      { start: '09:30', end: '10:00', title: 'Palestra de investigação', type: 'palestra', track: 1, provisional: true, note: 'tema a anunciar' },
+      { start: '10:00', end: '10:30', title: 'Coffee break', type: 'logistica', track: 1 },
+      { start: '10:30', end: '11:00', title: 'Palestra de investigação', type: 'palestra', track: 1, provisional: true, note: 'tema a anunciar' },
+      { start: '11:00', end: '11:30', title: 'Coffee break', type: 'logistica', track: 1 },
+      { start: '11:30', end: '12:00', title: 'Palestra de investigação', type: 'palestra', track: 1, provisional: true, note: 'tema a anunciar' },
+      { start: '12:00', end: '12:30', title: 'Coffee break', type: 'logistica', track: 1 },
+      { start: '12:30', end: '13:00', title: 'Painel dos oradores', type: 'sessao', track: 1 },
       { start: '13:00', end: '13:30', title: 'Almoço', type: 'logistica' },
       { start: '13:30', end: '18:30', title: 'Visitas técnicas', type: 'visita' },
       { start: '18:30', end: '20:00', title: 'Alojamento', type: 'logistica' },
@@ -139,5 +143,45 @@ export const PROGRAM: ProgramDay[] = [
   },
 ]
 
-// Ordem dos filtros na barra. 'todos' é sempre o primeiro.
-export const FILTER_TYPES: SessionType[] = ['sessao', 'palestra', 'feira', 'visita', 'social']
+// Ordem da legenda.
+export const LEGEND_TYPES: SessionType[] = ['sessao', 'palestra', 'feira', 'visita', 'social', 'logistica']
+
+// ── Geometria da grelha ───────────────────────────────────────────────────
+// A grelha começa e acaba onde o programa começa e acaba, com meia hora de
+// folga em baixo para o After de quinta, que no ficheiro não tem fim.
+export const GRID_START = '08:30'
+export const GRID_END = '22:00'
+export const SLOT_MIN = 30
+
+export function toMinutes(hhmm: string): number {
+  const [h, m] = hhmm.split(':').map(Number)
+  return h * 60 + m
+}
+
+export const GRID_ROWS = (toMinutes(GRID_END) - toMinutes(GRID_START)) / SLOT_MIN
+
+/** Linha da grelha (base 1) onde uma hora começa. */
+export function rowOf(hhmm: string): number {
+  return (toMinutes(hhmm) - toMinutes(GRID_START)) / SLOT_MIN + 1
+}
+
+/** Quantas linhas ocupa uma sessão. Sem fim declarado, ocupa uma hora. */
+export function spanOf(s: Session): number {
+  if (!s.end) return 2
+  return Math.max(1, (toMinutes(s.end) - toMinutes(s.start)) / SLOT_MIN)
+}
+
+/** Chave estável para selecção e listas. */
+export const keyOf = (dayKey: string, s: Session) => `${dayKey}-${s.start}-${s.title}`
+
+/** As horas certas dentro da grelha, para o eixo do tempo. */
+export const HOUR_MARKS: string[] = (() => {
+  const out: string[] = []
+  const end = toMinutes(GRID_END)
+  // Primeira hora certa a partir do início da grelha (08:30 → 09:00).
+  let min = Math.ceil(toMinutes(GRID_START) / 60) * 60
+  for (; min <= end; min += 60) {
+    out.push(`${String(min / 60).padStart(2, '0')}:00`)
+  }
+  return out
+})()
