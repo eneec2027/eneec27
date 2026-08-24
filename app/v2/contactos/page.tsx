@@ -41,7 +41,7 @@ export default function ContactosPage() {
                     <span className="section-label sm:w-52 shrink-0">{label}</span>
                     <a
                       href={`mailto:${value}`}
-                      className="text-foreground hover:text-gold transition-colors"
+                      className="text-foreground hover:text-gold transition-colors py-1"
                     >
                       {value}
                     </a>
@@ -53,14 +53,14 @@ export default function ContactosPage() {
             <Reveal delay={0.08}>
               <p className="section-label mb-8 mt-16">Redes sociais</p>
               <ul className="space-y-px">
-                <li className="flex items-baseline gap-6 py-4 border-b border-gold-subtle">
-                  <span className="section-label w-52 shrink-0">Instagram</span>
+                <li className="flex flex-col sm:flex-row sm:items-baseline gap-1 sm:gap-6 py-4 border-b border-gold-subtle">
+                  <span className="section-label sm:w-52 shrink-0">Instagram</span>
                   <span className="flex flex-wrap gap-x-3">
                     <a
                       href={SOCIAL.instagram}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="text-foreground hover:text-gold transition-colors"
+                      className="inline-block py-2 text-foreground hover:text-gold transition-colors"
                     >
                       {SOCIAL.instagramHandle}
                     </a>
@@ -69,14 +69,14 @@ export default function ContactosPage() {
                       href={SOCIAL.instagramNebec}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="text-foreground hover:text-gold transition-colors"
+                      className="inline-block py-2 text-foreground hover:text-gold transition-colors"
                     >
                       {SOCIAL.instagramNebecHandle}
                     </a>
                   </span>
                 </li>
-                <li className="flex items-baseline gap-6 py-4 border-b border-gold-subtle">
-                  <span className="section-label w-52 shrink-0">LinkedIn</span>
+                <li className="flex flex-col sm:flex-row sm:items-baseline gap-1 sm:gap-6 py-4 border-b border-gold-subtle">
+                  <span className="section-label sm:w-52 shrink-0">LinkedIn</span>
                   {SOCIAL.linkedin !== '#' ? (
                     <a
                       href={SOCIAL.linkedin}
@@ -90,8 +90,8 @@ export default function ContactosPage() {
                     <span className="text-muted-foreground/60 italic">a publicar</span>
                   )}
                 </li>
-                <li className="flex items-baseline gap-6 py-4 border-b border-gold-subtle">
-                  <span className="section-label w-52 shrink-0">TikTok</span>
+                <li className="flex flex-col sm:flex-row sm:items-baseline gap-1 sm:gap-6 py-4 border-b border-gold-subtle">
+                  <span className="section-label sm:w-52 shrink-0">TikTok</span>
                   {SOCIAL.tiktok !== '#' ? (
                     <a
                       href={SOCIAL.tiktok}
@@ -127,7 +127,7 @@ export default function ContactosPage() {
                   rel="noopener noreferrer"
                   className="inline-flex mt-6 text-xs text-gold mono hover:text-gold-light transition-colors border border-gold/30 px-4 py-2 rounded-sm"
                 >
-                  Abrir no Google Maps →
+                  Abrir no Google{'\u00A0'}Maps →
                 </a>
               </div>
             </Reveal>

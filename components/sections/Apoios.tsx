@@ -39,13 +39,13 @@ export default function Apoios() {
           <div className="mt-14 flex flex-wrap items-center gap-x-8 gap-y-3">
             <Link
               href={ROUTES.parceiros}
-              className="mono text-xs tracking-widest uppercase text-gold hover:text-gold-light transition-colors"
+              className="inline-block py-2 mono text-xs tracking-widest uppercase text-gold hover:text-gold-light transition-colors"
             >
-              Ver todos os parceiros →
+              Ver todos os{'\u00A0'}parceiros →
             </Link>
             <a
               href={`mailto:${CONTACTS.parcerias}`}
-              className="mono text-xs tracking-widest uppercase text-muted-foreground hover:text-gold transition-colors"
+              className="inline-block py-2 mono text-xs tracking-widest uppercase text-muted-foreground hover:text-gold transition-colors"
             >
               Apoiar o ENEEC27 · {CONTACTS.parcerias}
             </a>

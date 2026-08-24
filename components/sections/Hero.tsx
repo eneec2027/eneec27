@@ -112,9 +112,9 @@ export default function Hero() {
           <h1 className="heading-xl text-foreground mb-8 text-balance">{HERO_HEADLINE}</h1>
 
           {/* "Data e local, sempre bem visíveis" — briefing */}
-          <p className="flex flex-wrap items-center gap-x-3 gap-y-1 text-lg md:text-xl mb-10">
+          <p className="flex flex-col sm:flex-row sm:items-center gap-x-3 gap-y-0.5 text-lg md:text-xl mb-10">
             <span className="text-gold font-semibold">{EVENT.dates}</span>
-            <span className="text-muted-foreground/50">·</span>
+            <span className="hidden sm:inline text-muted-foreground/50">·</span>
             <span className="text-foreground/90">{EVENT.venue}</span>
           </p>
 

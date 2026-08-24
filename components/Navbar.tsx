@@ -95,18 +95,18 @@ export default function Navbar() {
             <button
               onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
               aria-label="Alternar tema"
-              className="p-2 text-foreground/60 hover:text-foreground transition-colors"
+              className="p-3 -m-1 text-foreground/60 hover:text-foreground transition-colors"
             >
-              {theme === 'dark' ? <Sun size={15} /> : <Moon size={15} />}
+              {theme === 'dark' ? <Sun size={18} /> : <Moon size={18} />}
             </button>
           )}
           <button
-            className="text-foreground/60 hover:text-foreground transition-colors p-1"
+            className="text-foreground/60 hover:text-foreground transition-colors p-3 -m-1"
             onClick={() => setOpen(o => !o)}
             aria-label="Menu"
             aria-expanded={open}
           >
-            <div className="w-5 space-y-1">
+            <div className="w-6 space-y-1.5">
               <span className={`block h-px bg-current transition-all ${open ? 'rotate-45 translate-y-1.5' : ''}`} />
               <span className={`block h-px bg-current transition-all ${open ? 'opacity-0' : ''}`} />
               <span className={`block h-px bg-current transition-all ${open ? '-rotate-45 -translate-y-1.5' : ''}`} />
@@ -118,13 +118,13 @@ export default function Navbar() {
       {/* Mobile menu */}
       {open && (
         <div className="lg:hidden bg-background/97 backdrop-blur-md border-b border-gold-subtle px-6 pb-8 pt-2">
-          <ul className="space-y-4">
+          <ul className="divide-y divide-gold-subtle">
             {NAV_ITEMS.map(({ label, href }) => (
               <li key={href}>
                 <Link
                   href={href}
                   onClick={() => setOpen(false)}
-                  className={`block text-sm transition-colors ${
+                  className={`block text-base py-2.5 transition-colors ${
                     isActive(href) ? 'text-foreground' : 'text-muted-foreground hover:text-foreground'
                   }`}
                 >
@@ -132,11 +132,11 @@ export default function Navbar() {
                 </Link>
               </li>
             ))}
-            <li className="pt-2">
+            <li className="pt-5">
               <Link
                 href={CTA.href}
                 onClick={() => setOpen(false)}
-                className="inline-flex px-4 py-2 text-xs font-semibold tracking-widest uppercase bg-gold text-primary-foreground mono rounded-sm"
+                className="flex justify-center px-4 py-3.5 text-xs font-semibold tracking-widest uppercase bg-gold text-primary-foreground mono rounded-sm"
               >
                 {CTA.label}
               </Link>

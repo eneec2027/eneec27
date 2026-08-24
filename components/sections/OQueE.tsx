@@ -25,9 +25,9 @@ export default function OQueE() {
         <Reveal delay={0.15}>
           <Link
             href={ROUTES.evento}
-            className="inline-flex items-center gap-2 mono text-xs tracking-widest uppercase text-gold hover:text-gold-light transition-colors"
+            className="inline-flex items-center gap-2 py-2 mono text-xs tracking-widest uppercase text-gold hover:text-gold-light transition-colors"
           >
-            A história do ENEEC e a visão de Aveiro →
+            A história do ENEEC e a visão de{'\u00A0'}Aveiro →
           </Link>
         </Reveal>
       </div>

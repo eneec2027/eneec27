@@ -35,9 +35,9 @@ export default function ProgramaPage() {
                 href={SOCIAL.instagram}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="mono text-xs tracking-widest uppercase text-gold hover:text-gold-light transition-colors"
+                className="inline-block py-2 mono text-xs tracking-widest uppercase text-gold hover:text-gold-light transition-colors"
               >
-                Acompanhar os anúncios em {SOCIAL.instagramHandle} →
+                Acompanhar os anúncios em{'\u00A0'}{SOCIAL.instagramHandle} →
               </a>
             </Reveal>
           </div>

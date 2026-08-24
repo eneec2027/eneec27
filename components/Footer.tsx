@@ -25,10 +25,10 @@ export default function Footer() {
           {/* Navegação rápida */}
           <div>
             <p className="section-label mb-5">Navegação</p>
-            <ul className="space-y-2 text-sm text-muted-foreground">
+            <ul className="text-sm text-muted-foreground">
               {NAV_ITEMS.map(({ label, href }) => (
                 <li key={href}>
-                  <Link href={href} className="hover:text-gold transition-colors">
+                  <Link href={href} className="inline-block py-2 hover:text-gold transition-colors">
                     {label}
                   </Link>
                 </li>
@@ -39,27 +39,27 @@ export default function Footer() {
           {/* Contactos e redes */}
           <div>
             <p className="section-label mb-5">Contactos</p>
-            <ul className="space-y-2 text-sm text-muted-foreground">
+            <ul className="text-sm text-muted-foreground">
               <li>
-                <a href={`mailto:${CONTACTS.geral}`} className="hover:text-gold transition-colors">
+                <a href={`mailto:${CONTACTS.geral}`} className="inline-block py-2 hover:text-gold transition-colors">
                   {CONTACTS.geral}
                 </a>
               </li>
               <li>
-                <a href={`mailto:${CONTACTS.parcerias}`} className="hover:text-gold transition-colors">
+                <a href={`mailto:${CONTACTS.parcerias}`} className="inline-block py-2 hover:text-gold transition-colors">
                   {CONTACTS.parcerias}
                 </a>
               </li>
             </ul>
 
-            <div className="flex items-center gap-4 mt-6">
+            <div className="flex items-center gap-1 mt-4 -ml-2">
               <a
                 href={SOCIAL.instagram}
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label={`Instagram ${SOCIAL.instagramHandle}`}
                 title={SOCIAL.instagramHandle}
-                className="text-muted-foreground hover:text-gold transition-colors"
+                className="p-2.5 text-muted-foreground hover:text-gold transition-colors"
               >
                 <IconInstagram />
               </a>
@@ -69,7 +69,7 @@ export default function Footer() {
                 rel="noopener noreferrer"
                 aria-label={`Instagram ${SOCIAL.instagramNebecHandle}`}
                 title={SOCIAL.instagramNebecHandle}
-                className="text-muted-foreground hover:text-gold transition-colors"
+                className="p-2.5 text-muted-foreground hover:text-gold transition-colors"
               >
                 <IconInstagram />
               </a>
@@ -80,7 +80,7 @@ export default function Footer() {
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label="LinkedIn"
-                  className="text-muted-foreground hover:text-gold transition-colors"
+                  className="p-2.5 text-muted-foreground hover:text-gold transition-colors"
                 >
                   <IconLinkedIn />
                 </a>
@@ -91,14 +91,14 @@ export default function Footer() {
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label="TikTok"
-                  className="text-muted-foreground hover:text-gold transition-colors"
+                  className="p-2.5 text-muted-foreground hover:text-gold transition-colors"
                 >
                   <IconTikTok />
                 </a>
               )}
             </div>
 
-            <p className="mono text-[0.62rem] text-muted-foreground/60 mt-4 tracking-widest uppercase">
+            <p className="mono text-[0.7rem] text-muted-foreground/60 mt-4 tracking-widest uppercase">
               {SOCIAL.instagramHandle} · {SOCIAL.instagramNebecHandle}
             </p>
           </div>
@@ -127,7 +127,7 @@ export default function Footer() {
           <div className="flex items-center gap-6">
             <Link
               href={ROUTES.privacidade}
-              className="mono text-xs text-muted-foreground/70 hover:text-gold transition-colors"
+              className="mono text-xs text-muted-foreground/70 hover:text-gold transition-colors py-2"
             >
               Política de Privacidade
             </Link>
@@ -135,7 +135,7 @@ export default function Footer() {
               href={EVENT.organizerUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="mono text-xs text-muted-foreground/70 hover:text-gold transition-colors"
+              className="mono text-xs text-muted-foreground/70 hover:text-gold transition-colors py-2"
             >
               {EVENT.organizer}
             </a>

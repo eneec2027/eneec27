@@ -66,7 +66,7 @@ export default function EmailCapture({ source, label, cta, hint, className = '' 
       {hint && state !== 'done' && (
         <p className="text-xs text-muted-foreground mt-2 leading-relaxed">
           {hint}{' '}
-          <Link href={ROUTES.privacidade} className="underline hover:text-gold transition-colors">
+          <Link href={ROUTES.privacidade} className="inline-block py-1 underline hover:text-gold transition-colors">
             Política de Privacidade
           </Link>
           .

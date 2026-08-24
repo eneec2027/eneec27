@@ -193,7 +193,9 @@
 
   .section-label {
     font-family: var(--font-mono);
-    font-size: 0.62rem;
+    /* 0.62rem dava 9.9px — pequeno de mais em telemóvel para maiúsculas mono
+       com letter-spacing largo. Sobe com a largura do ecrã. */
+    font-size: clamp(0.7rem, 0.66rem + 0.15vw, 0.75rem);
     letter-spacing: 0.18em;
     text-transform: uppercase;
     color: var(--gold-ink);

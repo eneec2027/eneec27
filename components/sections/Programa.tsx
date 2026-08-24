@@ -28,7 +28,7 @@ const ROW_H = '2.5rem'
 
 function TypeChip({ type }: { type: SessionType }) {
   return (
-    <span className={`mono text-[0.6rem] tracking-widest uppercase px-2 py-0.5 border rounded-sm ${TYPE_STYLE[type]}`}>
+    <span className={`mono text-[0.68rem] tracking-widest uppercase px-2 py-0.5 border rounded-sm ${TYPE_STYLE[type]}`}>
       {TYPE_LABEL[type]}
     </span>
   )
@@ -163,7 +163,7 @@ function DayList({
                   </span>
                   {s.type !== 'logistica' && <TypeChip type={s.type} />}
                   {s.track && (
-                    <span className="mono text-[0.6rem] tracking-widest uppercase text-muted-foreground/70">
+                    <span className="mono text-[0.68rem] tracking-widest uppercase text-muted-foreground/70">
                       paralelo
                     </span>
                   )}
@@ -174,7 +174,7 @@ function DayList({
                   </span>
                 )}
                 {s.children && !open && (
-                  <span className="block mono text-[0.62rem] tracking-widest uppercase text-gold mt-1.5">
+                  <span className="block mono text-[0.7rem] tracking-widest uppercase text-gold mt-1.5">
                     ▾ {s.children.length} momentos
                   </span>
                 )}
@@ -214,7 +214,7 @@ function Detail({ day, session }: { day: ProgramDay; session: Session }) {
         </span>
         <TypeChip type={session.type} />
         {session.track && (
-          <span className="mono text-[0.62rem] tracking-widest uppercase text-muted-foreground/70">
+          <span className="mono text-[0.68rem] tracking-widest uppercase text-muted-foreground/70">
             em paralelo
           </span>
         )}
@@ -245,7 +245,7 @@ function Detail({ day, session }: { day: ProgramDay; session: Session }) {
       )}
 
       {session.type !== 'logistica' && !session.children && (
-        <p className="mono text-[0.68rem] tracking-widest uppercase text-muted-foreground/60 mt-5">
+        <p className="mono text-[0.7rem] tracking-widest uppercase text-muted-foreground/60 mt-5">
           Orador a anunciar
         </p>
       )}

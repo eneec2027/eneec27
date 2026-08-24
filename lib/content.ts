@@ -28,13 +28,18 @@ export const WHAT_IS_ENEEC =
   'ligações e viver uma experiência que vai muito além da sala de aula.'
 
 // ── Homepage · Bloco 3 — razões para vir ──────────────────────────────────
-export const HIGHLIGHTS = [
-  { value: '300+', label: 'Estudantes esperados' },
-  { value: '4', label: 'Dias de evento' },
-  { value: null, label: 'Workshops' },
-  { value: null, label: 'Visitas Técnicas' },
-  { value: null, label: 'Festas & Convívios' },
-] as const
+// `icon` liga a um desenho em components/site/Icons.tsx. Os três itens que o
+// briefing não quantifica não levam número — levam o ícone no lugar dele, para
+// não ficarem cartões vazios ao lado dos que têm.
+export type HighlightIcon = 'estudantes' | 'dias' | 'workshops' | 'visitas' | 'festas'
+
+export const HIGHLIGHTS: { value: string | null; label: string; icon: HighlightIcon }[] = [
+  { value: '300+', label: 'Estudantes esperados', icon: 'estudantes' },
+  { value: '4',    label: 'Dias de evento',       icon: 'dias' },
+  { value: null,   label: 'Workshops',            icon: 'workshops' },
+  { value: null,   label: 'Visitas Técnicas',     icon: 'visitas' },
+  { value: null,   label: 'Festas & Convívios',   icon: 'festas' },
+]
 
 // ── 3.1 Descobre o ENEEC27 ────────────────────────────────────────────────
 export const TEASER_INTRO =

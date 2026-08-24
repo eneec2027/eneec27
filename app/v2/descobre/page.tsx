@@ -25,9 +25,9 @@ export default function DescobrePage() {
             <h1 className="heading-xl text-foreground mb-6 text-balance">
               O teaser está quase pronto.
             </h1>
-            <p className="flex flex-wrap justify-center items-center gap-x-3 text-lg md:text-xl mb-10">
+            <p className="flex flex-col sm:flex-row justify-center sm:items-center gap-x-3 gap-y-0.5 text-lg md:text-xl mb-10">
               <span className="text-gold font-semibold">{EVENT.dates}</span>
-              <span className="text-muted-foreground/50">·</span>
+              <span className="hidden sm:inline text-muted-foreground/50">·</span>
               <span className="text-foreground/90">{EVENT.venue}</span>
             </p>
           </div>
