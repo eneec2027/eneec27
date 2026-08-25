@@ -1,8 +1,10 @@
+import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
 
 import Navbar from '@/components/Navbar'
 import Footer from '@/components/Footer'
-import { LANGS, isLang, HTML_LANG, type Lang } from '@/lib/i18n'
+import { LANGS, isLang, getDict, HTML_LANG, type Lang } from '@/lib/i18n'
+import { EVENT } from '@/lib/siteConfig'
 
 // O site serve na raiz, uma árvore por língua: /pt e /en. Substituiu o teaser
 // da V1 a 2026-08-24 — o histórico está no vault, proximos-passos › 0.5.
@@ -14,6 +16,30 @@ import { LANGS, isLang, HTML_LANG, type Lang } from '@/lib/i18n'
 
 export function generateStaticParams() {
   return LANGS.map(lang => ({ lang }))
+}
+
+// Título e descrição seguem a língua da árvore. Sem isto, herdavam o layout de
+// raiz — e o separador de /en abria em português.
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ lang: string }>
+}): Promise<Metadata> {
+  const { lang } = await params
+  if (!isLang(lang)) return {}
+  const d = getDict(lang)
+  const description = `${d.event.fullName}. ${d.event.datesLong}. ${d.event.venue}.`
+
+  return {
+    // template '%s': as páginas já trazem o título completo.
+    title: { default: `${EVENT.name} — ${d.event.fullName}`, template: '%s' },
+    description,
+    openGraph: {
+      title: `${EVENT.name} — ${d.event.fullName}`,
+      description,
+      locale: lang === 'pt' ? 'pt_PT' : 'en_GB',
+    },
+  }
 }
 
 export default async function V2Layout({
