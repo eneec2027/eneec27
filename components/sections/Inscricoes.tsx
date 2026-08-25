@@ -1,33 +1,21 @@
 'use client'
 
+// ⚠️ Não está ligada a nenhuma rota. Enquanto os Early Birds não tiverem data, o
+// site vive em pré-lançamento: o CTA é "Descobre o ENEEC27" e a recolha de
+// interesse faz-se pelo rodapé e por /descobre — ver EARLY_BIRDS_OPEN em
+// lib/siteConfig.ts. As modalidades de bilhete abaixo nunca foram confirmadas
+// pela NEBEC; ficam vazias até serem.
+
 import { useState } from 'react'
 
-const TICKET_TYPES = [
-  {
-    id: 'estudante',
-    label: 'Estudante',
-    price: 'TBD',
-    unit: '',
-    description: 'Para estudantes de engenharia civil. Âmbito e condições a anunciar.',
-    highlight: true,
-  },
-  {
-    id: 'profissional',
-    label: 'Profissional',
-    price: 'TBD',
-    unit: '',
-    description: 'Para engenheiros e profissionais da área. Âmbito e condições a anunciar.',
-    highlight: false,
-  },
-  {
-    id: 'dia',
-    label: 'Passe Diário',
-    price: 'TBD',
-    unit: '/dia',
-    description: 'Acesso ao programa de um único dia à escolha. Âmbito e condições a anunciar.',
-    highlight: false,
-  },
-]
+const TICKET_TYPES: {
+  id: string
+  label: string
+  price: string
+  unit: string
+  description: string
+  highlight: boolean
+}[] = []
 
 // As respostas do FAQ são compromissos, não descrições: preços, política de
 // selecção de workshops, alojamento e certificados só podem ser afirmados

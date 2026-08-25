@@ -1,5 +1,10 @@
 'use client'
 
+// ⚠️ Não está ligada a nenhuma rota. O briefing de conteúdos da NEBEC (agosto
+// 2026) não menciona Feira de Empresas — está por confirmar se existe nesta
+// edição. O componente fica preservado; se for confirmada, entra em /parceiros
+// ou em página própria. Ver o vault, briefing-conteudos.
+
 import { useState } from 'react'
 import { CONTACTS } from '@/lib/siteConfig'
 
@@ -21,14 +26,14 @@ const AREAS: { label: string; value: Area }[] = [
 ]
 
 const COMPANIES: Company[] = [
-  { name: 'A confirmar', area: 'construção', description: 'Empresa de construção civil e obras públicas.' },
-  { name: 'A confirmar', area: 'estruturas', description: 'Projeto e dimensionamento de estruturas.' },
-  { name: 'A confirmar', area: 'infraestruturas', description: 'Infraestruturas rodoviárias e hidráulicas.' },
-  { name: 'A confirmar', area: 'consultoria', description: 'Consultoria técnica e gestão de projeto.' },
-  { name: 'A confirmar', area: 'gestão', description: 'Gestão e fiscalização de obras.' },
-  { name: 'A confirmar', area: 'construção', description: 'Reabilitação e conservação de edifícios.' },
-  { name: 'A confirmar', area: 'estruturas', description: 'Estruturas metálicas e mistas.' },
-  { name: 'A confirmar', area: 'infraestruturas', description: 'Portos, aeroportos e obras marítimas.' },
+  { name: 'A confirmar', area: 'construção',      description: '' },
+  { name: 'A confirmar', area: 'estruturas',      description: '' },
+  { name: 'A confirmar', area: 'infraestruturas', description: '' },
+  { name: 'A confirmar', area: 'consultoria',     description: '' },
+  { name: 'A confirmar', area: 'gestão',          description: '' },
+  { name: 'A confirmar', area: 'construção',      description: '' },
+  { name: 'A confirmar', area: 'estruturas',      description: '' },
+  { name: 'A confirmar', area: 'infraestruturas', description: '' },
 ]
 
 const AREA_COLORS: Record<Exclude<Area, 'todas'>, string> = {
@@ -55,8 +60,8 @@ export default function FeiraDEmpresas() {
             </h2>
           </div>
           <p className="text-sm text-muted-foreground max-w-sm">
-            Duas sessões abertas ao longo do Dia 3. Candidaturas espontâneas,
-            apresentação de projetos e contacto direto com recrutadores.
+            Contacto direto com empresas do setor. Formato e horários a anunciar
+            com o programa.
           </p>
         </div>
 

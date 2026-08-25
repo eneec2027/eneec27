@@ -24,14 +24,34 @@ const ibmPlexMono = IBM_Plex_Mono({
 })
 
 export const metadata: Metadata = {
+  // Sem metadataBase, o Next avisa e as imagens de partilha saem com caminho
+  // relativo — que nenhuma rede social sabe resolver.
+  metadataBase: new URL("https://eneec.pt"),
   title: `${EVENT.name} — ${EVENT.fullName}`,
   description:
-    `O ${EVENT.fullName}. ${EVENT.city}, ${EVENT.monthLower}. ${EVENT.tagline}.`,
+    `O ${EVENT.fullName}. ${EVENT.city}, ${EVENT.datesLong}. ${EVENT.tagline}.`,
   keywords: ["ENEEC", "engenharia civil", "estudantes", "Aveiro", "2027", "NEBEC"],
   openGraph: {
-    title: EVENT.name,
-    description: `${EVENT.tagline}. ${EVENT.city}, ${EVENT.monthLower}.`,
+    title: `${EVENT.name} — ${EVENT.fullName}`,
+    description: `${EVENT.datesLong}. ${EVENT.venue}.`,
     type: "website",
+    locale: "pt_PT",
+    siteName: EVENT.name,
+    url: "https://eneec.pt",
+    images: [
+      {
+        url: "/og-eneec27.png",
+        width: 1200,
+        height: 630,
+        alt: `${EVENT.name} — ${EVENT.datesLong}, ${EVENT.venue}`,
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: `${EVENT.name} — ${EVENT.fullName}`,
+    description: `${EVENT.datesLong}. ${EVENT.venue}.`,
+    images: ["/og-eneec27.png"],
   },
 }
 

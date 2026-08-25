@@ -45,6 +45,11 @@
 
   --gold:       #f5a623;
   --gold-light: #f7b84a;
+  /* Tinta de acento para TEXTO. O laranja da marca sobre branco fica em 2.1:1,
+     abaixo do mínimo de 4.5:1 — o texto usa esta variante escura, os fundos e
+     as arestas continuam a usar --gold. No tema escuro as duas coincidem. */
+  --gold-ink:       #9a5c00;
+  --gold-ink-light: #b86e00;
   --primary:    #f5a623;
   --primary-foreground: #ffffff;
 
@@ -101,6 +106,10 @@
   --bp-line: rgba(123, 143, 214, .22);
   --bp-grid: rgba(123, 143, 214, .055);
 
+  /* Fundo escuro: o laranja da marca já passa o contraste sem ajuste. */
+  --gold-ink:       var(--gold);
+  --gold-ink-light: var(--gold-light);
+
   /* shadcn compat */
   --secondary:            #1a2444;
   --secondary-foreground: #e2e8f8;
@@ -139,8 +148,8 @@
 }
 
 @layer utilities {
-  .text-gold { color: var(--gold); }
-  .text-gold-light { color: var(--gold-light); }
+  .text-gold { color: var(--gold-ink); }
+  .text-gold-light { color: var(--gold-ink-light); }
   .bg-surface { background-color: var(--surface); }
   .bg-card-dark { background-color: var(--card); }
   .border-gold { border-color: var(--gold); }
@@ -184,10 +193,12 @@
 
   .section-label {
     font-family: var(--font-mono);
-    font-size: 0.62rem;
+    /* 0.62rem dava 9.9px — pequeno de mais em telemóvel para maiúsculas mono
+       com letter-spacing largo. Sobe com a largura do ecrã. */
+    font-size: clamp(0.7rem, 0.66rem + 0.15vw, 0.75rem);
     letter-spacing: 0.18em;
     text-transform: uppercase;
-    color: var(--gold);
+    color: var(--gold-ink);
   }
 
   .heading-xl {
