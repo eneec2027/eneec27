@@ -4,11 +4,9 @@ import { getDict } from '@/lib/i18n'
 // Navegação do site, na estrutura que o briefing da NEBEC define:
 // Início | O Evento | Programa | Equipa & Embaixadores | Parceiros | Contactos
 //
-// A V2 vive sob /v2/<lang> enquanto não substituir a V1 — ver o vault,
-// briefing-conteudos. Quando substituir, pôr BASE a '' e mover app/v2/[lang]
-// para app/[lang]. É a única alteração necessária: nenhum href está escrito à
-// mão nos componentes.
-export const BASE = '/v2'
+// O site vive na raiz, por língua: /pt e /en. Foi público a 2026-08-24, quando
+// substituiu o teaser da V1 — ver o vault, proximos-passos › 0.5.
+export const BASE = ''
 
 export const path = (lang: Lang, p = '') => `${BASE}/${lang}${p}`
 
@@ -52,4 +50,15 @@ export type Routes = ReturnType<typeof routes>
 export function swapLang(pathname: string, to: Lang): string {
   const rest = pathname.replace(new RegExp(`^${BASE}/[a-z]{2}`), '')
   return path(to, rest)
+}
+
+/**
+ * Alternativas de língua para os motores de busca. Sem isto, as duas versões
+ * competem uma com a outra em vez de se apresentarem como traduções.
+ */
+export function langAlternates(lang: Lang, p = '') {
+  return {
+    canonical: path(lang, p),
+    languages: { pt: path('pt', p), en: path('en', p) },
+  }
 }

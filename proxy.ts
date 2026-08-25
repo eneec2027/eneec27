@@ -6,16 +6,15 @@ import { DEFAULT_LANG, isLang } from '@/lib/i18n'
 export async function proxy(request: NextRequest) {
   const { pathname } = request.nextUrl
 
-  // A V2 passou a viver sob /v2/<lang> a 2026-08-24. Os caminhos antigos
-  // (/v2/programa) apanham a língua por omissão em vez de darem 404.
-  if (pathname.startsWith('/v2/')) {
-    const [, , first, ...rest] = pathname.split('/')
-    if (first && !isLang(first)) {
-      const url = request.nextUrl.clone()
-      url.pathname = ['/v2', DEFAULT_LANG, first, ...rest].join('/')
-      return NextResponse.redirect(url)
-    }
-    return NextResponse.next()
+  // O site esteve em pré-visualização sob /v2/<lang> até 2026-08-24. Os links
+  // que ficaram por aí — mensagens, separadores abertos — continuam a chegar
+  // ao sítio certo em vez de darem 404.
+  if (pathname === '/v2' || pathname.startsWith('/v2/')) {
+    const rest = pathname.slice('/v2'.length)
+    const [, first] = rest.split('/')
+    const url = request.nextUrl.clone()
+    url.pathname = first && isLang(first) ? rest : `/${DEFAULT_LANG}${rest}`
+    return NextResponse.redirect(url)
   }
 
   // Allow login page through
@@ -34,5 +33,5 @@ export async function proxy(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ['/admin/:path*', '/v2/:path*'],
+  matcher: ['/admin/:path*', '/v2/:path*', '/v2'],
 }

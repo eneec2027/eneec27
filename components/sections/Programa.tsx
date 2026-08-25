@@ -87,7 +87,7 @@ function Block({
       ) : rows <= 1 ? (
         // Meia hora à largura do dia: hora e título na mesma linha.
         <span className="flex items-baseline gap-1.5 w-full">
-          <span className="mono text-[0.6rem] tabular-nums opacity-70 shrink-0">{session.start}</span>
+          <span className="mono text-[0.66rem] tabular-nums opacity-70 shrink-0">{session.start}</span>
           <span
             className={`text-xs leading-tight truncate ${
               session.type === 'logistica' ? 'font-normal' : 'font-semibold'
@@ -98,7 +98,7 @@ function Block({
         </span>
       ) : (
         <>
-          <span className="mono text-[0.6rem] tabular-nums opacity-70 block leading-tight">
+          <span className="mono text-[0.66rem] tabular-nums opacity-70 block leading-tight">
             {session.start}{session.end ? `–${session.end}` : '→'}
           </span>
           <span
@@ -312,7 +312,7 @@ export default function Programa({ lang }: { lang: Lang }) {
               <div />
               {PROGRAM.map(day => (
                 <div key={day.key} className="col-span-2 px-1 pb-3">
-                  <p className="mono text-[0.62rem] tracking-widest uppercase text-muted-foreground">
+                  <p className="mono text-[0.68rem] tracking-widest uppercase text-muted-foreground">
                     {t(day.weekday, lang)}
                   </p>
                   <p className="font-semibold text-foreground">{t(day.date, lang)}</p>
@@ -337,7 +337,7 @@ export default function Programa({ lang }: { lang: Lang }) {
               {HOUR_MARKS.map(h => (
                 <div
                   key={`l-${h}`}
-                  className="mono text-[0.62rem] text-muted-foreground/70 tabular-nums pt-1 pr-3 text-right"
+                  className="mono text-[0.68rem] text-muted-foreground/70 tabular-nums pt-1 pr-3 text-right"
                   style={{ gridColumn: '1 / 2', gridRow: `${rowOf(h)} / span 2` }}
                 >
                   {h}
@@ -385,7 +385,7 @@ export default function Programa({ lang }: { lang: Lang }) {
                 onFocus={() => setHighlight(type)}
                 onBlur={() => setHighlight(null)}
                 onClick={() => setHighlight(h => (h === type ? null : type))}
-                className={`flex items-center gap-2 mono text-[0.62rem] tracking-widest uppercase transition-colors ${
+                className={`flex items-center gap-2 py-1.5 mono text-[0.68rem] tracking-widest uppercase transition-colors ${
                   highlight === type ? 'text-foreground' : 'text-muted-foreground hover:text-foreground'
                 }`}
               >

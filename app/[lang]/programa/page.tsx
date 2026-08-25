@@ -5,13 +5,17 @@ import PageHeader from '@/components/site/PageHeader'
 import Reveal from '@/components/site/Reveal'
 import Programa from '@/components/sections/Programa'
 import Oradores from '@/components/sections/Oradores'
+import { langAlternates } from '@/lib/nav'
 import { getDict, isLang } from '@/lib/i18n'
 import { EVENT, SCHEDULE_ANNOUNCED, SOCIAL } from '@/lib/siteConfig'
 
 export async function generateMetadata({ params }: { params: Promise<{ lang: string }> }): Promise<Metadata> {
   const { lang } = await params
   if (!isLang(lang)) return {}
-  return { title: `${getDict(lang).programa.label} — ${EVENT.name}` }
+  return {
+    title: `${getDict(lang).programa.label} — ${EVENT.name}`,
+    alternates: langAlternates(lang, '/programa'),
+  }
 }
 
 // "Concentra o programa dos quatro dias: horários, workshops, visitas técnicas e

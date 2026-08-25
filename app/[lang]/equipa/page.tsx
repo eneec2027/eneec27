@@ -7,14 +7,17 @@ import PageHeader from '@/components/site/PageHeader'
 import Reveal from '@/components/site/Reveal'
 import BlueprintRule from '@/components/site/BlueprintRule'
 import { TEAM, AMBASSADORS, type Member } from '@/lib/content'
-import { routes } from '@/lib/nav'
+import { routes, langAlternates } from '@/lib/nav'
 import { CONTACTS, EVENT, TEAM_ANNOUNCED, AMBASSADORS_ANNOUNCED } from '@/lib/siteConfig'
 import { getDict, isLang } from '@/lib/i18n'
 
 export async function generateMetadata({ params }: { params: Promise<{ lang: string }> }): Promise<Metadata> {
   const { lang } = await params
   if (!isLang(lang)) return {}
-  return { title: `${getDict(lang).equipa.label} — ${EVENT.name}` }
+  return {
+    title: `${getDict(lang).equipa.label} — ${EVENT.name}`,
+    alternates: langAlternates(lang, '/equipa'),
+  }
 }
 
 // "Apresenta primeiro a Comissão Organizadora, com fotografia, nome e função de

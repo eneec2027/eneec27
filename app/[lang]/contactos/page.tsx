@@ -4,14 +4,17 @@ import Link from 'next/link'
 
 import PageHeader from '@/components/site/PageHeader'
 import Reveal from '@/components/site/Reveal'
-import { routes } from '@/lib/nav'
+import { routes, langAlternates } from '@/lib/nav'
 import { CONTACTS, EVENT, SOCIAL } from '@/lib/siteConfig'
 import { getDict, isLang } from '@/lib/i18n'
 
 export async function generateMetadata({ params }: { params: Promise<{ lang: string }> }): Promise<Metadata> {
   const { lang } = await params
   if (!isLang(lang)) return {}
-  return { title: `${getDict(lang).contactos.label} — ${EVENT.name}` }
+  return {
+    title: `${getDict(lang).contactos.label} — ${EVENT.name}`,
+    alternates: langAlternates(lang, '/contactos'),
+  }
 }
 
 // "Reúne os e-mails oficiais, redes sociais e localização do Departamento de

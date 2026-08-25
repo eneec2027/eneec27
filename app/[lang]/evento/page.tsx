@@ -4,13 +4,17 @@ import { notFound } from 'next/navigation'
 import PageHeader from '@/components/site/PageHeader'
 import Reveal from '@/components/site/Reveal'
 import BlueprintRule from '@/components/site/BlueprintRule'
+import { langAlternates } from '@/lib/nav'
 import { getDict, isLang } from '@/lib/i18n'
 import { EVENT } from '@/lib/siteConfig'
 
 export async function generateMetadata({ params }: { params: Promise<{ lang: string }> }): Promise<Metadata> {
   const { lang } = await params
   if (!isLang(lang)) return {}
-  return { title: `${getDict(lang).evento.label} — ${EVENT.name}` }
+  return {
+    title: `${getDict(lang).evento.label} — ${EVENT.name}`,
+    alternates: langAlternates(lang, '/evento'),
+  }
 }
 
 // 3.2 do briefing: história do ENEEC, visão de Aveiro e mensagem de boas-vindas.

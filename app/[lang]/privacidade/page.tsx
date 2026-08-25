@@ -3,12 +3,16 @@ import { notFound } from 'next/navigation'
 
 import PageHeader from '@/components/site/PageHeader'
 import { CONTACTS, EVENT } from '@/lib/siteConfig'
+import { langAlternates } from '@/lib/nav'
 import { getDict, isLang } from '@/lib/i18n'
 
 export async function generateMetadata({ params }: { params: Promise<{ lang: string }> }): Promise<Metadata> {
   const { lang } = await params
   if (!isLang(lang)) return {}
-  return { title: `${getDict(lang).privacidade.title} — ${EVENT.name}` }
+  return {
+    title: `${getDict(lang).privacidade.title} — ${EVENT.name}`,
+    alternates: langAlternates(lang, '/privacidade'),
+  }
 }
 
 // O briefing pede um link permanente no rodapé, porque a newsletter e o aviso de

@@ -1,22 +1,16 @@
-import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
 
 import Navbar from '@/components/Navbar'
 import Footer from '@/components/Footer'
 import { LANGS, isLang, HTML_LANG, type Lang } from '@/lib/i18n'
 
-// Toda a V2 vive sob /v2/<lang> enquanto não substituir a V1 em produção, e sob
-// noindex — é revisão interna, não é lançamento. Ver o vault, briefing-conteudos.
+// O site serve na raiz, uma árvore por língua: /pt e /en. Substituiu o teaser
+// da V1 a 2026-08-24 — o histórico está no vault, proximos-passos › 0.5.
 //
-// 🚀 PARA LANÇAR (três passos, por esta ordem):
-//   1. mover app/v2/[lang] → app/[lang] e pôr BASE = '' em lib/nav.ts
-//   2. apagar o `robots` abaixo, e passar o <html lang> do layout de raiz a
-//      seguir o segmento de língua (hoje é sempre "pt", e o <div lang> nesta
-//      árvore é o que corrige a leitura em inglês)
-//   3. tirar o ramo /v2 do proxy.ts, que deixa de ter para onde redirecionar
-export const metadata: Metadata = {
-  robots: { index: false, follow: false },
-}
+// O <html lang> do layout de raiz é sempre "pt", porque /admin e /candidatura
+// vivem fora desta árvore e o Next só permite um <html>. É o <div lang> abaixo
+// que corrige a leitura em inglês, e são as alternates de cada página que dizem
+// aos motores de busca que as duas versões são traduções uma da outra.
 
 export function generateStaticParams() {
   return LANGS.map(lang => ({ lang }))

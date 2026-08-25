@@ -5,12 +5,16 @@ import EmailCapture from '@/components/site/EmailCapture'
 import Reveal from '@/components/site/Reveal'
 import Logo from '@/components/site/Logo'
 import { EVENT, TEASER_VIDEO_URL, EARLY_BIRDS_OPEN } from '@/lib/siteConfig'
+import { langAlternates } from '@/lib/nav'
 import { getDict, isLang } from '@/lib/i18n'
 
 export async function generateMetadata({ params }: { params: Promise<{ lang: string }> }): Promise<Metadata> {
   const { lang } = await params
   if (!isLang(lang)) return {}
-  return { title: `${getDict(lang).cta.discover} — ${EVENT.name}` }
+  return {
+    title: `${getDict(lang).cta.discover} — ${EVENT.name}`,
+    alternates: langAlternates(lang, '/descobre'),
+  }
 }
 
 // 3.1 do briefing: a página de pré-lançamento para onde aponta o CTA principal.

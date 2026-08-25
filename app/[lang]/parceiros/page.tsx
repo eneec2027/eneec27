@@ -7,12 +7,16 @@ import Reveal from '@/components/site/Reveal'
 import BlueprintRule from '@/components/site/BlueprintRule'
 import { INSTITUTIONAL_PARTNERS, ORGANIZERS, SPONSORS } from '@/lib/content'
 import { CONTACTS, EVENT, SPONSORS_ANNOUNCED } from '@/lib/siteConfig'
+import { langAlternates } from '@/lib/nav'
 import { getDict, isLang } from '@/lib/i18n'
 
 export async function generateMetadata({ params }: { params: Promise<{ lang: string }> }): Promise<Metadata> {
   const { lang } = await params
   if (!isLang(lang)) return {}
-  return { title: `${getDict(lang).parceiros.label} — ${EVENT.name}` }
+  return {
+    title: `${getDict(lang).parceiros.label} — ${EVENT.name}`,
+    alternates: langAlternates(lang, '/parceiros'),
+  }
 }
 
 // "Reúne os apoios institucionais e patrocinadores, com uma estrutura preparada
