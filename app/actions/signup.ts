@@ -2,18 +2,14 @@
 
 import { createClient } from '@supabase/supabase-js'
 
+import { SIGNUP_SOURCES, type SignupSource } from '@/lib/signupSources'
+
 function getSupabase() {
   return createClient(
     process.env.NEXT_PUBLIC_SUPABASE_URL!,
     process.env.SUPABASE_ANON_KEY!
   )
 }
-
-// De onde veio o email. O briefing pede dois pontos de recolha — newsletter e
-// aviso de Early Birds — a partilhar o mesmo sistema, "distinguindo apenas o
-// interesse do utilizador". É a coluna `source` da tabela que faz essa distinção.
-export const SIGNUP_SOURCES = ['v1_teaser', 'v2_newsletter', 'v2_early_birds'] as const
-export type SignupSource = (typeof SIGNUP_SOURCES)[number]
 
 export async function signupEmail(
   email: string,

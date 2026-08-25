@@ -3,7 +3,8 @@
 import { useState } from 'react'
 import Link from 'next/link'
 
-import { signupEmail, type SignupSource } from '@/app/actions/signup'
+import { signupEmail } from '@/app/actions/signup'
+import type { SignupSource } from '@/lib/signupSources'
 import { routes } from '@/lib/nav'
 import { getDict, type Lang } from '@/lib/i18n'
 
