@@ -38,10 +38,20 @@ export default function Numeros({ lang }: { lang: Lang }) {
                 delay={i * 0.06}
                 className={i === HIGHLIGHTS.length - 1 ? 'col-span-2 lg:col-span-1' : ''}
               >
-                <div className="card-dark p-6 sm:p-7 h-full flex flex-col min-h-[10.5rem] group hover:border-gold/40 transition-colors">
-                  <Icon size={26} className="text-gold/60 group-hover:text-gold transition-colors" />
+                {/* Sem número, o cartão ficava com um vazio a meio: aí o ícone
+                    cresce e centra-se com a etiqueta. Com número, o ícone fica
+                    em cima e os algarismos alinham-se em baixo com os vizinhos. */}
+                <div
+                  className={`card-dark p-6 sm:p-7 h-full flex flex-col min-h-[10.5rem] group hover:border-gold/40 transition-colors ${
+                    value ? '' : 'justify-center'
+                  }`}
+                >
+                  <Icon
+                    size={value ? 26 : 34}
+                    className="text-gold/60 group-hover:text-gold transition-colors"
+                  />
 
-                  <div className="mt-auto pt-5">
+                  <div className={value ? 'mt-auto pt-5' : 'pt-4'}>
                     {value && (
                       <p className="mono text-4xl md:text-5xl font-bold text-gold glow-text mb-1 tabular-nums leading-none">
                         {value}

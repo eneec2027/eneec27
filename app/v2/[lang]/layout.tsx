@@ -7,6 +7,13 @@ import { LANGS, isLang, HTML_LANG, type Lang } from '@/lib/i18n'
 
 // Toda a V2 vive sob /v2/<lang> enquanto não substituir a V1 em produção, e sob
 // noindex — é revisão interna, não é lançamento. Ver o vault, briefing-conteudos.
+//
+// 🚀 PARA LANÇAR (três passos, por esta ordem):
+//   1. mover app/v2/[lang] → app/[lang] e pôr BASE = '' em lib/nav.ts
+//   2. apagar o `robots` abaixo, e passar o <html lang> do layout de raiz a
+//      seguir o segmento de língua (hoje é sempre "pt", e o <div lang> nesta
+//      árvore é o que corrige a leitura em inglês)
+//   3. tirar o ramo /v2 do proxy.ts, que deixa de ter para onde redirecionar
 export const metadata: Metadata = {
   robots: { index: false, follow: false },
 }

@@ -62,7 +62,11 @@ export default function Navbar({ lang }: { lang: Lang }) {
 
   // CTA de pré-lançamento do briefing. Quando os Early Birds abrirem, a flag
   // muda e o botão passa a "Garantir Bilhete" em todo o site.
-  const cta = { label: EARLY_BIRDS_OPEN ? d.cta.ticket : d.cta.discover, href: r.descobre }
+  const cta = {
+    label: EARLY_BIRDS_OPEN ? d.cta.ticket : d.cta.discover,
+    short: EARLY_BIRDS_OPEN ? d.cta.ticketShort : d.cta.discoverShort,
+    href: r.descobre,
+  }
 
   useEffect(() => {
     // Guard de hidratação do next-themes — mesmo padrão do V1Page e do Hero.
@@ -85,18 +89,18 @@ export default function Navbar({ lang }: { lang: Lang }) {
           : 'border-b border-transparent'
       }`}
     >
-      <nav className="max-w-7xl mx-auto px-6 h-24 flex items-center justify-between gap-6">
+      <nav className="max-w-7xl mx-auto px-6 h-24 flex items-center justify-between gap-3 xl:gap-6">
         <Link href={r.home} className="shrink-0" aria-label={d.nav.inicio}>
-          <Logo variant="h" height={56} sizeClassName="h-11 sm:h-12 lg:h-13 xl:h-14 w-auto" priority />
+          <Logo variant="h" height={56} sizeClassName="h-11 sm:h-12 lg:h-10 xl:h-14 w-auto" priority />
         </Link>
 
         {/* Desktop */}
-        <ul className="hidden lg:flex items-center gap-7">
+        <ul className="hidden lg:flex items-center gap-4 xl:gap-7">
           {items.map(({ label, href, short }) => (
             <li key={href}>
               <Link
                 href={href}
-                className={`text-sm tracking-wide transition-colors ${
+                className={`block py-2 text-sm tracking-wide transition-colors ${
                   isActive(href) ? 'text-foreground' : 'text-muted-foreground hover:text-foreground'
                 }`}
               >
@@ -107,7 +111,7 @@ export default function Navbar({ lang }: { lang: Lang }) {
           ))}
         </ul>
 
-        <div className="hidden lg:flex items-center gap-3 shrink-0">
+        <div className="hidden lg:flex items-center gap-2 xl:gap-3 shrink-0">
           <LangSwitch lang={lang} pathname={pathname} label={d.nav.language} />
           {mounted && (
             <button
@@ -120,9 +124,10 @@ export default function Navbar({ lang }: { lang: Lang }) {
           )}
           <Link
             href={cta.href}
-            className="inline-flex items-center px-4 py-2 text-xs font-semibold tracking-widest uppercase bg-gold text-primary-foreground hover:bg-gold-light transition-colors rounded-sm mono"
+            className="inline-flex items-center px-3 xl:px-4 py-2 text-xs font-semibold tracking-widest uppercase bg-gold text-primary-foreground hover:bg-gold-light transition-colors rounded-sm mono whitespace-nowrap"
           >
-            {cta.label}
+            <span className="xl:hidden">{cta.short}</span>
+            <span className="hidden xl:inline">{cta.label}</span>
           </Link>
         </div>
 

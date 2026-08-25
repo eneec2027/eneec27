@@ -57,7 +57,10 @@ const pt = {
 
   cta: {
     discover: 'Descobre o ENEEC27',
+    // Versão curta para a barra entre 1024 e 1280px, onde a longa não cabe.
+    discoverShort: 'Descobre',
     ticket: 'Garantir Bilhete',
+    ticketShort: 'Bilhete',
     event: 'O Evento',
     scroll: 'scroll',
   },
@@ -361,7 +364,9 @@ const en: Dict = {
 
   cta: {
     discover: 'Discover ENEEC27',
+    discoverShort: 'Discover',
     ticket: 'Get your ticket',
+    ticketShort: 'Ticket',
     event: 'The Event',
     scroll: 'scroll',
   },

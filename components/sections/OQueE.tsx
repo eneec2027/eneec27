@@ -9,7 +9,7 @@ import { getDict, type Lang } from '@/lib/i18n'
 export default function OQueE({ lang }: { lang: Lang }) {
   const d = getDict(lang).home
   return (
-    <section className="py-28 bg-surface">
+    <section className="py-24 bg-surface">
       <div className="max-w-7xl mx-auto px-6">
         <Reveal>
           <p className="section-label mb-6">{d.whatIsLabel}</p>
@@ -19,7 +19,7 @@ export default function OQueE({ lang }: { lang: Lang }) {
         </Reveal>
 
         <Reveal delay={0.1}>
-          <BlueprintRule className="my-14 opacity-80" />
+          <BlueprintRule className="mt-12 mb-8 opacity-80" />
         </Reveal>
 
         <Reveal delay={0.15}>

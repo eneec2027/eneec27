@@ -14,18 +14,19 @@ export default function PartnerGrid({
 }) {
   const plate = {
     sm: 'h-20 px-4',
-    md: 'h-24 px-6',
-    lg: 'h-28 px-8',
+    md: 'h-24 px-5',
+    lg: 'h-28 px-6',
   }[size]
 
-  const img = { sm: 40, md: 52, lg: 64 }[size]
+  // O logo ocupava metade da placa e sobrava branco de todos os lados.
+  const img = { sm: 48, md: 64, lg: 78 }[size]
 
   return (
     <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
       {partners.map(({ name, logo, url }) => {
         const plateInner = (
           <div
-            className={`${plate} w-full bg-white rounded-sm border border-gold-subtle flex items-center justify-center transition-all duration-200 group-hover:border-gold/50`}
+            className={`${plate} w-full bg-white rounded-sm border border-slate-900/10 dark:border-gold-subtle flex items-center justify-center transition-all duration-200 group-hover:border-gold/60`}
           >
             <Image
               src={logo}

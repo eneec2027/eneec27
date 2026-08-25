@@ -48,16 +48,24 @@ function PersonCard({ member }: { member: Member }) {
   )
 }
 
-function EmptyState({ soon, role }: { soon: string; role: string }) {
+// A etiqueta do bloco já diz de quem se trata: repeti-la nos quatro cartões só
+// enchia a secção de ruído. Fica a silhueta, no formato das fotografias que hão
+// de vir para o lugar.
+function EmptyState({ soon }: { soon: string }) {
   return (
     <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
       {[0, 1, 2, 3].map(i => (
-        <div key={i} className="card-dark p-6 flex flex-col">
-          <div className="w-16 h-16 rounded-sm bg-surface border border-gold-subtle flex items-center justify-center mb-4">
-            <span className="mono text-gold/30 text-lg font-bold">?</span>
+        <div key={i} className="card-dark overflow-hidden">
+          <div className="aspect-[4/5] relative bg-surface grid-bg flex items-center justify-center">
+            <svg width="46" height="46" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                 strokeWidth="1" className="text-gold/25">
+              <circle cx="12" cy="8.5" r="3.5" />
+              <path d="M5 20v-1a7 7 0 0 1 14 0v1" />
+            </svg>
           </div>
-          <p className="font-semibold text-muted-foreground/50 italic">{soon}</p>
-          <p className="text-xs text-gold mono mt-1">{role}</p>
+          <div className="p-5">
+            <p className="text-sm text-muted-foreground/50 italic">{soon}</p>
+          </div>
         </div>
       ))}
     </div>
@@ -93,7 +101,7 @@ export default async function EquipaPage({ params }: { params: Promise<{ lang: s
               </div>
             ) : (
               <>
-                <EmptyState soon={d.soon} role={d.teamLabel} />
+                <EmptyState soon={d.soon} />
                 <p className="text-xs text-muted-foreground mono mt-6">{d.teamSoon}</p>
               </>
             )}
@@ -122,7 +130,7 @@ export default async function EquipaPage({ params }: { params: Promise<{ lang: s
               </div>
             ) : (
               <>
-                <EmptyState soon={d.soon} role={d.ambassadorsLabel} />
+                <EmptyState soon={d.soon} />
                 <p className="text-xs text-muted-foreground mono mt-6">{d.ambassadorsSoon}</p>
               </>
             )}

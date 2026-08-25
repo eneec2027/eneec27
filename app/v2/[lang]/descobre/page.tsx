@@ -47,13 +47,30 @@ export default async function DescobrePage({ params }: { params: Promise<{ lang:
               <video src={TEASER_VIDEO_URL} controls playsInline className="w-full h-full object-cover" />
             ) : (
               <>
-                <div className="absolute inset-0 grid-bg opacity-60" />
+                <div className="absolute inset-0 grid-bg" />
+                {/* Esquadria de folha de desenho nos quatro cantos */}
+                {[
+                  'top-4 left-4 border-t border-l',
+                  'top-4 right-4 border-t border-r',
+                  'bottom-4 left-4 border-b border-l',
+                  'bottom-4 right-4 border-b border-r',
+                ].map(pos => (
+                  <span key={pos} className={`absolute ${pos} w-8 h-8 border-gold/40`} />
+                ))}
                 <div className="relative z-10 text-center px-6">
                   <div className="w-16 h-16 border border-gold/50 rounded-full flex items-center justify-center mx-auto mb-5">
                     <span className="text-gold text-xl translate-x-0.5">▶</span>
                   </div>
                   <p className="text-sm text-muted-foreground">{d.videoSoon}</p>
-                  <p className="mono text-xs text-muted-foreground/50 mt-1">{d.videoSoonSub}</p>
+                </div>
+                {/* Legenda do desenho, no canto inferior direito */}
+                <div className="absolute bottom-4 right-4 border border-gold-subtle bg-background/70 backdrop-blur-sm rounded-sm px-3 py-2 text-right">
+                  <p className="mono text-[0.68rem] tracking-widest uppercase text-gold/80">
+                    {d.comingSoon}
+                  </p>
+                  <p className="mono text-[0.68rem] tracking-widest uppercase text-muted-foreground/60">
+                    {d.videoSoonSub}
+                  </p>
                 </div>
               </>
             )}
