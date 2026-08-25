@@ -75,6 +75,12 @@ const pt = {
       'Quatro dias. Uma cidade. A próxima geração da Engenharia Civil reunida em Aveiro.',
     ],
     whatIsLabel: "O que é o ENEEC'27?",
+    // "Oito anos depois" conta a partir da **última edição**, não da última em
+    // Aveiro: o encontro era anual, parou com a pandemia e volta em 2027. Com a
+    // 10.ª edição em 2014 e a 15.ª em 2027, a 14.ª cai em 2019 — oito anos antes.
+    // Não é contradição com o texto da história (Aveiro 2014, 13 anos); são duas
+    // contagens diferentes. Não "corrigir" o número. Por confirmar com a NEBEC:
+    // o ano e a cidade da 14.ª edição.
     whatIs:
       'Oito anos depois, o ENEEC regressa a Aveiro!! Durante quatro dias, estudantes ' +
       'de Engenharia Civil de todo o país juntam-se para partilhar conhecimento, criar ' +
