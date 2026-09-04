@@ -37,7 +37,7 @@ export const INSTITUTIONAL_PARTNERS: Partner[] = [
   { name: 'Ordem dos Engenheiros Técnicos', logo: '/logos/ordem-engenheiros-tecnicos.png', url: 'https://www.oet.pt' },
   { name: 'AICCOPN', logo: '/logos/aiccopn.png', url: 'https://www.aiccopn.pt' },
   { name: 'ANIPB', logo: '/logos/anipb.png', url: 'https://www.anipb.pt' },
-  { name: 'Infraestruturas de Portugal', logo: '/logos/infraestruturas-portugal.png', url: 'https://www.infraestruturasdeportugal.pt' },
+  { name: 'CNJ — Conselho Nacional de Juventude', logo: '/logos/cnj.png', url: 'https://www.cnj.pt' },
 ]
 
 export const ORGANIZERS: Partner[] = [
