@@ -85,7 +85,7 @@ export const PROGRAM: ProgramDay[] = [
           { start: '18:00', end: '18:30', title: { pt: 'Coffee break', en: 'Coffee break' }, type: 'logistica' },
           {
             start: '18:30', end: '19:00',
-            title: { pt: 'Ted Talk', en: 'Ted Talk' },
+            title: { pt: 'ENEEC Talk', en: 'ENEEC Talk' },
             type: 'palestra',
             provisional: true,
             note: { pt: 'convidado a anunciar', en: 'guest to be announced' },
@@ -159,7 +159,7 @@ export const PROGRAM: ProgramDay[] = [
     weekday: { pt: 'Sábado', en: 'Saturday' },
     date: { pt: '10 de abril', en: '10 April' },
     sessions: [
-      { start: '08:30', end: '13:00', title: { pt: 'Atividade lúdica', en: 'Group activity' }, type: 'social' },
+      { start: '08:30', end: '13:00', title: { pt: 'Mola Challenge', en: 'Mola Challenge' }, type: 'social' },
       { start: '13:00', title: { pt: 'Almoço de despedida', en: 'Farewell lunch' }, type: 'logistica' },
     ],
   },

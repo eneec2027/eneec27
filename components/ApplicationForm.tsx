@@ -557,8 +557,8 @@ function SuccessScreen() {
         </p>
         <p className="text-sm text-foreground/60">
           Em caso de dúvida, contacta-nos em{' '}
-          <a href={`mailto:${CONTACTS.logistica}`} className="inline-block py-1 text-gold hover:underline">
-            {CONTACTS.logistica}
+          <a href={`mailto:${CONTACTS.staff}`} className="inline-block py-1 text-gold hover:underline">
+            {CONTACTS.staff}
           </a>
           .
         </p>

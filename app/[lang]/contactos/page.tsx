@@ -33,7 +33,7 @@ export default async function ContactosPage({ params }: { params: Promise<{ lang
   const emails = [
     { label: d.emailGeneral, value: CONTACTS.geral },
     { label: d.emailSponsors, value: CONTACTS.parcerias },
-    { label: d.emailApplications, value: CONTACTS.logistica },
+    { label: d.emailApplications, value: CONTACTS.staff },
   ]
 
   return (
@@ -57,8 +57,8 @@ export default async function ContactosPage({ params }: { params: Promise<{ lang
               </Link>
               <p className="text-xs text-muted-foreground/70 mt-4">
                 {d.teamDoubts}{' '}
-                <a href={`mailto:${CONTACTS.logistica}`} className="inline-block py-1 text-gold hover:underline">
-                  {CONTACTS.logistica}
+                <a href={`mailto:${CONTACTS.staff}`} className="inline-block py-1 text-gold hover:underline">
+                  {CONTACTS.staff}
                 </a>
               </p>
             </div>
@@ -133,18 +133,14 @@ export default async function ContactosPage({ params }: { params: Promise<{ lang
                 </li>
                 <li className="flex flex-col sm:flex-row sm:items-baseline gap-1 sm:gap-6 py-4 border-b border-gold-subtle">
                   <span className="section-label sm:w-52 shrink-0">LinkedIn</span>
-                  {SOCIAL.linkedin !== '#' ? (
-                    <a
-                      href={SOCIAL.linkedin}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="text-foreground hover:text-gold transition-colors"
-                    >
-                      {d.linkedinText}
-                    </a>
-                  ) : (
-                    <span className="text-muted-foreground/60 italic">{d.soon}</span>
-                  )}
+                  <a
+                    href={SOCIAL.linkedin}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-foreground hover:text-gold transition-colors"
+                  >
+                    {d.linkedinText}
+                  </a>
                 </li>
                 <li className="flex flex-col sm:flex-row sm:items-baseline gap-1 sm:gap-6 py-4 border-b border-gold-subtle">
                   <span className="section-label sm:w-52 shrink-0">TikTok</span>

@@ -41,8 +41,8 @@ export const INSTITUTIONAL_PARTNERS: Partner[] = [
 ]
 
 export const ORGANIZERS: Partner[] = [
-  { name: 'NEBEC — Núcleo de Estudantes de Engenharia Civil', logo: '/logos/nebec.png', url: 'https://nebec.pt' },
-  { name: 'AAUAv — Associação Académica da Universidade de Aveiro', logo: '/logos/aauav.png', url: 'https://aauav.pt' },
+  { name: 'NEBEC — Núcleo de Estudantes de Engenharia Civil', logo: '/logos/nebec.png', url: 'https://www.instagram.com/nebecaauav/' },
+  { name: 'AAUAv — Associação Académica da Universidade de Aveiro', logo: '/logos/aauav.png', url: 'https://www.instagram.com/aauav_/' },
   { name: 'Departamento de Engenharia Civil da Universidade de Aveiro', logo: '/logos/decivil.png', url: 'https://www.ua.pt/pt/decivil' },
   { name: 'Universidade de Aveiro', logo: '/logos/ua.png', url: 'https://www.ua.pt' },
 ]

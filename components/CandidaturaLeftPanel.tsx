@@ -179,8 +179,8 @@ export function CandidaturaLeftPanel() {
         </div>
         <p className="mono text-[0.66rem] text-muted-foreground/55">
           Dúvidas?{' '}
-          <a href={`mailto:${CONTACTS.logistica}`} className="inline-block py-1 text-gold/65 hover:text-gold transition-colors">
-            {CONTACTS.logistica}
+          <a href={`mailto:${CONTACTS.staff}`} className="inline-block py-1 text-gold/65 hover:text-gold transition-colors">
+            {CONTACTS.staff}
           </a>
         </p>
       </div>

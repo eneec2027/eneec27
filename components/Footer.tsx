@@ -78,18 +78,15 @@ export default function Footer({ lang }: { lang: Lang }) {
               >
                 <IconInstagram />
               </a>
-              {/* Só renderiza quando houver URL real — ver SOCIAL em siteConfig. */}
-              {SOCIAL.linkedin !== '#' && (
-                <a
-                  href={SOCIAL.linkedin}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  aria-label="LinkedIn"
-                  className="p-2.5 text-muted-foreground hover:text-gold transition-colors"
-                >
-                  <IconLinkedIn />
-                </a>
-              )}
+              <a
+                href={SOCIAL.linkedin}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="LinkedIn"
+                className="p-2.5 text-muted-foreground hover:text-gold transition-colors"
+              >
+                <IconLinkedIn />
+              </a>
               {SOCIAL.tiktok !== '#' && (
                 <a
                   href={SOCIAL.tiktok}

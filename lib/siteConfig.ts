@@ -25,7 +25,7 @@ export const EVENT = {
   tagline: 'Construção em Movimento',
   organizer: 'NEBEC',
   organizerFull: 'NEBEC-AAUAv',
-  organizerUrl: 'https://nebec.pt',
+  organizerUrl: 'https://www.instagram.com/nebecaauav/',
 } as const
 
 // Datas fechadas pelo briefing de 2026-08-24 (antes disto só o mês era público).
@@ -64,18 +64,17 @@ export const TEASER_VIDEO_URL: string | null = null
 export const CONTACTS = {
   geral: 'geral@eneec.pt',
   parcerias: 'parcerias@eneec.pt',
-  logistica: 'logistica.eneec@ua.pt',
+  staff: 'staff@eneec.pt',
 } as const
 
-// LinkedIn e TikTok ainda sem URL confirmado — '#' desactiva o link em vez de
-// o renderizar morto. O briefing diz que o evento tem LinkedIn oficial; falta
-// o endereço. TikTok tem espaço reservado, por pedido do briefing.
+// TikTok ainda sem URL confirmado — '#' desactiva o link em vez de o
+// renderizar morto. TikTok tem espaço reservado, por pedido do briefing.
 export const SOCIAL = {
   instagram: 'https://www.instagram.com/eneec2027',
   instagramHandle: '@eneec2027',
   instagramNebec: 'https://www.instagram.com/nebecaauav',
   instagramNebecHandle: '@nebecaauav',
-  linkedin: '#',
+  linkedin: 'https://www.linkedin.com/company/eneec27/',
   tiktok: '#',
   facebook: '#',
 } as const
