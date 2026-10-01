@@ -262,12 +262,12 @@ const pt = {
   },
 
   descobre: {
-    title: 'O teaser está quase pronto.',
-    comingSoon: 'Coming Soon',
+    title: 'Quatro dias. Uma cidade.',
+    comingSoon: 'Teaser',
     intro:
       'O ENEEC27 junta durante quatro dias estudantes de Engenharia Civil de todo o ' +
-      'país em Aveiro. O teaser está em fase final de produção — entretanto, deixa o ' +
-      'teu email e sabes em primeira mão quando abrirem os Early Birds.',
+      'país em Aveiro. Vê o teaser e deixa o teu email — sabes em primeira mão ' +
+      'quando abrirem os Early Birds.',
     videoSoon: 'Teaser em fase final de produção',
     videoSoonSub: 'a publicar em breve',
     formLabel: 'Avisa-me quando abrirem os Early Birds',
@@ -566,12 +566,12 @@ const en: Dict = {
   },
 
   descobre: {
-    title: 'The teaser is almost ready.',
-    comingSoon: 'Coming Soon',
+    title: 'Four days. One city.',
+    comingSoon: 'Teaser',
     intro:
       'ENEEC27 brings together Civil Engineering students from across the country for ' +
-      'four days in Aveiro. The teaser is in final production — in the meantime, leave ' +
-      'your email and be the first to know when Early Birds open.',
+      'four days in Aveiro. Watch the teaser and leave your email — you\'ll be the ' +
+      'first to know when Early Birds open.',
     videoSoon: 'Teaser in final production',
     videoSoonSub: 'publishing soon',
     formLabel: 'Tell me when Early Birds open',
