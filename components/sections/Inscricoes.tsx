@@ -2,7 +2,7 @@
 
 // ⚠️ Não está ligada a nenhuma rota. Enquanto os Early Birds não tiverem data, o
 // site vive em pré-lançamento: o CTA é "Descobre o ENEEC27" e a recolha de
-// interesse faz-se pelo rodapé e por /descobre — ver EARLY_BIRDS_OPEN em
+// interesse faz-se pelo rodapé — ver EARLY_BIRDS_OPEN em
 // lib/siteConfig.ts. As modalidades de bilhete abaixo nunca foram confirmadas
 // pela NEBEC; ficam vazias até serem.
 

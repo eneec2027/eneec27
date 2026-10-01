@@ -65,7 +65,7 @@ export default function Navbar({ lang }: { lang: Lang }) {
   const cta = {
     label: EARLY_BIRDS_OPEN ? d.cta.ticket : d.cta.discover,
     short: EARLY_BIRDS_OPEN ? d.cta.ticketShort : d.cta.discoverShort,
-    href: r.descobre,
+    href: r.evento,
   }
 
   useEffect(() => {

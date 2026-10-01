@@ -54,10 +54,11 @@ export const AMBASSADORS_ANNOUNCED = false
 export const SPONSORS_ANNOUNCED = false
 
 // Enquanto false, o CTA principal do site é "Descobre o ENEEC27" e aponta para
-// /descobre. Quando os Early Birds abrirem, passa a "Garantir Bilhete".
+// /evento (a /descobre saiu a 2026-10-01). Quando os Early Birds abrirem, passa
+// a "Garantir Bilhete".
 export const EARLY_BIRDS_OPEN = false
 
-// Teaser em /descobre. Com null, aparece o placeholder no lugar do vídeo.
+// Teaser no topo da /evento. Com null, a secção do teaser não aparece.
 // O primeiro frame do vídeo é preto — o poster é o plano de drone aos 3 s.
 export const TEASER_VIDEO_URL: string | null = '/teaser-eneec27.mp4'
 export const TEASER_POSTER_URL = '/teaser-eneec27-poster.jpg'

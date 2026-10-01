@@ -7,7 +7,7 @@ const SITE = 'https://eneec.pt'
 
 // Páginas públicas, nas duas línguas. /admin fica de fora (é privado) e
 // /candidatura entra uma vez só, porque não tem versão inglesa.
-const PAGES = ['', '/evento', '/programa', '/equipa', '/parceiros', '/contactos', '/descobre', '/privacidade']
+const PAGES = ['', '/evento', '/programa', '/equipa', '/parceiros', '/contactos', '/privacidade']
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const pages = LANGS.flatMap(lang =>

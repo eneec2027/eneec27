@@ -36,7 +36,6 @@ export function routes(lang: Lang) {
     equipa: path(lang, '/equipa'),
     parceiros: path(lang, '/parceiros'),
     contactos: path(lang, '/contactos'),
-    descobre: path(lang, '/descobre'),
     privacidade: path(lang, '/privacidade'),
     // Fora do prefixo da V2 e sem versão inglesa: o formulário de candidatura é
     // o mesmo que a V1 serve, com layout próprio, e vive na raiz desde maio.

@@ -135,7 +135,7 @@ export default function Hero({ lang }: { lang: Lang }) {
 
           <div className="flex flex-wrap gap-4">
             <Link
-              href={r.descobre}
+              href={r.evento}
               className="inline-flex items-center px-7 py-3 bg-gold text-primary-foreground font-semibold text-sm tracking-widest uppercase mono hover:bg-gold-light transition-colors rounded-sm glow-gold"
             >
               {EARLY_BIRDS_OPEN ? d.cta.ticket : d.cta.discover}

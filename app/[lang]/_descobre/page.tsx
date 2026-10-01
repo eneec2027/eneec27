@@ -30,6 +30,12 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: str
   }
 }
 
+// ⚠️ GUARDADA, SEM ROTA (2026-10-01, a pedido do AD). A pasta começa por "_",
+// por isso o Next não a serve; /pt/descobre e /en/descobre redireccionam para
+// /evento (next.config.ts) e os botões "Descobre o ENEEC27" apontam para lá.
+// Para a repor: renomear a pasta para `descobre`, tirar o redirect, voltar a
+// pôr '/descobre' no sitemap e `descobre` em routes() (lib/nav.ts).
+//
 // 3.1 do briefing: a página de pré-lançamento para onde aponta o CTA principal.
 // Fica deliberadamente curta — "sem necessidade de preencher a página com
 // conteúdo provisório". Cresce com programa, bilhetes e convidados a seu tempo.

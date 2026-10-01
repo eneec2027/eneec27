@@ -20,7 +20,7 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: str
   }
 }
 
-// Esquadria de folha de desenho nos quatro cantos — a mesma da /descobre.
+// Esquadria de folha de desenho nos quatro cantos.
 const CORNERS = [
   '-top-2 -left-2 border-t border-l',
   '-top-2 -right-2 border-t border-r',

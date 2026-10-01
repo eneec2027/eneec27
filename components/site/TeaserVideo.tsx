@@ -1,6 +1,6 @@
 import { TEASER_VIDEO_URL, TEASER_POSTER_URL } from '@/lib/siteConfig'
 
-// O mesmo leitor em /evento e /descobre. preload="metadata" para não
+// O leitor do teaser (/evento; também na /descobre guardada). preload="metadata" para não
 // descarregar os 17 MB antes de alguém carregar no play; o poster cobre o
 // primeiro frame, que é preto.
 export default function TeaserVideo({ label }: { label: string }) {
