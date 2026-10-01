@@ -9,7 +9,7 @@ import BlueprintRule from '@/components/site/BlueprintRule'
 import TeaserVideo from '@/components/site/TeaserVideo'
 import { langAlternates, routes } from '@/lib/nav'
 import { getDict, isLang } from '@/lib/i18n'
-import { EVENT, TEASER_VIDEO_URL, TEASER_DURATION } from '@/lib/siteConfig'
+import { EVENT, TEASER_VIDEO_URL } from '@/lib/siteConfig'
 
 export async function generateMetadata({ params }: { params: Promise<{ lang: string }> }): Promise<Metadata> {
   const { lang } = await params
@@ -62,16 +62,13 @@ export default async function EventoPage({ params }: { params: Promise<{ lang: s
           {TEASER_VIDEO_URL && (
             <Reveal>
               <div id="teaser" className="scroll-mt-28">
-                <div className="flex items-baseline justify-between gap-4 mb-5">
-                  <h2 className="section-label">{d.teaserLabel}</h2>
-                  <span className="mono text-xs text-muted-foreground tabular-nums">{TEASER_DURATION}</span>
-                </div>
+                <h2 className="section-label mb-5">{d.teaserLabel}</h2>
                 <div className="relative">
                   {CORNERS.map(pos => (
                     <span key={pos} aria-hidden className={`hidden sm:block absolute ${pos} w-6 h-6 border-gold/50`} />
                   ))}
                   <div className="aspect-video w-full card-dark overflow-hidden">
-                    <TeaserVideo label={d.teaserLabel} />
+                    <TeaserVideo label={d.teaserLabel} playLabel={dict.cta.watchTeaser} />
                   </div>
                 </div>
                 <p className="text-sm text-muted-foreground mt-4">{d.teaserCaption}</p>

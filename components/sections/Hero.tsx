@@ -140,11 +140,13 @@ export default function Hero({ lang }: { lang: Lang }) {
             >
               {EARLY_BIRDS_OPEN ? d.cta.ticket : d.cta.discover}
             </Link>
+            {/* Era "O Evento", mas o CTA principal já leva lá desde que a
+                /descobre saiu (2026-10-01). */}
             <Link
-              href={r.evento}
+              href={r.programa}
               className="inline-flex items-center px-7 py-3 border border-gold/40 text-foreground/80 font-medium text-sm tracking-wide hover:border-gold hover:text-foreground transition-all rounded-sm"
             >
-              {d.cta.event}
+              {d.nav.programa}
             </Link>
           </div>
 

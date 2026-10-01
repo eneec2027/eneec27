@@ -59,9 +59,9 @@ export const SPONSORS_ANNOUNCED = false
 export const EARLY_BIRDS_OPEN = false
 
 // Teaser no topo da /evento. Com null, a secção do teaser não aparece.
-// O primeiro frame do vídeo é preto — o poster é o plano de drone aos 3 s.
+// O poster é o logo completo, o frame dos 48,5 s (o primeiro frame é preto).
 export const TEASER_VIDEO_URL: string | null = '/teaser-eneec27.mp4'
-export const TEASER_POSTER_URL = '/teaser-eneec27-poster.jpg'
+export const TEASER_POSTER_URL = '/teaser-eneec27-capa.jpg'
 export const TEASER_DURATION = '0:50'
 
 export const CONTACTS = {
