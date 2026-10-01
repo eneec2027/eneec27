@@ -38,6 +38,7 @@ export const INSTITUTIONAL_PARTNERS: Partner[] = [
   { name: 'AICCOPN', logo: '/logos/aiccopn.png', url: 'https://www.aiccopn.pt' },
   { name: 'ANIPB', logo: '/logos/anipb.png', url: 'https://www.anipb.pt' },
   { name: 'CNJ — Conselho Nacional de Juventude', logo: '/logos/cnj.png', url: 'https://www.cnj.pt' },
+  { name: 'LNEC — Laboratório Nacional de Engenharia Civil', logo: '/logos/lnec.png', url: 'https://www.lnec.pt' },
 ]
 
 export const ORGANIZERS: Partner[] = [
