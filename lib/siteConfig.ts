@@ -57,9 +57,10 @@ export const SPONSORS_ANNOUNCED = false
 // /descobre. Quando os Early Birds abrirem, passa a "Garantir Bilhete".
 export const EARLY_BIRDS_OPEN = false
 
-// Teaser "Coming Soon" em fase final de produção. Substituir por o caminho do
-// ficheiro (ex.: '/teaser-eneec27.mp4') e o placeholder desaparece sozinho.
-export const TEASER_VIDEO_URL: string | null = null
+// Teaser em /descobre. Com null, aparece o placeholder no lugar do vídeo.
+// O primeiro frame do vídeo é preto — o poster é o plano de drone aos 3 s.
+export const TEASER_VIDEO_URL: string | null = '/teaser-eneec27.mp4'
+export const TEASER_POSTER_URL = '/teaser-eneec27-poster.jpg'
 
 export const CONTACTS = {
   geral: 'geral@eneec.pt',
