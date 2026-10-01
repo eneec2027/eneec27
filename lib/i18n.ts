@@ -59,6 +59,7 @@ const pt = {
     discover: 'Descobre o ENEEC27',
     // Versão curta para a barra entre 1024 e 1280px, onde a longa não cabe.
     discoverShort: 'Descobre',
+    watchTeaser: 'Vê o teaser',
     ticket: 'Garantir Bilhete',
     ticketShort: 'Bilhete',
     event: 'O Evento',
@@ -106,6 +107,11 @@ const pt = {
     title: 'O ENEEC regressa a Aveiro.',
     intro: (edition: string, org: string) =>
       `${edition} do Encontro Nacional de Estudantes de Engenharia Civil, organizada pelo ${org}.`,
+    teaserLabel: 'O teaser',
+    teaserCaption: 'O campus, a cidade e o convite para abril.',
+    factsLabel: 'Ficha do evento',
+    facts: { edition: 'Edição', dates: 'Datas', organizer: 'Organização', venue: 'Local' },
+    mapLink: 'Ver no mapa',
     historyLabel: 'A história do ENEEC',
     history:
       'O ENEEC é um encontro nacional que reúne estudantes de Engenharia Civil de ' +
@@ -115,6 +121,12 @@ const pt = {
       'recebeu a 10.ª edição em 2014, organizada pelo NEBEC-AAUAv, e em 2027 ' +
       'prepara-se para voltar a acolher o evento, na sua 15.ª edição, retomando uma ' +
       'tradição nacional e abrindo um novo capítulo do ENEEC.',
+    // Os dois marcos saem do próprio texto da história, acima — não acrescentar
+    // edições ou cidades que ele não diga.
+    milestones: [
+      { year: '2014', text: '10.ª edição, em Aveiro' },
+      { year: '2027', text: '15.ª edição — o regresso' },
+    ],
     aveiroLabel: 'A visão de Aveiro',
     aveiro:
       'Aveiro é a cidade dos canais, dos moliceiros e de uma universidade que respira ' +
@@ -122,6 +134,8 @@ const pt = {
       'Departamento de Engenharia Civil, o campus e o coração da cidade. Uma edição ' +
       'pensada para quem vem de fora conhecer não só a engenharia civil portuguesa, ' +
       'mas também esta cidade.',
+    aveiroImageAlt: 'Vista aérea do campus da Universidade de Aveiro, com a cidade ao fundo',
+    aveiroImageCaption: 'Campus de Santiago, num plano do teaser',
     pillarsLabel: 'Os 3 Pilares',
     pillars: [
       {
@@ -148,6 +162,8 @@ const pt = {
       'à cidade, das conversas aos momentos de convívio. Façam desta edição também ' +
       'vossa. Sejam muito bem-vindos ao ENEEC27.',
     welcomeSignature: 'Comissão Organizadora do ENEEC’27',
+    programaCta: 'O que acontece em cada dia',
+    programaLink: 'Ver o programa',
   },
 
   programa: {
@@ -371,6 +387,7 @@ const en: Dict = {
   cta: {
     discover: 'Discover ENEEC27',
     discoverShort: 'Discover',
+    watchTeaser: 'Watch the teaser',
     ticket: 'Get your ticket',
     ticketShort: 'Ticket',
     event: 'The Event',
@@ -411,6 +428,11 @@ const en: Dict = {
     title: 'ENEEC returns to Aveiro.',
     intro: (edition: string, org: string) =>
       `The ${edition} of the National Meeting of Civil Engineering Students, organised by ${org}.`,
+    teaserLabel: 'The teaser',
+    teaserCaption: 'The campus, the city and the invitation for April.',
+    factsLabel: 'Event details',
+    facts: { edition: 'Edition', dates: 'Dates', organizer: 'Organised by', venue: 'Venue' },
+    mapLink: 'View on map',
     historyLabel: 'The history of ENEEC',
     history:
       'ENEEC is a national meeting that brings together Civil Engineering students ' +
@@ -420,6 +442,10 @@ const en: Dict = {
       'Portuguese cities. Aveiro hosted the 10th edition in 2014, organised by ' +
       'NEBEC-AAUAv, and in 2027 prepares to host it again, in its 15th edition, ' +
       'picking up a national tradition and opening a new chapter of ENEEC.',
+    milestones: [
+      { year: '2014', text: '10th edition, in Aveiro' },
+      { year: '2027', text: '15th edition — the return' },
+    ],
     aveiroLabel: 'The Aveiro vision',
     aveiro:
       'Aveiro is the city of canals, of moliceiro boats and of a university that ' +
@@ -427,6 +453,8 @@ const en: Dict = {
       'between the Department of Civil Engineering, the campus and the heart of the ' +
       'city. An edition designed for those coming from elsewhere to discover not only ' +
       'Portuguese civil engineering, but this city too.',
+    aveiroImageAlt: 'Aerial view of the University of Aveiro campus, with the city behind it',
+    aveiroImageCaption: 'Santiago Campus, in a shot from the teaser',
     pillarsLabel: 'The 3 Pillars',
     pillars: [
       {
@@ -453,6 +481,8 @@ const en: Dict = {
       'the city, from the conversations to the moments together. Make this edition ' +
       'yours too. A very warm welcome to ENEEC27.',
     welcomeSignature: 'The ENEEC’27 Organising Committee',
+    programaCta: 'What happens each day',
+    programaLink: 'See the programme',
   },
 
   programa: {

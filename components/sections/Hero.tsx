@@ -4,7 +4,7 @@ import dynamic from 'next/dynamic'
 import Link from 'next/link'
 import { useEffect, useState } from 'react'
 
-import { EVENT, EVENT_TARGET_DATE, EARLY_BIRDS_OPEN } from '@/lib/siteConfig'
+import { EVENT, EVENT_TARGET_DATE, EARLY_BIRDS_OPEN, TEASER_VIDEO_URL, TEASER_DURATION } from '@/lib/siteConfig'
 import { HERO_HEADLINE_INDEX } from '@/lib/content'
 import { routes } from '@/lib/nav'
 import { getDict, type Lang } from '@/lib/i18n'
@@ -147,6 +147,27 @@ export default function Hero({ lang }: { lang: Lang }) {
               {d.cta.event}
             </Link>
           </div>
+
+          {/* Entrada para o teaser, discreta ao lado dos dois CTAs mas com o
+              botão de play a puxar o olho. Leva ao topo da /evento. */}
+          {TEASER_VIDEO_URL && (
+            <Link
+              href={`${r.evento}#teaser`}
+              className="group mt-7 inline-flex items-center gap-3 py-1 text-foreground hover:text-gold transition-colors"
+            >
+              <span className="relative flex items-center justify-center w-11 h-11 rounded-full border border-gold bg-background/60 group-hover:bg-gold/15 transition-colors">
+                <span
+                  aria-hidden
+                  className="absolute inset-0 rounded-full border border-gold/40 motion-safe:animate-ping [animation-duration:2.6s]"
+                />
+                <svg viewBox="0 0 12 12" aria-hidden className="w-3 h-3 translate-x-px fill-gold">
+                  <path d="M2.5 1.5v9l8-4.5z" />
+                </svg>
+              </span>
+              <span className="mono text-xs font-semibold tracking-widest uppercase">{d.cta.watchTeaser}</span>
+              <span className="mono text-xs text-muted-foreground tabular-nums">{TEASER_DURATION}</span>
+            </Link>
+          )}
         </div>
       </div>
 

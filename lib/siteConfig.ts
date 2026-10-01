@@ -61,6 +61,7 @@ export const EARLY_BIRDS_OPEN = false
 // O primeiro frame do vídeo é preto — o poster é o plano de drone aos 3 s.
 export const TEASER_VIDEO_URL: string | null = '/teaser-eneec27.mp4'
 export const TEASER_POSTER_URL = '/teaser-eneec27-poster.jpg'
+export const TEASER_DURATION = '0:50'
 
 export const CONTACTS = {
   geral: 'geral@eneec.pt',

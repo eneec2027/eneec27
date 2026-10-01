@@ -4,7 +4,8 @@ import { notFound } from 'next/navigation'
 import EmailCapture from '@/components/site/EmailCapture'
 import Reveal from '@/components/site/Reveal'
 import Logo from '@/components/site/Logo'
-import { EVENT, TEASER_VIDEO_URL, TEASER_POSTER_URL, EARLY_BIRDS_OPEN } from '@/lib/siteConfig'
+import TeaserVideo from '@/components/site/TeaserVideo'
+import { EVENT, TEASER_VIDEO_URL, EARLY_BIRDS_OPEN } from '@/lib/siteConfig'
 import { langAlternates } from '@/lib/nav'
 import { getDict, isLang } from '@/lib/i18n'
 
@@ -48,14 +49,7 @@ export default async function DescobrePage({ params }: { params: Promise<{ lang:
         <Reveal delay={0.1}>
           <div className="aspect-video w-full card-dark overflow-hidden relative flex items-center justify-center">
             {TEASER_VIDEO_URL ? (
-              <video
-                src={TEASER_VIDEO_URL}
-                poster={TEASER_POSTER_URL}
-                preload="metadata"
-                controls
-                playsInline
-                className="w-full h-full object-cover"
-              />
+              <TeaserVideo label={d.comingSoon} />
             ) : (
               <>
                 <div className="absolute inset-0 grid-bg" />
