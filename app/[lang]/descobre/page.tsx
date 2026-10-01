@@ -5,16 +5,28 @@ import EmailCapture from '@/components/site/EmailCapture'
 import Reveal from '@/components/site/Reveal'
 import Logo from '@/components/site/Logo'
 import TeaserVideo from '@/components/site/TeaserVideo'
-import { EVENT, TEASER_VIDEO_URL, EARLY_BIRDS_OPEN } from '@/lib/siteConfig'
+import { EVENT, TEASER_VIDEO_URL, TEASER_POSTER_URL, EARLY_BIRDS_OPEN } from '@/lib/siteConfig'
+import { shareMetadata } from '@/lib/share'
 import { langAlternates } from '@/lib/nav'
 import { getDict, isLang } from '@/lib/i18n'
 
 export async function generateMetadata({ params }: { params: Promise<{ lang: string }> }): Promise<Metadata> {
   const { lang } = await params
   if (!isLang(lang)) return {}
+  const dict = getDict(lang)
+  const d = dict.descobre
+  // Com o vídeo, o cartão de partilha mostra o teaser em vez do genérico do site.
+  const share = TEASER_VIDEO_URL
+    ? shareMetadata(lang, {
+        title: d.shareTitle,
+        description: d.shareDescription(dict.event.datesLong, dict.event.venue),
+        image: { url: TEASER_POSTER_URL, width: 1280, height: 720, alt: d.posterAlt },
+      })
+    : {}
   return {
-    title: `${getDict(lang).cta.discover} — ${EVENT.name}`,
+    title: `${dict.cta.discover} — ${EVENT.name}`,
     alternates: langAlternates(lang, '/descobre'),
+    ...share,
   }
 }
 

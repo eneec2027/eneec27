@@ -280,6 +280,12 @@ const pt = {
   descobre: {
     title: 'Quatro dias. Uma cidade.',
     comingSoon: 'Teaser',
+    // Cartão de partilha (WhatsApp, Instagram, LinkedIn): esta é a página para
+    // mandar a quem só quer ver o teaser.
+    shareTitle: "ENEEC'27 — o teaser",
+    shareDescription: (dates: string, venue: string) =>
+      `Vê o teaser do Encontro Nacional de Estudantes de Engenharia Civil. ${dates}, ${venue}.`,
+    posterAlt: 'Vista aérea do campus da Universidade de Aveiro, primeiro plano do teaser',
     intro:
       'O ENEEC27 junta durante quatro dias estudantes de Engenharia Civil de todo o ' +
       'país em Aveiro. Vê o teaser e deixa o teu email — sabes em primeira mão ' +
@@ -598,6 +604,10 @@ const en: Dict = {
   descobre: {
     title: 'Four days. One city.',
     comingSoon: 'Teaser',
+    shareTitle: "ENEEC'27 — the teaser",
+    shareDescription: (dates: string, venue: string) =>
+      `Watch the teaser for the National Meeting of Civil Engineering Students. ${dates}, ${venue}.`,
+    posterAlt: 'Aerial view of the University of Aveiro campus, the opening shot of the teaser',
     intro:
       'ENEEC27 brings together Civil Engineering students from across the country for ' +
       'four days in Aveiro. Watch the teaser and leave your email — you\'ll be the ' +

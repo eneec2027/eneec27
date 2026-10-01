@@ -5,6 +5,7 @@ import Navbar from '@/components/Navbar'
 import Footer from '@/components/Footer'
 import { LANGS, isLang, getDict, HTML_LANG, type Lang } from '@/lib/i18n'
 import { EVENT } from '@/lib/siteConfig'
+import { shareMetadata } from '@/lib/share'
 
 // O site serve na raiz, uma árvore por língua: /pt e /en. Substituiu o teaser
 // da V1 a 2026-08-24 — o histórico está no vault, proximos-passos › 0.5.
@@ -34,11 +35,7 @@ export async function generateMetadata({
     // template '%s': as páginas já trazem o título completo.
     title: { default: `${EVENT.name} — ${d.event.fullName}`, template: '%s' },
     description,
-    openGraph: {
-      title: `${EVENT.name} — ${d.event.fullName}`,
-      description,
-      locale: lang === 'pt' ? 'pt_PT' : 'en_GB',
-    },
+    ...shareMetadata(lang, { title: `${EVENT.name} — ${d.event.fullName}`, description }),
   }
 }
 
